@@ -15,7 +15,14 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //player movement
-        transform.Translate(Vector3.right * _speed * Time.deltaTime);   //transform.Translate(new Vector3(1,0,0));
+        //user inputs WASD
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+        
+        //player movement - optimized
+        //transform.Translate(Vector3.right * _speed * horizontalInput  * Time.deltaTime);   //transform.Translate(new Vector3(1,0,0));
+        //transform.Translate(Vector3.up * _speed * verticalInput * Time.deltaTime);
+        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        transform.Translate(direction * _speed * Time.deltaTime);
     }
 }

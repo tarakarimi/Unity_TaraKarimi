@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("Hit: " + other.transform.name);
         switch (other.transform.tag)

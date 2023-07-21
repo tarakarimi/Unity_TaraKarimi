@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    private float _speed = 8f;
+    [SerializeField] private float _speed = 8f;
     void Update()
     {
-        LaserMovement()
+        LaserMovement();
     }
 
     void LaserMovement()

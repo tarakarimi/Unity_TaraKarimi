@@ -333,9 +333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _laserPrefab: {fileID: 5106786797682567655, guid: a5f04dbf0a9558845bcfe944b62de7c1, type: 3}
+  _tripleShotPrefab: {fileID: 2892352037420426825, guid: 1eced301eeff2bf4f8dd61b80996b754, type: 3}
   _speed: 3.5
   _fireRate: 0.2
   _lives: 3
+  _isTripleShotActive: 0
 --- !u!212 &974275816
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -396,7 +398,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974275814}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -3.28, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -490,6 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 5937792392318764180, guid: adfc1e621641bef4785b2a32095da5e2, type: 3}
+  tripleShotPowerupPrefab: {fileID: 5383570989743312481, guid: e8a9cb3799e99004aa7953a01c278c7b, type: 3}
   _enemyContainer: {fileID: 1101845401}
 --- !u!4 &1409382142
 Transform:

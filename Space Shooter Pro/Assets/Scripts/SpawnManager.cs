@@ -8,7 +8,7 @@ using Vector3 = UnityEngine.Vector3;
 public class SpawnManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private GameObject tripleShotPowerupPrefab;
+    [SerializeField] private GameObject[] powerups;
     [SerializeField] private GameObject _enemyContainer;
 
     private bool _stopSpawning = false;
@@ -40,9 +40,10 @@ public class SpawnManager : MonoBehaviour
     {
         while (_stopSpawning == false)
         {
-            yield return new WaitForSeconds(Random.Range(3, 8));
             Vector3 posToSpawn = new Vector3(Random.Range(-9f, 9f), 7f, 0);
-            Instantiate(tripleShotPowerupPrefab, posToSpawn, Quaternion.identity);
+            int randomPowerup = Random.Range(0, 3);
+            Instantiate(powerups[randomPowerup], posToSpawn, Quaternion.identity);
+            yield return new WaitForSeconds(Random.Range(3, 8));
         }
     }
 

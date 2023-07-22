@@ -8,11 +8,13 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _tripleShotPrefab;
     private float horizontalBound = 11f;
     [SerializeField] private float _speed = 3.5f;
+    private float _speedMultiplier = 2f;
     [SerializeField] private float _fireRate = 0.2f;
     private float _canFire = -1;
     [SerializeField] private int _lives = 3;
     private SpawnManager _spawnManager;
-    [SerializeField] private bool _isTripleShotActive = false;
+    private bool _isTripleShotActive = false;
+    //private bool _isSpeedBoostActive = false;
     
     void Start()
     {
@@ -42,8 +44,10 @@ public class Player : MonoBehaviour
         
         //player movement
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
-        transform.Translate(direction * _speed * Time.deltaTime);
         
+        transform.Translate(direction * _speed * 2 * Time.deltaTime);
+        
+
         //player bounds
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.8f, 0), 0);
 
@@ -89,5 +93,19 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(5);
         _isTripleShotActive = false;
+    }
+
+    public void SpeedBoostActive()
+    {
+        _speed *= _speedMultiplier;
+        //_isSpeedBoostActive = true;
+        StartCoroutine(SpeedBoostPowerDownRoutine());
+    }
+
+    IEnumerator SpeedBoostPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5);
+        _speed /= _speedMultiplier;
+        //_isSpeedBoostActive = false;
     }
 }

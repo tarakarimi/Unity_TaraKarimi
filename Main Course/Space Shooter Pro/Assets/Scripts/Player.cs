@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         //player movement
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         
-        transform.Translate(direction * _speed * 2 * Time.deltaTime);
+        transform.Translate(direction * _speed * Time.deltaTime);
         
 
         //player bounds

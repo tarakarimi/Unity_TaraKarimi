@@ -9,17 +9,19 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float levelWidth = 2.6f;
     [SerializeField] private float minY = 0.4f;
     [SerializeField] private float maxY = 1.5f;
+    [SerializeField] private GameObject platformParent;
     
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 spawnPosition = new Vector3();
+        Vector3 spawnPosition = transform.position;
         
         for (int i = 0; i < numberOfPlatforms; i++)
         {
             spawnPosition.y += Random.Range(minY, maxY);
             spawnPosition.x = Random.Range(-levelWidth, levelWidth);
-            Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
+            GameObject tempPlat = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
+            tempPlat.transform.parent = platformParent.transform;
         }
     }
 

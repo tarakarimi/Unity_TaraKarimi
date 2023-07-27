@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class Player : MonoBehaviour
     [SerializeField] private Sprite leftSprite;
     [SerializeField] private Sprite rightSprite;
     private SpriteRenderer spriteRenderer;
+
+    private float horizontalBound = 3.5f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +27,7 @@ public class Player : MonoBehaviour
     {
         horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
         FlipCharacterHandler();
+        ReSpawnOnTheOtherSide();
     }
 
     private void FixedUpdate()
@@ -40,6 +44,17 @@ public class Player : MonoBehaviour
         else if (horizontalMovement > 0)
         {
             spriteRenderer.sprite = rightSprite;
+        }
+    }
+
+    void ReSpawnOnTheOtherSide()
+    {
+        if (transform.position.x > horizontalBound)
+        {
+            transform.position = new Vector2(-horizontalBound,transform.position.y);
+        } else if (transform.position.x < -horizontalBound)
+        {
+            transform.position = new Vector2(horizontalBound, transform.position.y);
         }
     }
 }

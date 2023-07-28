@@ -6,10 +6,16 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     private bool _isGameOver = false;
+
+    public bool isMultiPlayerMode = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "MultiPlayerMode")
+        {
+            isMultiPlayerMode = true;
+        }
     }
 
     // Update is called once per frame

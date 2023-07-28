@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public bool isPlayerOne = false;
+    public bool isPlayerTwo = false;
     [SerializeField] private GameObject _laserPrefab;
     [SerializeField] private GameObject _tripleShotPrefab;
     private float horizontalBound = 11f;
@@ -21,11 +23,16 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject _righttEngineDamage, _leftEngineDamage;
     AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSFX;
-
+    private GameManager _gameManager;
     void Start()
     {
-        //player starting position 
-        transform.position = new Vector3(0, 0, 0);
+        _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
+        if (_gameManager.isMultiPlayerMode == false)
+        {
+            //player starting position 
+            transform.position = new Vector3(0, 0, 0);
+        }
+        
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _audioSource = GetComponent<AudioSource>();
@@ -52,10 +59,23 @@ public class Player : MonoBehaviour
     
     void Update()
     {
-        CalculateMovement();
-        if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
+        if (isPlayerOne)
         {
-            FireLaser();
+            CalculateMovement();
+            if ((Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire))
+            {
+                FireLaser();
+            }
+        }
+
+        if (isPlayerTwo)
+        {
+            CalculatePlayertwoMovement();
+            if ((Input.GetKeyDown(KeyCode.RightShift) && Time.time > _canFire))
+            {
+                FireLaserPlayerTwo();    
+            }
+            
         }
     }
 
@@ -67,9 +87,35 @@ public class Player : MonoBehaviour
         
         //player movement
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
+
+        //player bounds
+        transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.8f, 0), 0);
+
+        if (transform.position.x >= horizontalBound)
+        {
+            transform.position = new Vector3(-horizontalBound, transform.position.y, 0);
+        } else if (transform.position.x < -horizontalBound)
+        {
+            transform.position = new Vector3(horizontalBound, transform.position.y, 0);
+        }
+    }
+    
+    void CalculatePlayertwoMovement()
+    {
+        //user inputs WASD
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
         
-        transform.Translate(direction * _speed * Time.deltaTime);
-        
+        //player movement
+        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow))
+        {
+            transform.Translate(direction * _speed * Time.deltaTime);
+        }
 
         //player bounds
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.8f, 0), 0);
@@ -84,6 +130,21 @@ public class Player : MonoBehaviour
     }
 
     void FireLaser()
+    {
+        _canFire = Time.time + _fireRate;
+        if (_isTripleShotActive)
+        {
+            Instantiate(_tripleShotPrefab, transform.position, Quaternion.identity);
+        }
+        else
+        {
+            Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
+        }
+
+        _audioSource.Play();
+    }
+    
+    void FireLaserPlayerTwo()
     {
         _canFire = Time.time + _fireRate;
         if (_isTripleShotActive)

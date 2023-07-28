@@ -354,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be0c8ff8bef31c44b4dd25ffceac3e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMultiPlayerMode: 0
 --- !u!4 &151997611
 Transform:
   m_ObjectHideFlags: 0
@@ -781,6 +782,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab53ef4537c4a7949836ca535fdd2943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerOne: 0
+  isPlayerTwo: 1
   _laserPrefab: {fileID: 5106786797682567655, guid: a5f04dbf0a9558845bcfe944b62de7c1, type: 3}
   _tripleShotPrefab: {fileID: 2892352037420426825, guid: 1eced301eeff2bf4f8dd61b80996b754, type: 3}
   _speed: 5
@@ -1154,6 +1157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab53ef4537c4a7949836ca535fdd2943, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerOne: 1
+  isPlayerTwo: 0
   _laserPrefab: {fileID: 5106786797682567655, guid: a5f04dbf0a9558845bcfe944b62de7c1, type: 3}
   _tripleShotPrefab: {fileID: 2892352037420426825, guid: 1eced301eeff2bf4f8dd61b80996b754, type: 3}
   _speed: 5
@@ -2614,6 +2619,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2665177586205741733, guid: ab57dfcd185b60748ba4e118f27a447a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7497907582441246954, guid: ab57dfcd185b60748ba4e118f27a447a, type: 3}
       propertyPath: m_RootOrder
       value: 9

@@ -13,6 +13,7 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     //[SerializeField] private AudioClip _explosionSFX;
     private AudioSource _audioSource;
+    [SerializeField] private GameObject _laserPrefab;
         
 
     private void Start()
@@ -29,9 +30,16 @@ public class Enemy : MonoBehaviour
         }
 
         _audioSource = GetComponent<AudioSource>();
+
+        StartCoroutine(ShootingLaser());
     }
 
     void Update()
+    {
+        CalculateMovement();
+    }
+
+    void CalculateMovement()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
         if (transform.position.y < _lowerBound)
@@ -54,7 +62,7 @@ public class Enemy : MonoBehaviour
                 }
                 _animator.SetTrigger("OnEnemyDeath");
                 _speed = 0;
-                //AudioSource.PlayClipAtPoint(_explosionSFX, transform.position);
+                Destroy(GetComponent<Collider2D>());
                 _audioSource.Play();
                 Destroy(this.gameObject,2.5f);
                 break;
@@ -67,10 +75,25 @@ public class Enemy : MonoBehaviour
                 }
                 _animator.SetTrigger("OnEnemyDeath");
                 _speed = 0;
-                //AudioSource.PlayClipAtPoint(_explosionSFX, transform.position);
+                Destroy(GetComponent<Collider2D>());
                 _audioSource.Play();
                 Destroy(other.gameObject);
                 break;
+        }
+    }
+
+    IEnumerator ShootingLaser()
+    {
+        while (true)
+        {
+            GameObject tempLaserPar = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+            Laser[] lasers = tempLaserPar.GetComponentsInChildren<Laser>();
+            for (int i = 0; i < lasers.Length; i++)
+            {
+                lasers[i].AssignEnemyLaser();
+            }
+            //Debug.Break(); //pause unity
+            yield return new WaitForSeconds(Random.Range(3, 8));
         }
     }
 }

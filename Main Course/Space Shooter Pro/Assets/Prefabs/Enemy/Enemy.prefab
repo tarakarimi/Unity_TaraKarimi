@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
-  _explosionSFX: {fileID: 8300000, guid: a885c043fab7e46438bba03ba9dab6bc, type: 3}
+  _laserPrefab: {fileID: 7194959912438001490, guid: 3fa858ddb95a5274d842aa151aa78f7d, type: 3}
 --- !u!50 &2680559247286684847
 Rigidbody2D:
   serializedVersion: 4

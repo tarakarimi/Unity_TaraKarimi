@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Powerup : MonoBehaviour
 {
-    [SerializeField] private float _speed = 3f;
+    [SerializeField] private float speed = 3f;
     [SerializeField] private int powerupID; //0:tripleshot  //1:speed  //2:shield
-    void Update()
+    private void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
         if (transform.position.y < -7f)
         {
             Destroy(this.gameObject);
@@ -18,7 +18,7 @@ public class Powerup : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.transform.tag == "Player")
+        if (other.transform.CompareTag("Player"))
         {
             Player player = other.transform.GetComponent<Player>();
             if (player != null)

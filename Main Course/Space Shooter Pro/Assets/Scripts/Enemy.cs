@@ -9,7 +9,13 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _speed = 4.0f;
     private float _lowerBound = -8.5f;
     private float _upperBound = 7f;
-    
+    private Player _player;
+
+    private void Start()
+    {
+        _player = GameObject.FindWithTag("Player").transform.GetComponent<Player>();
+    }
+
     void Update()
     {
         transform.Translate(Vector3.down * _speed * Time.deltaTime);
@@ -36,6 +42,10 @@ public class Enemy : MonoBehaviour
             
             case "Laser":
                 Destroy(this.gameObject);
+                if (_player != null)
+                {
+                    _player.AddScore(10);
+                }
                 Destroy(other.gameObject);
                 break;
         }

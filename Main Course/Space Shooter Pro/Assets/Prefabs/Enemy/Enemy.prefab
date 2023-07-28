@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 4
+  Player: {fileID: 6042161332172329065, guid: 8e8de994c95cc6846990ac0638edaaab, type: 3}
 --- !u!50 &2680559247286684847
 Rigidbody2D:
   serializedVersion: 4

@@ -17,16 +17,24 @@ public class Player : MonoBehaviour
     private bool _isShieldActive = false;
     //private bool _isSpeedBoostActive = false;
     [SerializeField] private GameObject _shieldVisualizer;
-    
+    private int _score = 0;
+    private UIManager _uiManager;
+
     void Start()
     {
         //player starting position 
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         if (_spawnManager == null)
         {
             Debug.LogError("spawn manager script not found! it's NULL");
         }
+        if (_uiManager == null)
+        {
+            Debug.LogError("UI Manager script not found! it's NULL");
+        }
+        
     }
     
     void Update()
@@ -84,6 +92,7 @@ public class Player : MonoBehaviour
             return;
         }
         _lives--;
+        _uiManager.UpdateLives(_lives);
         if (_lives < 1)
         {
             _spawnManager.OnPlayerDeath();
@@ -121,5 +130,11 @@ public class Player : MonoBehaviour
     {
         _isShieldActive = true;
         _shieldVisualizer.SetActive(true);
+    }
+
+    public void AddScore(int points)
+    {
+        _score += points;
+        _uiManager.UpdateScoreText(_score);
     }
 }

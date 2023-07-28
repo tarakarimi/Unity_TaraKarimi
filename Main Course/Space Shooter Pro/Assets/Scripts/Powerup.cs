@@ -7,6 +7,7 @@ public class Powerup : MonoBehaviour
 {
     [SerializeField] private float speed = 3f;
     [SerializeField] private int powerupID; //0:tripleshot  //1:speed  //2:shield
+    [SerializeField] private AudioClip _collectPowerupSFX;
     private void Update()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
@@ -39,6 +40,7 @@ public class Powerup : MonoBehaviour
                         break;
                 }
             }
+            AudioSource.PlayClipAtPoint(_collectPowerupSFX, transform.position);
             Destroy(this.gameObject);
         }
     }

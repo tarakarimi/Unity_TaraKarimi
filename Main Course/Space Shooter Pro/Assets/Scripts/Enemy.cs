@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour
     private float _upperBound = 7f;
     private Player _player;
     private Animator _animator;
+    //[SerializeField] private AudioClip _explosionSFX;
+    private AudioSource _audioSource;
         
 
     private void Start()
@@ -25,6 +27,8 @@ public class Enemy : MonoBehaviour
         {
             Debug.LogError("animator is null");
         }
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -50,6 +54,8 @@ public class Enemy : MonoBehaviour
                 }
                 _animator.SetTrigger("OnEnemyDeath");
                 _speed = 0;
+                //AudioSource.PlayClipAtPoint(_explosionSFX, transform.position);
+                _audioSource.Play();
                 Destroy(this.gameObject,2.5f);
                 break;
             
@@ -61,6 +67,8 @@ public class Enemy : MonoBehaviour
                 }
                 _animator.SetTrigger("OnEnemyDeath");
                 _speed = 0;
+                //AudioSource.PlayClipAtPoint(_explosionSFX, transform.position);
+                _audioSource.Play();
                 Destroy(other.gameObject);
                 break;
         }

@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     private int _score = 0;
     private UIManager _uiManager;
     [SerializeField] private GameObject _righttEngineDamage, _leftEngineDamage;
+    AudioSource _audioSource;
+    [SerializeField] private AudioClip _laserSFX;
 
     void Start()
     {
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour
         transform.position = new Vector3(0, 0, 0);
         _spawnManager = GameObject.Find("Spawn_Manager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+        _audioSource = GetComponent<AudioSource>();
         if (_spawnManager == null)
         {
             Debug.LogError("spawn manager script not found! it's NULL");
@@ -34,6 +37,16 @@ public class Player : MonoBehaviour
         {
             Debug.LogError("UI Manager script not found! it's NULL");
         }
+
+        if (_audioSource == null)
+        {
+            Debug.LogError("audio source of player is null");
+        }
+        else
+        {
+            _audioSource.clip = _laserSFX;
+        }
+
         
     }
     
@@ -81,6 +94,8 @@ public class Player : MonoBehaviour
         {
             Instantiate(_laserPrefab, transform.position + new Vector3(0, 1.05f, 0), Quaternion.identity);
         }
+
+        _audioSource.Play();
     }
 
     public void Damage()

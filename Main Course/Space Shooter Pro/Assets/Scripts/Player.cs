@@ -15,10 +15,10 @@ public class Player : MonoBehaviour
     private SpawnManager _spawnManager;
     private bool _isTripleShotActive = false;
     private bool _isShieldActive = false;
-    //private bool _isSpeedBoostActive = false;
     [SerializeField] private GameObject _shieldVisualizer;
     private int _score = 0;
     private UIManager _uiManager;
+    [SerializeField] private GameObject _righttEngineDamage, _leftEngineDamage;
 
     void Start()
     {
@@ -92,12 +92,21 @@ public class Player : MonoBehaviour
             return;
         }
         _lives--;
-        _uiManager.UpdateLives(_lives);
-        if (_lives < 1)
+        if (_lives == 2)
+        {
+            _righttEngineDamage.SetActive(true);
+        } else if (_lives == 1)
+        {
+            _leftEngineDamage.SetActive(true);
+        }
+        else
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
-        } 
+            
+        }
+        _uiManager.UpdateLives(_lives);
+        
     }
 
     public void TripleShotActive()

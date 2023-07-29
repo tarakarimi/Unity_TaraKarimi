@@ -24,6 +24,7 @@ public class Player : MonoBehaviour
     AudioSource _audioSource;
     [SerializeField] private AudioClip _laserSFX;
     private GameManager _gameManager;
+    private Animator _animator;
     void Start()
     {
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
@@ -54,7 +55,8 @@ public class Player : MonoBehaviour
             _audioSource.clip = _laserSFX;
         }
 
-        
+        _animator = GetComponent<Animator>();
+
     }
     
     void Update()
@@ -91,6 +93,25 @@ public class Player : MonoBehaviour
         {
             transform.Translate(direction * _speed * Time.deltaTime);
         }
+        
+        //anim
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            _animator.SetBool("turnLeft",true);
+            _animator.SetBool("turnRight",false);
+        } else if (Input.GetKeyUp(KeyCode.A))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",false);
+        } else if (Input.GetKeyDown(KeyCode.D))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",true);
+        } else if (Input.GetKeyUp(KeyCode.D))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",false);
+        }
 
         //player bounds
         transform.position = new Vector3(transform.position.x, Mathf.Clamp(transform.position.y, -4.8f, 0), 0);
@@ -115,6 +136,25 @@ public class Player : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.UpArrow))
         {
             transform.Translate(direction * _speed * Time.deltaTime);
+        }
+        
+        //anim
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            _animator.SetBool("turnLeft",true);
+            _animator.SetBool("turnRight",false);
+        } else if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",false);
+        } else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",true);
+        } else if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            _animator.SetBool("turnLeft",false);
+            _animator.SetBool("turnRight",false);
         }
 
         //player bounds

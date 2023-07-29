@@ -23,12 +23,20 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R) && _isGameOver)
         {
-            SceneManager.LoadScene(1); //game scene
+            if (isMultiPlayerMode)
+            {
+                SceneManager.LoadScene(2); //game scene
+            }
+            else
+            {
+                SceneManager.LoadScene(1); //game scene   
+            }
         }
         
-        if (Input.GetKeyDown(KeyCode.Escape))
+        else if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            //Application.Quit();
+            SceneManager.LoadScene("MainMenu");
         }
     }
 

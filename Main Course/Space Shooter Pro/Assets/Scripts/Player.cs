@@ -219,7 +219,7 @@ public class Player : MonoBehaviour
         {
             _spawnManager.OnPlayerDeath();
             Destroy(this.gameObject);
-            
+            _uiManager.CheckForBestScore(_score);
         }
         _uiManager.UpdateLives(_lives);
         

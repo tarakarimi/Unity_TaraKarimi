@@ -7,7 +7,8 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private Text scoreText;
+    [SerializeField] private Text scoreText, bestScoreText;
+    public int bestScore;
 
     [SerializeField] private Sprite[] _liveSprites;
 
@@ -22,6 +23,8 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         scoreText.text = "Score: " + 0;
+        bestScore = PlayerPrefs.GetInt("BestScore", 0);
+        bestScoreText.text = "Best: " + bestScore;
         _gameOverText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("Game_Manager").GetComponent<GameManager>();
         if (_gameManager == null)
@@ -41,8 +44,23 @@ public class UIManager : MonoBehaviour
         scoreText.text = "score: " + playerScore.ToString();
     }
 
+    public void CheckForBestScore(int currentScore)
+    {
+        if (currentScore>bestScore)
+        {
+            bestScore = currentScore;
+            bestScoreText.text = "score: " + bestScore.ToString();
+            PlayerPrefs.SetInt("BestScore",bestScore);
+        }
+    }
+
     public void UpdateLives(int currentLives)
     {
+        if (currentLives <= 0)
+        {
+            currentLives = 0;
+            
+        }
         _livesDisplayImg.sprite = _liveSprites[currentLives];
         if (currentLives == 0)
         {

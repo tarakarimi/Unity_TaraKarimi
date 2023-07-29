@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -68,4 +69,15 @@ public class UIManager : MonoBehaviour
         }
         
     }
+
+    public void ResumePlay()
+    {
+        _gameManager.ResumeGame();
+    }
+
+    public void BackToMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
+    
 }

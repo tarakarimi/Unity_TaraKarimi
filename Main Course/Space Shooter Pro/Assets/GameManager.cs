@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     private bool _isGameOver = false;
 
     public bool isMultiPlayerMode = false;
+
+    [SerializeField] private GameObject _pauseMenuPanel;
+    Animator _pausePanelAnimator; 
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +19,13 @@ public class GameManager : MonoBehaviour
         {
             isMultiPlayerMode = true;
         }
+
+        _pausePanelAnimator = GameObject.Find("Pause_Menu").GetComponent<Animator>();
+        if (_pauseMenuPanel == null)
+        {
+            Debug.Log("Pause panel animator not found");
+        }
+        _pausePanelAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
     }
 
     // Update is called once per frame
@@ -38,10 +48,23 @@ public class GameManager : MonoBehaviour
             //Application.Quit();
             SceneManager.LoadScene("MainMenu");
         }
+        
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            _pauseMenuPanel.SetActive(true);
+            _pausePanelAnimator.SetBool("isPaused",true);
+            Time.timeScale = 0;
+        }
     }
 
     public void GameOver()
     {
         _isGameOver = true;
+    }
+
+    public void ResumeGame()
+    {
+        _pauseMenuPanel.SetActive(false);
+        Time.timeScale = 1;
     }
 }

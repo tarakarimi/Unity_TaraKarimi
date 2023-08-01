@@ -22,11 +22,16 @@ public class Player : MonoBehaviour
     private float bullSpawnY = 2f;
 
     private float horizontalBound = 3.5f;
+
+    private Camera camera;
+
+    private GameManagerScript _gameManagerScript;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = rightSprite;
+        _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
     }
 
     // Update is called once per frame
@@ -47,6 +52,8 @@ public class Player : MonoBehaviour
         {
             ShootInDirection();
         }
+
+        GameOverFallCheck();
     }
 
     private void FixedUpdate()
@@ -139,4 +146,17 @@ public class Player : MonoBehaviour
             FlipCharacterHandler();
         }
     }
+
+    public void GameOverFallCheck()
+    {
+        float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
+        if (transform.position.y < cameraBottomY)
+        {
+            //Debug.Log("Game Over!");
+            _gameManagerScript.isGameOver = true;
+            //Destroy(this.gameObject);
+        }
+    }
+    
+    
 }

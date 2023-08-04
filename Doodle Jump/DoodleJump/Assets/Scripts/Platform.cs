@@ -2,18 +2,28 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Platform : MonoBehaviour
 {
     public float jumpForce = 10f;
+    private string currentScene;
+    private void Start()
+    {
+        currentScene = SceneManager.GetActiveScene().ToString();
+    }
 
     private void Update()
     {
         float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
         if (transform.position.y < cameraBottomY)
         {
-            Destroy(this.gameObject);
+            if (currentScene == "GameScene")
+            {
+                Destroy(this.gameObject);
+            }
         }
     }
 

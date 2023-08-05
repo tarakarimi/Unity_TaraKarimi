@@ -835,9 +835,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4572413701196230519, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4572413701196230521, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
       propertyPath: m_Name
       value: Doodler
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572413701196230521, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}

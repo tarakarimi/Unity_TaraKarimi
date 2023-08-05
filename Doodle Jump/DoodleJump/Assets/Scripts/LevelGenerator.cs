@@ -12,7 +12,9 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject platformParent;
     private Vector3 spawnPosition;
     [SerializeField] private GameObject firstPlat;
-
+    [SerializeField] private GameObject breakablePlatformPrefab;
+    [SerializeField] private GameObject movablePlatformPrefab;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +31,35 @@ public class LevelGenerator : MonoBehaviour
             SpawnPlatforms();
         }
     }
-
+    
     public void SpawnPlatforms()
+    {
+        for (int i = 0; i < numberOfPlatforms; i++)
+        {
+            spawnPosition.y += Random.Range(minY, maxY);
+            spawnPosition.x = Random.Range(-levelWidth, levelWidth);
+
+            // Check if the current spawn position will obstruct the doodler's jumpable path.
+            bool canSpawn = !Physics2D.Raycast(spawnPosition, Vector2.down, maxY * 2);
+
+            if (canSpawn)
+            {
+                // Determine platform type to spawn.
+                GameObject platformToSpawn = platformPrefab;
+                float randomValue = Random.value;
+
+                if (randomValue < 0.2f) // 20% chance for breakable platform.
+                    platformToSpawn = breakablePlatformPrefab;
+                else if (randomValue < 0.4f) // 20% chance for movable platform.
+                    platformToSpawn = movablePlatformPrefab;
+
+                // Instantiate the selected platform.
+                GameObject tempPlat = Instantiate(platformToSpawn, spawnPosition, Quaternion.identity);
+                tempPlat.transform.parent = platformParent.transform;
+            }
+        }
+    }
+    /*public void SpawnPlatforms()
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
@@ -39,5 +68,5 @@ public class LevelGenerator : MonoBehaviour
             GameObject tempPlat = Instantiate(platformPrefab, spawnPosition, Quaternion.identity);
             tempPlat.transform.parent = platformParent.transform;
         }
-    }
+    }*/
 }

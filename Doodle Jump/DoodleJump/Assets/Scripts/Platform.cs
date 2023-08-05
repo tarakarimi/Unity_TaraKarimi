@@ -12,7 +12,7 @@ public class Platform : MonoBehaviour
     private string currentScene;
     private void Start()
     {
-        currentScene = SceneManager.GetActiveScene().ToString();
+        currentScene = SceneManager.GetActiveScene().name;
     }
 
     private void Update()

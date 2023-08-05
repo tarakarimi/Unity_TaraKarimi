@@ -4,38 +4,39 @@ using UnityEngine;
 
 public class MovablePlatform : MonoBehaviour
 {
-    public float moveSpeed = 1.0f;
-    public float moveDistance = 2.0f;
-    private Vector3 initialPosition;
-    private Vector3 targetPosition;
-
-    private bool movingToTarget = true;
-
+    private bool goRight;
+    private float boundLimit = 2.6f;
+    private float _speed = 1f;
     private void Start()
     {
-        initialPosition = transform.position;
-        targetPosition = initialPosition + new Vector3(moveDistance, 0f, 0f);
+        goRight = (Random.value > 0.5f); //0: left   1: right
     }
 
     private void Update()
     {
-        float step = moveSpeed * Time.deltaTime;
-
-        if (movingToTarget)
+        if (goRight)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-            if (transform.position.x >= targetPosition.x)
+            if (transform.position.x < boundLimit)
             {
-                movingToTarget = false;
+                transform.Translate(Vector3.right * _speed * Time.deltaTime);
+            }
+            else
+            {
+                goRight = false;
             }
         }
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, initialPosition, step);
-            if (transform.position.x <= initialPosition.x)
+            if (transform.position.x > -boundLimit)
             {
-                movingToTarget = true;
+                transform.Translate(Vector3.left * _speed * Time.deltaTime);
+            }
+            else
+            {
+                goRight = true;
             }
         }
+        
+        
     }
 }

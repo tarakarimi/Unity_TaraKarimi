@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManagerScript : MonoBehaviour
@@ -10,6 +11,7 @@ public class GameManagerScript : MonoBehaviour
     private Player _Player;
     private int _score = 0;
     public GameObject dimmingPanel;
+    public GameObject gameOverPanel;
     public bool isPaused = false;
     void Start()
     {
@@ -42,12 +44,15 @@ public class GameManagerScript : MonoBehaviour
     
     public void PauseGame()
     {
-        if (!isPaused)
+        if (isGameOver == false)
         {
-            Time.timeScale = 0;
-            isPaused = true; 
-            dimmingPanel.SetActive(true);
-        }
+            if (!isPaused)
+            {
+                Time.timeScale = 0;
+                isPaused = true; 
+                dimmingPanel.SetActive(true);
+            }
+        }   
     }
     
     public void ResumeGame()
@@ -58,6 +63,19 @@ public class GameManagerScript : MonoBehaviour
             isPaused = false;
             dimmingPanel.SetActive(false);
         }
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void GameOverActions()
+    {
+        isGameOver = true;
+        Camera.main.GetComponent<CameraFollow>().changeView();
+        gameOverPanel.SetActive(true);
+        gameOverPanel.transform.GetChild(1).GetComponent<Text>().text = "your score: " + _score;
     }
 }
 

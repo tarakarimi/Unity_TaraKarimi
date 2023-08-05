@@ -152,9 +152,10 @@ public class Player : MonoBehaviour
         float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
         if (transform.position.y < cameraBottomY)
         {
-            //Debug.Log("Game Over!");
-            _gameManagerScript.isGameOver = true;
-            //Destroy(this.gameObject);
+            if (_gameManagerScript.isGameOver == false)
+            {
+                _gameManagerScript.GameOverActions();
+            }
         }
     }
     

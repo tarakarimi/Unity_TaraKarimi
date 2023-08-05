@@ -10,7 +10,7 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private float minY = 0.4f;
     [SerializeField] private float maxY = 1.5f;
     [SerializeField] private GameObject platformParent;
-    private Vector3 spawnPosition;
+    Vector3 spawnPosition;
     [SerializeField] private GameObject firstPlat;
     [SerializeField] private GameObject breakablePlatformPrefab;
     [SerializeField] private GameObject movablePlatformPrefab;
@@ -18,9 +18,8 @@ public class LevelGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 spawnPosition = firstPlat.transform.position;
+        spawnPosition = firstPlat.transform.position;
         SpawnPlatforms();
-
     }
 
     // Update is called once per frame

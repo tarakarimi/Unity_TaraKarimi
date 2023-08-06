@@ -2309,6 +2309,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4572413701196230517, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4572413701196230517, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
       propertyPath: m_SpriteTilingProperty.pivot.x
       value: 0.5
       objectReference: {fileID: 0}

@@ -77,6 +77,11 @@ public class GameManagerScript : MonoBehaviour
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.GetChild(1).GetComponent<Text>().text = "your score: " + _score;
     }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+    }
 }
 
 

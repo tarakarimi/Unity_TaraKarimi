@@ -37,23 +37,26 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
-        
-        FlipCharacterHandler();
-        
-        ReSpawnOnTheOtherSide();
-
-        if (Input.GetKeyDown(KeyCode.Space) & Time.time > shootCoolDownTime)
+        if (_gameManagerScript.isGameOver == false)
         {
-            ShootUpward();
-        }
+            horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
         
-        if (Input.GetMouseButtonDown(0) & Time.time > shootCoolDownTime)
-        {
-            ShootInDirection();
-        }
+            FlipCharacterHandler();
+        
+            ReSpawnOnTheOtherSide();
 
-        GameOverFallCheck();
+            if (Input.GetKeyDown(KeyCode.Space) & Time.time > shootCoolDownTime)
+            {
+                ShootUpward();
+            }
+        
+            if (Input.GetMouseButtonDown(0) & Time.time > shootCoolDownTime)
+            {
+                ShootInDirection();
+            }
+
+            GameOverFallCheck();
+        }
     }
 
     private void FixedUpdate()
@@ -93,43 +96,49 @@ public class Player : MonoBehaviour
 
     void ShootInDirection()
     {
-        shootMode = true;
-        weapon.SetActive(true);
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 direction = (mousePos - transform.position);
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Debug.Log("angle: "+angle);
-        
-        if (!(angle > 45f && angle < 135f))
+        if (_gameManagerScript.isGameOver == false)
         {
-            if ((angle > 0 & angle < 45)||(angle < 0 & angle>-90))
+            shootMode = true;
+            weapon.SetActive(true);
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = (mousePos - transform.position);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            Debug.Log("angle: "+angle);
+        
+            if (!(angle > 45f && angle < 135f))
             {
-                angle = 45;
-            } else
-            {
-                angle = 135;
+                if ((angle > 0 & angle < 45)||(angle < 0 & angle>-90))
+                {
+                    angle = 45;
+                } else
+                {
+                    angle = 135;
+                }
             }
+
+            weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            // Convert the angle back to a normalized direction vector
+            direction = Quaternion.Euler(0, 0, angle) * Vector3.right;
+
+            GameObject bullet = Instantiate(bulletPrefab, transform.position+ new Vector3(0,bullSpawnY,0), Quaternion.identity);
+            bullet.GetComponent<Bullet>().SetDirection(direction);
+            shootCoolDownTime = Time.time + 0.5f;
+            StartCoroutine(ReturnSpriteToIdle());
         }
-
-        weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
-        // Convert the angle back to a normalized direction vector
-        direction = Quaternion.Euler(0, 0, angle) * Vector3.right;
-
-        GameObject bullet = Instantiate(bulletPrefab, transform.position+ new Vector3(0,bullSpawnY,0), Quaternion.identity);
-        bullet.GetComponent<Bullet>().SetDirection(direction);
-        shootCoolDownTime = Time.time + 0.5f;
-        StartCoroutine(ReturnSpriteToIdle());
     }
 
     void ShootUpward()
     {
-        shootMode = true;
-        weapon.SetActive(true);
-        GameObject bullet = Instantiate(bulletPrefab, transform.position + new Vector3(0,bullSpawnY,0), quaternion.identity);
-        bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
-        weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
-        shootCoolDownTime = Time.time + 0.5f;
-        StartCoroutine(ReturnSpriteToIdle());
+        if (_gameManagerScript.isGameOver == false)
+        {
+            shootMode = true;
+            weapon.SetActive(true);
+            GameObject bullet = Instantiate(bulletPrefab, transform.position + new Vector3(0,bullSpawnY,0), quaternion.identity);
+            bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
+            weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
+            shootCoolDownTime = Time.time + 0.5f;
+            StartCoroutine(ReturnSpriteToIdle());
+        }
     }
 
     IEnumerator ReturnSpriteToIdle()

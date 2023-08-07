@@ -13,6 +13,8 @@ public class GameManagerScript : MonoBehaviour
     public GameObject dimmingPanel;
     public GameObject gameOverPanel;
     public bool isPaused = false;
+    private SaveScoreHandler _saveScoreHandler;
+    
     void Start()
     {
         _Player = GameObject.Find("Doodler").GetComponent<Player>();
@@ -67,6 +69,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void PlayAgain()
     {
+        gameOverPanel.transform.GetComponent<SaveScoreHandler>().SaveRecord();
         SceneManager.LoadScene("GameScene");
     }
 
@@ -76,10 +79,12 @@ public class GameManagerScript : MonoBehaviour
         Camera.main.GetComponent<CameraFollow>().changeView();
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.GetChild(1).GetComponent<Text>().text = "your score: " + _score;
+        gameOverPanel.GetComponent<SaveScoreHandler>().SetFinalScore(_score);
     }
 
     public void GoToMenu()
     {
+        gameOverPanel.transform.GetComponent<SaveScoreHandler>().SaveRecord();
         SceneManager.LoadScene("MainMenu");
     }
 }

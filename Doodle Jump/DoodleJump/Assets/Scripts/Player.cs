@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
 
     private float horizontalMovement = 0f;
-    private float movementSpeed = 5f;
+    private float movementSpeed = 7f;
     [SerializeField] private Sprite leftSprite;
     [SerializeField] private Sprite rightSprite;
     [SerializeField] private Sprite shootSprite;

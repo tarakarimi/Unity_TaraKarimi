@@ -2054,11 +2054,15 @@ MonoBehaviour:
   platformPrefab: {fileID: 5753821789741603887, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
   breakablePlatformPrefab: {fileID: 1294412039778246554, guid: 614aa3ddff8bf4d48b1167103405d446, type: 3}
   moveablePlatformPrefab: {fileID: 8251393642056276822, guid: 397159fefff9c1540b9bde36bceae0c1, type: 3}
-  levelWidth: 2.6
+  firstPlat: {fileID: 1475595049}
+  platformParent: {fileID: 936374042}
   minY: 0.4
   maxY: 1.5
-  platformParent: {fileID: 936374042}
-  firstPlat: {fileID: 1475595049}
+  levelWidth: 2.6
+  enemyPrefabs:
+  - {fileID: 4214015016343438597, guid: f91c886bea4b11e4fbc32025cc6e0605, type: 3}
+  - {fileID: 362951581096217672, guid: 81fc1384a727bba4684c98023d333366, type: 3}
+  - {fileID: 5613441277049093491, guid: 26f3dc2907af07b498ac2bde4733a5fd, type: 3}
 --- !u!4 &1827984047
 Transform:
   m_ObjectHideFlags: 0

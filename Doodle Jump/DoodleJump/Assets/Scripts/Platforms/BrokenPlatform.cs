@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BrokenPlatform : MonoBehaviour
 {
-    private float _speed = 5.5f;
+    private float _speed = 8.5f;
     // Start is called before the first frame update
     void Start()
     {

@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8750589179469715443}
   m_Layer: 0
   m_Name: Moveable Platform
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -100,8 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3749632a5854bc4e860f651bc920ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 1
-  moveDistance: 2
 --- !u!251 &-5118783339266446229
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -117,7 +115,7 @@ PlatformEffector2D:
   m_RotationalOffset: 0
   m_UseOneWay: 1
   m_UseOneWayGrouping: 0
-  m_SurfaceArc: 180
+  m_SurfaceArc: 179
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1

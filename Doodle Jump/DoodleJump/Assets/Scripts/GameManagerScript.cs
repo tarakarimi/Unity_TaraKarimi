@@ -27,7 +27,7 @@ public class GameManagerScript : MonoBehaviour
     private void UpdateScore()
     {
         // Calculate the _score based on the Doodler's height.
-        int newScore = Mathf.FloorToInt(_Player.transform.position.y);
+        int newScore = Mathf.FloorToInt(_Player.transform.position.y * 100)/10;
 
         // Update the _score if it has changed.
         if (newScore > _score) 

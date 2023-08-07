@@ -21,9 +21,9 @@ public class BreakablePlatform : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Player") && !isBroken && col.relativeVelocity.y <= 0f)
+        if (col.gameObject.CompareTag("Player") && !isBroken && col.gameObject.GetComponent<Rigidbody2D>().velocity.y <= 0f)
         { 
             BreakPlatform();
         }

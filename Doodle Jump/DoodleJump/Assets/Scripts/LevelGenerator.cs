@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject platformPrefab, breakablePlatformPrefab,moveablePlatformPrefab;
+    public GameObject platformPrefab, breakablePlatformPrefab, moveablePlatformPrefab;
+    public List<GameObject> enemyPrefabs; // Attach your enemy prefabs to this list in the Inspector
     [SerializeField] private GameObject firstPlat;
     [SerializeField] private GameObject platformParent;
     private int numberOfPlatforms = 30;
-    [SerializeField] private float minY = 0.4f, maxY = 1.5f, levelWidth = 2.6f;
+    [SerializeField] private float minY = 0.4f, maxY = 3f, levelWidth = 2.6f;
+    private float maxYdefault = 2.8f;
     private Vector3 spawnPosition;
     private bool lastPlatformWasBreakable;
-    private float lastNonBreakableXPosition;
-    public List<GameObject> enemyPrefabs; 
+    private float xPosition;
+    private float yPositionRandom;
+
     void Start()
     {
         spawnPosition = firstPlat.transform.position;
-        lastNonBreakableXPosition = spawnPosition.x;
         SpawnPlatforms();
     }
-    
+
     void Update()
     {
         if (Camera.main.transform.position.y > spawnPosition.y - 10)
@@ -33,11 +35,10 @@ public class LevelGenerator : MonoBehaviour
         for (int i = 0; i < numberOfPlatforms; i++)
         {
             GameObject prefabToSpawn;
-
+            lastPlatformWasBreakable = false;
             if (lastPlatformWasBreakable || Random.Range(0f, 1f) < 0.5f)
             {
                 prefabToSpawn = platformPrefab;
-                lastPlatformWasBreakable = false;
             }
             else if (Random.Range(0f, 1f) < 0.6f)
             {
@@ -47,32 +48,42 @@ public class LevelGenerator : MonoBehaviour
             else if (Random.Range(0f, 1f) < 0.9f)
             {
                 prefabToSpawn = moveablePlatformPrefab;
-                lastPlatformWasBreakable = false;
-            }
-            else 
-            {
-                int randomIndex = Random.Range(0, enemyPrefabs.Count);
-                prefabToSpawn = enemyPrefabs[randomIndex];
-                lastPlatformWasBreakable = false;
-            }
-            
-            float xPosition;
-
-            if (lastPlatformWasBreakable)
-            {
-                float minX = Mathf.Max(-levelWidth, lastNonBreakableXPosition - 1.5f);
-                float maxX = Mathf.Min(levelWidth, lastNonBreakableXPosition + 1.5f);
-                xPosition = Random.Range(minX, maxX);
-                lastNonBreakableXPosition = xPosition;
             }
             else
             {
-                xPosition = Random.Range(-levelWidth, levelWidth);
+                int randomIndex = Random.Range(0, enemyPrefabs.Count);
+                prefabToSpawn = enemyPrefabs[randomIndex];
             }
 
-            spawnPosition = new Vector3(xPosition, spawnPosition.y + Random.Range(minY, maxY), 0f);
-            GameObject tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-            tempPlat.transform.parent = platformParent.transform;
+            xPosition = Random.Range(-levelWidth, levelWidth);
+            yPositionRandom = Random.Range(minY, maxY);
+            spawnPosition = new Vector3(xPosition, spawnPosition.y + yPositionRandom, 0f);
+
+            // Ensure the spawned object doesn't overlap with other objects
+            bool overlapping = CheckOverlap(prefabToSpawn, spawnPosition);
+
+            if (!overlapping)
+            {
+                GameObject tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+                tempPlat.transform.parent = platformParent.transform;
+            } else {
+                spawnPosition.y -= yPositionRandom;
+            }
         }
+    }
+
+    private bool CheckOverlap(GameObject prefab, Vector3 position)
+    {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(position, prefab.transform.localScale, 0f);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.gameObject.CompareTag("Platform") || collider.gameObject.CompareTag("Enemy"))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

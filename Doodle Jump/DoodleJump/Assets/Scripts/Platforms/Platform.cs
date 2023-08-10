@@ -5,13 +5,18 @@ using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class Platform : MonoBehaviour
 {
     public float jumpForce = 10f;
     private string currentScene;
+    [SerializeField] private Sprite colorYellow;
+    [SerializeField] private Sprite colorOrange;
     private void Start()
     {
+        int randomIndex = Random.Range(0, 2);
+        transform.GetComponent<SpriteRenderer>().sprite = (randomIndex == 0) ? colorYellow : colorOrange;
         currentScene = SceneManager.GetActiveScene().name;
     }
 

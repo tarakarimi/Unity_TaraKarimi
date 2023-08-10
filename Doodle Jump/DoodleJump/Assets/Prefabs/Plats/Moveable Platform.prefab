@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6700390687342031724}
   - component: {fileID: -5118783339266446229}
   - component: {fileID: 8448059390563462880}
-  - component: {fileID: -8750589179469715443}
   m_Layer: 0
   m_Name: Moveable Platform
   m_TagString: Platform
@@ -77,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: be14861df9b3bb549b09ae22fee19749, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 97700ec9cccbd314486ba0b1fc6e9da5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.14, y: 0.3}
+  m_Size: {x: 1.12, y: 0.3}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,6 +99,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3749632a5854bc4e860f651bc920ca7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 10
 --- !u!251 &-5118783339266446229
 PlatformEffector2D:
   m_ObjectHideFlags: 0
@@ -141,16 +141,3 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &-8750589179469715443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8251393642056276822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 306cf36188bc5f64199290badbf803ec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpForce: 10

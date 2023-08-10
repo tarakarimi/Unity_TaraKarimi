@@ -18,13 +18,10 @@ public class Player : MonoBehaviour
     public GameObject bulletPrefab;
     private float shootCoolDownTime = 0;
     private bool shootMode = false;
-    [SerializeField] private GameObject weapon;
+    [SerializeField] private GameObject weapon, circle;
     private float bullSpawnY = 2f;
-
     private float horizontalBound = 3.5f;
-
     private Camera camera;
-
     private GameManagerScript _gameManagerScript;
     // Start is called before the first frame update
     void Start()
@@ -161,6 +158,7 @@ public class Player : MonoBehaviour
         float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
         if (transform.position.y < cameraBottomY)
         {
+            circle.SetActive(false);
             if (_gameManagerScript.isGameOver == false)
             {
                 _gameManagerScript.GameOverActions();

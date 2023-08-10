@@ -9,16 +9,19 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private GameObject firstPlat;
     [SerializeField] private GameObject platformParent;
     private int numberOfPlatforms = 30;
-    [SerializeField] private float minY = 0.4f, maxY = 3f, levelWidth = 2.6f;
-    private float maxYdefault = 2.8f;
+    private float minY = 0.4f, maxY = 2.9f, levelWidth = 2.6f;
     private Vector3 spawnPosition;
-    private bool lastPlatformWasBreakable;
+    private bool lastInstanceWasNotJumpable;
     private float xPosition;
     private float yPositionRandom;
+    private GameObject prefabToSpawn;
+    private GameObject tempPlat;
+    private float nextYPosition = 0;
 
     void Start()
     {
         spawnPosition = firstPlat.transform.position;
+        tempPlat = firstPlat;
         SpawnPlatforms();
     }
 
@@ -34,41 +37,70 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            GameObject prefabToSpawn;
-            lastPlatformWasBreakable = false;
-            if (lastPlatformWasBreakable || Random.Range(0f, 1f) < 0.5f)
+            if (lastInstanceWasNotJumpable || Random.Range(0f, 1f) < 0.5f)
             {
                 prefabToSpawn = platformPrefab;
+                lastInstanceWasNotJumpable = false;
             }
             else if (Random.Range(0f, 1f) < 0.6f)
             {
                 prefabToSpawn = breakablePlatformPrefab;
-                lastPlatformWasBreakable = true;
+                lastInstanceWasNotJumpable = true;
             }
-            else if (Random.Range(0f, 1f) < 0.9f)
+            else if ( Random.Range(0f, 1f) < 0.9f)
             {
                 prefabToSpawn = moveablePlatformPrefab;
+                lastInstanceWasNotJumpable = false;
             }
             else
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Count);
                 prefabToSpawn = enemyPrefabs[randomIndex];
+                lastInstanceWasNotJumpable = true;
             }
 
             xPosition = Random.Range(-levelWidth, levelWidth);
-            yPositionRandom = Random.Range(minY, maxY);
+            if (nextYPosition == 0)
+            {
+                if (lastInstanceWasNotJumpable)
+                {
+                    yPositionRandom = Random.Range(minY, maxY/2f);
+                }
+                else
+                {
+                    yPositionRandom = Random.Range(minY, maxY);
+                }
+                
+            }
+            else
+            {
+                yPositionRandom = nextYPosition;
+            }
             spawnPosition = new Vector3(xPosition, spawnPosition.y + yPositionRandom, 0f);
+            if (lastInstanceWasNotJumpable)
+            {
+                //Debug.Log("possible: "+ (tempPlat.transform.position.y + maxY - spawnPosition.y));
+                nextYPosition = Random.Range(0.5f, tempPlat.transform.position.y + maxY - spawnPosition.y);
+            }
+            else
+            {
+                nextYPosition = 0;
+            }
+            tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+            tempPlat.transform.parent = platformParent.transform;
 
+            
+            /*
             // Ensure the spawned object doesn't overlap with other objects
             bool overlapping = CheckOverlap(prefabToSpawn, spawnPosition);
 
             if (!overlapping)
             {
-                GameObject tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
+                tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
                 tempPlat.transform.parent = platformParent.transform;
             } else {
                 spawnPosition.y -= yPositionRandom;
-            }
+            }*/
         }
     }
 

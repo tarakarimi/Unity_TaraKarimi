@@ -24,13 +24,13 @@ public class SaveScoreHandler : MonoBehaviour
         ScoreEntry[] topScores = LoadTopScores();
         
         //compare
-        bool isHighScore = false;
+        //bool isHighScore = false;
 
         for (int i = 0; i < topScores.Length; i++)
         {
             if (_currentScore > topScores[i].score)
             {
-                isHighScore = true;
+                //isHighScore = true;
                 topScores[i] = new ScoreEntry(_currentName, _currentScore);
                 SaveTopScores(topScores);
                 break;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,6 +12,15 @@ public class Hole : MonoBehaviour
     private void Start()
     {
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+    }
+
+    private void Update()
+    {
+        float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
+        if (transform.position.y + 0.8f < cameraBottomY)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

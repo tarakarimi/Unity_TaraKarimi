@@ -8,10 +8,11 @@ public class MovablePlatform : MonoBehaviour
     private float boundLimit = 2.6f;
     private float _speed = 1f;
     public float jumpForce = 10f;
-    
+    private AudioSource _audioSource;
     private void Start()
     {
         goRight = (Random.value > 0.5f); //0: left   1: right
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -54,6 +55,7 @@ public class MovablePlatform : MonoBehaviour
             if (rb != null)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                _audioSource.Play();
             }
         }
     }

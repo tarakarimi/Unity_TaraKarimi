@@ -6,13 +6,13 @@ public class Bullet : MonoBehaviour
 {
     private float speed = 15f;
     private float distCameraToEdge = 5.28f;
-    private Camera camera;
+    private Camera _camera;
     private Vector3 _direction;
     
     // Start is called before the first frame update
     void Start()
     {
-        camera = Camera.main;
+        _camera = Camera.main;
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class Bullet : MonoBehaviour
     {
         transform.position += _direction * speed * Time.deltaTime;
         
-        if (transform.position.y > camera.transform.position.y + distCameraToEdge)
+        if (transform.position.y > _camera.transform.position.y + distCameraToEdge)
         {
             Destroy(this.gameObject);
         }

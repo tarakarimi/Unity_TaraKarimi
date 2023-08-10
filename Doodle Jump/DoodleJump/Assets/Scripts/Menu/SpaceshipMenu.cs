@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class SpaceshipMenu : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class SpaceshipMenu : MonoBehaviour
     Vector3 startingPosition; 
 
     private float elapsedTime = 0.0f;
-    [SerializeField] private GameObject light;
+    [SerializeField] private GameObject _light;
 
     private void Start()
     {
@@ -31,9 +32,9 @@ public class SpaceshipMenu : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.4f);
-            light.SetActive(false);
+            _light.SetActive(false);
             yield return new WaitForSeconds(0.3f);
-            light.SetActive(true);
+            _light.SetActive(true);
         }
     }
 

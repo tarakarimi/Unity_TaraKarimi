@@ -13,11 +13,13 @@ public class Platform : MonoBehaviour
     private string currentScene;
     [SerializeField] private Sprite colorYellow;
     [SerializeField] private Sprite colorOrange;
+    private AudioSource _audioSource;
     private void Start()
     {
         int randomIndex = Random.Range(0, 2);
         transform.GetComponent<SpriteRenderer>().sprite = (randomIndex == 0) ? colorYellow : colorOrange;
         currentScene = SceneManager.GetActiveScene().name;
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -40,6 +42,10 @@ public class Platform : MonoBehaviour
             if (rb != null)
             {
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                if (_audioSource != null)
+                {
+                    _audioSource.Play();   
+                }
             }
         }
     }

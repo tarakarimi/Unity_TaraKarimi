@@ -8,10 +8,12 @@ public class Hole : MonoBehaviour
     private bool isAbsorbing = false;
     private float shrinkSpeed = 0.05f;
     private float moveSpeed = 5f; // Adjust the movement speed as needed
+    private AudioSource audioSource;
 
     private void Start()
     {
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -27,7 +29,9 @@ public class Hole : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isAbsorbing)
         {
+            audioSource.Play();
             isAbsorbing = true;
+            other.transform.GetChild(1).gameObject.SetActive(false);
             StartCoroutine(ShrinkAndAbsorbPlayer(other.gameObject));
         }
     }

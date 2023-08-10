@@ -37,22 +37,22 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            if (lastInstanceWasNotJumpable || Random.Range(0f, 1f) < 0.5f)
+            if (lastInstanceWasNotJumpable || Random.Range(0f, 1f) < 0.4f)
             {
                 prefabToSpawn = platformPrefab;
                 lastInstanceWasNotJumpable = false;
             }
-            else if (Random.Range(0f, 1f) < 0.6f)
+            else if (Random.Range(0f, 1f) < 0.5f)
             {
                 prefabToSpawn = breakablePlatformPrefab;
                 lastInstanceWasNotJumpable = true;
             }
-            else if ( Random.Range(0f, 1f) < 0.9f && _score > 1000)
+            else if ( Random.Range(0f, 1f) < 0.7f && _score > 100)
             {
                 prefabToSpawn = moveablePlatformPrefab;
                 lastInstanceWasNotJumpable = false;
             }
-            else if( _score > 2000)
+            else if( _score > 500)
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Count);
                 prefabToSpawn = enemyPrefabs[randomIndex];

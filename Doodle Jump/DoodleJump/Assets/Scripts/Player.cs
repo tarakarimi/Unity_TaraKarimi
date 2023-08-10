@@ -19,16 +19,18 @@ public class Player : MonoBehaviour
     private float shootCoolDownTime = 0;
     private bool shootMode = false;
     [SerializeField] private GameObject weapon, circle;
-    private float bullSpawnY = 2f;
     private float horizontalBound = 3.5f;
-    private Camera camera;
+    private Camera _camera;
     private GameManagerScript _gameManagerScript;
+
+    private AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = rightSprite;
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -119,7 +121,8 @@ public class Player : MonoBehaviour
 
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(direction);
-            shootCoolDownTime = Time.time + 0.2f;
+            shootCoolDownTime = Time.time + 0.4f;
+            _audioSource.Play();
             StartCoroutine(ReturnSpriteToIdle());
         }
     }
@@ -133,7 +136,8 @@ public class Player : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, transform.position, quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
             weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
-            shootCoolDownTime = Time.time + 0.2f;
+            shootCoolDownTime = Time.time + 0.4f;
+            _audioSource.Play();
             StartCoroutine(ReturnSpriteToIdle());
         }
     }

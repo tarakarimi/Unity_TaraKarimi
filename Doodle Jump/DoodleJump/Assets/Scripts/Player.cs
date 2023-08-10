@@ -117,9 +117,9 @@ public class Player : MonoBehaviour
             // Convert the angle back to a normalized direction vector
             direction = Quaternion.Euler(0, 0, angle) * Vector3.right;
 
-            GameObject bullet = Instantiate(bulletPrefab, transform.position+ new Vector3(0,bullSpawnY,0), Quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(direction);
-            shootCoolDownTime = Time.time + 0.5f;
+            shootCoolDownTime = Time.time + 0.2f;
             StartCoroutine(ReturnSpriteToIdle());
         }
     }
@@ -130,10 +130,10 @@ public class Player : MonoBehaviour
         {
             shootMode = true;
             weapon.SetActive(true);
-            GameObject bullet = Instantiate(bulletPrefab, transform.position + new Vector3(0,bullSpawnY,0), quaternion.identity);
+            GameObject bullet = Instantiate(bulletPrefab, transform.position, quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
             weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
-            shootCoolDownTime = Time.time + 0.5f;
+            shootCoolDownTime = Time.time + 0.2f;
             StartCoroutine(ReturnSpriteToIdle());
         }
     }

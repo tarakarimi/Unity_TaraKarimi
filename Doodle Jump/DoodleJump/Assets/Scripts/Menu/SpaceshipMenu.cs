@@ -4,7 +4,7 @@ using UnityEngine;
 public class SpaceshipMenu : MonoBehaviour
 {
     float loopRadius = .8f; 
-    float rotationSpeed = 1f; 
+    float rotationSpeed = 0.7f; 
     Vector3 startingPosition; 
 
     private float elapsedTime = 0.0f;
@@ -30,7 +30,7 @@ public class SpaceshipMenu : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
             light.SetActive(false);
             yield return new WaitForSeconds(0.3f);
             light.SetActive(true);

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelGenerator : MonoBehaviour
 {
-    public GameObject platformPrefab, breakablePlatformPrefab, moveablePlatformPrefab, SpringPrefab;
+    public GameObject platformPrefab, breakablePlatformPrefab, moveablePlatformPrefab, SpringPrefab, eyeTrampolinePrefab;
     public List<GameObject> enemyPrefabs;
     [SerializeField] private GameObject firstPlat;
     [SerializeField] private GameObject platformParent;
@@ -116,7 +116,9 @@ public class LevelGenerator : MonoBehaviour
                 tempPlat.transform.parent = platformParent.transform;
                 if (spawnSpring)
                 {
-                    GameObject tempSpring = Instantiate(SpringPrefab, spawnPosition + new Vector3(0.27f,0.25f,0), Quaternion.identity);
+                    int randomIndex = Random.Range(0, 2);
+                    GameObject jumpingPrefab = (randomIndex == 0) ? SpringPrefab : eyeTrampolinePrefab;
+                    GameObject tempSpring = Instantiate(jumpingPrefab, spawnPosition + new Vector3(0.25f,0.25f,0), Quaternion.identity);
                     tempSpring.transform.parent = tempPlat.transform;
                 }
             } else {

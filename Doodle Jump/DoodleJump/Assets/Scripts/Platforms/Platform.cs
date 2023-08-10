@@ -49,5 +49,5 @@ public class Platform : MonoBehaviour
             }
         }
     }
-    
+
 }

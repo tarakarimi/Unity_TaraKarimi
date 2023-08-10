@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private float jumpImmuneDuration = 1f; // Adjust the duration as needed
     private float jumpImmuneTimer;
+    private float rotationSpeed = 1f;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (_gameManagerScript.isGameOver == false)
         {
             horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
@@ -202,4 +204,29 @@ public class Player : MonoBehaviour
         playerCollider.enabled = false;
     }
     
+    public void TakeAFullTurn()
+    {
+        jumpImmuneDuration = 1.7f;
+        StartCoroutine(RotatePlayer());
+    }
+
+    private IEnumerator RotatePlayer()
+    {
+        float startRotation = transform.rotation.eulerAngles.z;
+        float targetRotation = transform.eulerAngles.z + 360f;
+        float elapsedTime = 0f;
+    
+        while (elapsedTime < 1f)
+        {
+            float currentRotation = Mathf.Lerp(startRotation, targetRotation, elapsedTime);
+            transform.rotation = Quaternion.Euler(0f, 0f, currentRotation);
+        
+            elapsedTime += Time.deltaTime * rotationSpeed;
+            yield return null;
+        }
+
+        transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
+        jumpImmuneDuration = 1f;
+    }
+
 }

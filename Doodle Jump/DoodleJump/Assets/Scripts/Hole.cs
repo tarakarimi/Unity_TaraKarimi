@@ -29,10 +29,14 @@ public class Hole : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isAbsorbing)
         {
-            audioSource.Play();
-            isAbsorbing = true;
-            other.transform.GetChild(1).gameObject.SetActive(false);
-            StartCoroutine(ShrinkAndAbsorbPlayer(other.gameObject));
+            if (other.gameObject.GetComponent<Player>()._immune == false)
+            {
+                audioSource.Play();
+                isAbsorbing = true;
+                other.transform.GetChild(1).gameObject.SetActive(false);
+                StartCoroutine(ShrinkAndAbsorbPlayer(other.gameObject));
+            }
+            
         }
     }
 

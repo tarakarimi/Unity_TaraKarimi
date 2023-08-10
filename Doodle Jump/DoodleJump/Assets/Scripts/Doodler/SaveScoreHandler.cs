@@ -53,8 +53,7 @@ public class SaveScoreHandler : MonoBehaviour
             //if (!string.IsNullOrEmpty(name) && score > 0)
             //{
                 topScores[i - 1] = new ScoreEntry(name, score);
-                Debug.Log(topScores);
-            //}
+                //}
         }
         return topScores;
     }

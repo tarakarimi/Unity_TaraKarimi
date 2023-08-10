@@ -46,9 +46,13 @@ public class TwoHPEnemy : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.GetComponent<Collider>());
-            _gameManagerScript.GameOverActions();
-            Destroy(gameObject);
+            if (collision.gameObject.GetComponent<Player>()._immune == false)
+            {
+                collision.transform.GetChild(1).gameObject.SetActive(false);
+                Destroy(collision.GetComponent<Collider>());
+                _gameManagerScript.GameOverActions();
+                Destroy(gameObject);
+            }
         }
     }
 }

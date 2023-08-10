@@ -36,9 +36,13 @@ public class MoveableEnemy : MonoBehaviour
         
         if (collision.gameObject.CompareTag("Player"))
         {
-            Destroy(collision.collider);
-            _gameManagerScript.GameOverActions();
-            Destroy(gameObject);
+            if (collision.gameObject.GetComponent<Player>()._immune == false)
+            {
+                collision.transform.GetChild(1).gameObject.SetActive(false);
+                Destroy(collision.collider);
+                _gameManagerScript.GameOverActions();
+                Destroy(gameObject);
+            }
         }
     }
 

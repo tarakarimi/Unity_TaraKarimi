@@ -22,8 +22,11 @@ public class Player : MonoBehaviour
     private float horizontalBound = 3.5f;
     private Camera _camera;
     private GameManagerScript _gameManagerScript;
-
+    public bool _immune = false;
+    private BoxCollider2D playerCollider;
     private AudioSource _audioSource;
+    private float jumpImmuneDuration = 1f; // Adjust the duration as needed
+    private float jumpImmuneTimer;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,6 +34,7 @@ public class Player : MonoBehaviour
         spriteRenderer.sprite = rightSprite;
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         _audioSource = GetComponent<AudioSource>();
+        playerCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -56,6 +60,17 @@ public class Player : MonoBehaviour
 
             GameOverFallCheck();
         }
+
+        if (_immune)
+        {
+            ResetJumpImmunity();
+        }
+
+        if (_gameManagerScript.isGameOver)
+        {
+            playerCollider.enabled = false;
+        }
+
     }
 
     private void FixedUpdate()
@@ -102,8 +117,7 @@ public class Player : MonoBehaviour
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 direction = (mousePos - transform.position);
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            Debug.Log("angle: "+angle);
-        
+
             if (!(angle > 45f && angle < 135f))
             {
                 if ((angle > 0 & angle < 45)||(angle < 0 & angle>-90))
@@ -169,8 +183,23 @@ public class Player : MonoBehaviour
             }
         }
     }
-    
-    
-    
+
+
+    private void ResetJumpImmunity()
+    {
+        jumpImmuneTimer += Time.deltaTime;
+        if (jumpImmuneTimer >= jumpImmuneDuration)
+        {
+            jumpImmuneTimer = 0f;
+            _immune = false;
+            playerCollider.enabled = true;
+        }
+    }
+
+    public void JumpImmunity()
+    {
+        _immune = true;
+        playerCollider.enabled = false;
+    }
     
 }

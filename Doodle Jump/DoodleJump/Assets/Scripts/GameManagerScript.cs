@@ -14,10 +14,12 @@ public class GameManagerScript : MonoBehaviour
     public GameObject gameOverPanel;
     public bool isPaused = false;
     private SaveScoreHandler _saveScoreHandler;
+    private LevelGenerator _lvlGen;
     
     void Start()
     {
         _Player = GameObject.Find("Doodler").GetComponent<Player>();
+        _lvlGen = transform.GetComponent<LevelGenerator>();
         UpdateScoreText();
     }
 
@@ -35,6 +37,7 @@ public class GameManagerScript : MonoBehaviour
         if (newScore > _score) 
         {
             _score = newScore;
+            _lvlGen.SetScore(_score);
             UpdateScoreText();
         }
     }

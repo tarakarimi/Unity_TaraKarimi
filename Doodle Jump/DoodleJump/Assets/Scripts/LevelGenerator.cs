@@ -5,18 +5,18 @@ using UnityEngine;
 public class LevelGenerator : MonoBehaviour
 {
     public GameObject platformPrefab, breakablePlatformPrefab, moveablePlatformPrefab;
-    public List<GameObject> enemyPrefabs; // Attach your enemy prefabs to this list in the Inspector
+    public List<GameObject> enemyPrefabs;
     [SerializeField] private GameObject firstPlat;
     [SerializeField] private GameObject platformParent;
     private int numberOfPlatforms = 30;
-    private float minY = 0.4f, maxY = 2.9f, levelWidth = 2.6f;
     private Vector3 spawnPosition;
     private bool lastInstanceWasNotJumpable;
-    private float xPosition;
-    private float yPositionRandom;
-    private GameObject prefabToSpawn;
-    private GameObject tempPlat;
-    private float nextYPosition = 0;
+    private float xPosition, yPositionRandom;
+    private GameObject prefabToSpawn,tempPlat;
+    private float nextYPosition ;
+    private int _score;
+    private float initialMaxY = 1, maxMaxY = 2.9f, currentMaxY = 1, minY = 0.4f, levelWidth = 2.6f;
+    private float allFeatureScore = 3000;
 
     void Start()
     {
@@ -47,16 +47,20 @@ public class LevelGenerator : MonoBehaviour
                 prefabToSpawn = breakablePlatformPrefab;
                 lastInstanceWasNotJumpable = true;
             }
-            else if ( Random.Range(0f, 1f) < 0.9f)
+            else if ( Random.Range(0f, 1f) < 0.9f && _score > 1000)
             {
                 prefabToSpawn = moveablePlatformPrefab;
                 lastInstanceWasNotJumpable = false;
             }
-            else
+            else if( _score > 2000)
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Count);
                 prefabToSpawn = enemyPrefabs[randomIndex];
                 lastInstanceWasNotJumpable = true;
+            }
+            else
+            {
+                prefabToSpawn = platformPrefab;
             }
 
             xPosition = Random.Range(-levelWidth, levelWidth);
@@ -64,13 +68,12 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (lastInstanceWasNotJumpable)
                 {
-                    yPositionRandom = Random.Range(minY, maxY/2f);
+                    yPositionRandom = Random.Range(minY, currentMaxY/2f);
                 }
                 else
                 {
-                    yPositionRandom = Random.Range(minY, maxY);
+                    yPositionRandom = Random.Range(minY, currentMaxY);
                 }
-                
             }
             else
             {
@@ -79,19 +82,13 @@ public class LevelGenerator : MonoBehaviour
             spawnPosition = new Vector3(xPosition, spawnPosition.y + yPositionRandom, 0f);
             if (lastInstanceWasNotJumpable)
             {
-                //Debug.Log("possible: "+ (tempPlat.transform.position.y + maxY - spawnPosition.y));
-                nextYPosition = Random.Range(0.5f, tempPlat.transform.position.y + maxY - spawnPosition.y);
+                nextYPosition = Random.Range(0.5f, tempPlat.transform.position.y + currentMaxY - spawnPosition.y);
             }
             else
             {
                 nextYPosition = 0;
             }
-            tempPlat = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-            tempPlat.transform.parent = platformParent.transform;
-
             
-            /*
-            // Ensure the spawned object doesn't overlap with other objects
             bool overlapping = CheckOverlap(prefabToSpawn, spawnPosition);
 
             if (!overlapping)
@@ -100,7 +97,7 @@ public class LevelGenerator : MonoBehaviour
                 tempPlat.transform.parent = platformParent.transform;
             } else {
                 spawnPosition.y -= yPositionRandom;
-            }*/
+            }
         }
     }
 
@@ -117,5 +114,27 @@ public class LevelGenerator : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SetScore(int score)
+    {
+        _score = score;
+        UpdateDifficulty();
+    }
+    
+    private void UpdateDifficulty()
+    {
+        float progress = Mathf.Clamp01(_score / allFeatureScore);
+        currentMaxY = Mathf.Lerp(initialMaxY, maxMaxY, progress);
+        Debug.Log(currentMaxY);
+        /*if (_score > 500) 
+        {
+            // Enable additional platforms, enemies, etc.
+            
+            if (_score > 1500)
+            {
+                
+            }
+        }*/
     }
 }

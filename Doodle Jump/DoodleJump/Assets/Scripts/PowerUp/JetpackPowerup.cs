@@ -13,9 +13,11 @@ public class JetpackPowerup : MonoBehaviour
     private GameObject jetpackVisual;
     [SerializeField] private GameObject FallingBroomPrefab;
     private int childNum;
+    private AudioSource _audioSource;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
         if (transform.tag == "Helicopter")
         {
             childNum = 3;
@@ -41,6 +43,10 @@ public class JetpackPowerup : MonoBehaviour
             playerController = other.GetComponent<Player>();
             playerController.Immunity();
             spriteRenderer.enabled = false;
+            if (_audioSource != null)
+            {
+                _audioSource.Play();
+            }
             StartCoroutine(DeActivateJetpack());
         }
     }

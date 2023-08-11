@@ -1,0 +1,103 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2267001356017588190
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2745144115495761600, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Name
+      value: Helicopter Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761600, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_TagString
+      value: Helicopter
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761601, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 09e24de9036565546a77c707ad858480, type: 3}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761602, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761660, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: jetpackForce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761660, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: jetpackDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761660, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: FallingBroomPrefab
+      value: 
+      objectReference: {fileID: 8770468773371008106, guid: 27b4d3f071b72b249b14092786097f06, type: 3}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Size.x
+      value: 0.60526943
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4559734
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.007829428
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.011743903
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 2745144115495761661, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.43
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}

@@ -4,24 +4,37 @@ using UnityEngine;
 
 public class JetpackPowerup : MonoBehaviour
 {
-    private float jetpackForce = 80f;
-    private float jetpackDuration = 5f;
+    private float jetpackForce;
+    private float jetpackDuration;
     private Player playerController;
     private GameObject attachedJetpack;
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private GameObject jetpackVisual;
     [SerializeField] private GameObject FallingBroomPrefab;
+    private int childNum;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (transform.tag == "Helicopter")
+        {
+            childNum = 3;
+            jetpackForce = 30f;
+            jetpackDuration = 2f;
+        }
+        if (transform.tag == "JetpackPowerup")
+        {
+            childNum = 2;
+            jetpackForce = 80f;
+            jetpackDuration = 5.5f;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            jetpackVisual = other.transform.GetChild(2).gameObject;
+            jetpackVisual = other.transform.GetChild(childNum).gameObject;
             jetpackVisual.SetActive(true);
             rb = other.GetComponent<Rigidbody2D>();
             rb.velocity = new Vector2(rb.velocity.x, jetpackForce);
@@ -34,7 +47,7 @@ public class JetpackPowerup : MonoBehaviour
 
     private IEnumerator DeActivateJetpack()
     {
-        playerController.ResetImmunity(5);
+        playerController.ResetImmunity(jetpackDuration);
         yield return new WaitForSeconds(jetpackDuration);
         //jetpackVisual.transform.parent = null;
         Instantiate(FallingBroomPrefab, playerController.transform.position, Quaternion.identity);

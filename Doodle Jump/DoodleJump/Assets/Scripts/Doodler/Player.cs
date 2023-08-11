@@ -25,11 +25,8 @@ public class Player : MonoBehaviour
     public bool _immune = false;
     private BoxCollider2D playerCollider;
     private AudioSource _audioSource;
-    //private float jumpImmuneDuration = 1f; // Adjust the duration as needed
     private float jumpImmuneTimer;
     private float rotationSpeed = 1f;
-
-    private Transform secondChild;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,7 +35,6 @@ public class Player : MonoBehaviour
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         _audioSource = GetComponent<AudioSource>();
         playerCollider = GetComponent<BoxCollider2D>();
-        secondChild = transform.GetChild(2);
     }
 
     // Update is called once per frame

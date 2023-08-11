@@ -9,6 +9,7 @@ TagManager:
   - Platform
   - Eye
   - JetpackPowerup
+  - Helicopter
   layers:
   - Default
   - TransparentFX

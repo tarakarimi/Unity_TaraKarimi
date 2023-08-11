@@ -2247,6 +2247,7 @@ MonoBehaviour:
   SpringPrefab: {fileID: 6738167596342574354, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
   eyeTrampolinePrefab: {fileID: 286378654488377415, guid: be0fc3e7b15b6c341974fba8233e1082, type: 3}
   jetPackPowerupPrefab: {fileID: 2745144115495761600, guid: 207f0145ad8b8134eb0a4f9e6ccbf4b5, type: 3}
+  helicopterPowerupPrefab: {fileID: 4138447141647491358, guid: 1202845915bcf0e45b264d10654324a0, type: 3}
   enemyPrefabs:
   - {fileID: 4214015016343438597, guid: f91c886bea4b11e4fbc32025cc6e0605, type: 3}
   - {fileID: 362951581096217672, guid: 81fc1384a727bba4684c98023d333366, type: 3}

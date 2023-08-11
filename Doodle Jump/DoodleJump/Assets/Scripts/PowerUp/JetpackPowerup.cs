@@ -17,7 +17,7 @@ public class JetpackPowerup : MonoBehaviour
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        _audioSource = GetComponent<AudioSource>();
+        _audioSource = transform.GetComponent<AudioSource>();
         if (transform.tag == "Helicopter")
         {
             childNum = 3;

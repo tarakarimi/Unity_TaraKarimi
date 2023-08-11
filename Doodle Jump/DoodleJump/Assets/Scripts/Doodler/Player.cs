@@ -27,9 +27,28 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private float jumpImmuneTimer;
     private float rotationSpeed = 1f;
+    private bool useGyroscope; // Set this to false for touch controls
+    private Vector3 initialGyroRotation;
     // Start is called before the first frame update
     void Start()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            useGyroscope = true;
+        }
+        if (useGyroscope)
+        {
+            // Enable the gyroscope
+            if (SystemInfo.supportsGyroscope)
+            {
+                Input.gyro.enabled = true;
+                initialGyroRotation = Input.gyro.attitude.eulerAngles;
+            }
+            else
+            {
+                useGyroscope = false;
+            }
+        }
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = rightSprite;
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
@@ -43,22 +62,7 @@ public class Player : MonoBehaviour
         
         if (_gameManagerScript.isGameOver == false)
         {
-            horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
-        
-            FlipCharacterHandler();
-        
-            ReSpawnOnTheOtherSide();
-
-            if (Input.GetKeyDown(KeyCode.Space) & Time.time > shootCoolDownTime)
-            {
-                ShootUpward();
-            }
-        
-            if (Input.GetMouseButtonDown(0) & Time.time > shootCoolDownTime)
-            {
-                ShootInDirection();
-            }
-
+            MovementHandler();
             GameOverFallCheck();
         }
 
@@ -70,6 +74,32 @@ public class Player : MonoBehaviour
             }
         }
 
+    }
+
+    private void MovementHandler()
+    {
+        if (useGyroscope)
+        {
+            horizontalMovement = -Input.gyro.rotationRateUnbiased.z * movementSpeed;
+        }
+        else
+        {
+            horizontalMovement = Input.GetAxis("Horizontal") * movementSpeed;
+        }
+        
+        FlipCharacterHandler();
+        
+        ReSpawnOnTheOtherSide();
+
+        if (Input.GetKeyDown(KeyCode.Space) & Time.time > shootCoolDownTime)
+        {
+            ShootUpward();
+        }
+        
+        if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && Time.time > shootCoolDownTime)
+        {
+            ShootInDirection();
+        }
     }
 
     private void FixedUpdate()
@@ -135,7 +165,16 @@ public class Player : MonoBehaviour
                 }
             }
 
-            weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            if (transform.localScale.x == 1)
+            {
+                weapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            }
+            else
+            {
+                weapon.transform.rotation = Quaternion.Euler(0, 0, angle+180);
+            }
+
+            
             // Convert the angle back to a normalized direction vector
             direction = Quaternion.Euler(0, 0, angle) * Vector3.right;
 
@@ -164,7 +203,7 @@ public class Player : MonoBehaviour
 
     IEnumerator ReturnSpriteToIdle()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         shootMode = false;
         weapon.SetActive(false);
         if (horizontalMovement == 0)

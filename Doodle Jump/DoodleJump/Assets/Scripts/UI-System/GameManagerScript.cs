@@ -83,6 +83,14 @@ public class GameManagerScript : MonoBehaviour
         gameOverPanel.SetActive(true);
         gameOverPanel.transform.GetChild(1).GetComponent<Text>().text = "your score: " + _score;
         gameOverPanel.GetComponent<SaveScoreHandler>().SetFinalScore(_score);
+        int currentHighscore = PlayerPrefs.GetInt("HighScore", 0);
+        if (_score > currentHighscore)
+        {
+            PlayerPrefs.SetInt("HighScore", _score);
+            PlayerPrefs.Save();
+            currentHighscore = _score;
+        }
+        gameOverPanel.transform.GetChild(2).GetComponent<Text>().text = "your high score: " + currentHighscore;
     }
 
     public void GoToMenu()

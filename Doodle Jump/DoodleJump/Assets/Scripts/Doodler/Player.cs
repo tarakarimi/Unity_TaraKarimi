@@ -25,9 +25,11 @@ public class Player : MonoBehaviour
     public bool _immune = false;
     private BoxCollider2D playerCollider;
     private AudioSource _audioSource;
-    private float jumpImmuneDuration = 1f; // Adjust the duration as needed
+    //private float jumpImmuneDuration = 1f; // Adjust the duration as needed
     private float jumpImmuneTimer;
     private float rotationSpeed = 1f;
+
+    private Transform secondChild;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +38,7 @@ public class Player : MonoBehaviour
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         _audioSource = GetComponent<AudioSource>();
         playerCollider = GetComponent<BoxCollider2D>();
+        secondChild = transform.GetChild(2);
     }
 
     // Update is called once per frame
@@ -63,14 +66,12 @@ public class Player : MonoBehaviour
             GameOverFallCheck();
         }
 
-        if (_immune)
-        {
-            ResetJumpImmunity();
-        }
-
         if (_gameManagerScript.isGameOver)
         {
-            playerCollider.enabled = false;
+            if (playerCollider != null)
+            {
+                playerCollider.enabled = false;
+            }
         }
 
     }
@@ -84,13 +85,20 @@ public class Player : MonoBehaviour
     {
         if (shootMode == false)
         {
+            spriteRenderer.sprite = rightSprite;
              if (horizontalMovement < 0)
              {
-                 spriteRenderer.sprite = leftSprite;
+                 //spriteRenderer.sprite = leftSprite;
+                 Vector3 newScale = transform.localScale;
+                 newScale.x = -1f;
+                 transform.localScale = newScale;
              }
              else if (horizontalMovement > 0)
              {
-                 spriteRenderer.sprite = rightSprite;
+                 
+                 Vector3 newScale = transform.localScale;
+                 newScale.x = 1f;
+                 transform.localScale = newScale;
              }
         }
         else
@@ -187,26 +195,33 @@ public class Player : MonoBehaviour
     }
 
 
-    private void ResetJumpImmunity()
+    public void ResetImmunity(float duration)
     {
-        jumpImmuneTimer += Time.deltaTime;
-        if (jumpImmuneTimer >= jumpImmuneDuration)
-        {
-            jumpImmuneTimer = 0f;
-            _immune = false;
-            playerCollider.enabled = true;
-        }
+        StartCoroutine(StartResetingImmunity(duration));
     }
 
-    public void JumpImmunity()
+
+    IEnumerator StartResetingImmunity(float duration)
+    {
+        jumpImmuneTimer = 0f;
+        while (jumpImmuneTimer < duration)
+        {
+            jumpImmuneTimer += Time.deltaTime;
+            yield return null;
+        }
+    
+        jumpImmuneTimer = 0f;
+        _immune = false;
+        playerCollider.enabled = true;
+    }
+    public void Immunity()
     {
         _immune = true;
         playerCollider.enabled = false;
     }
-    
+
     public void TakeAFullTurn()
     {
-        jumpImmuneDuration = 1.7f;
         StartCoroutine(RotatePlayer());
     }
 
@@ -226,7 +241,7 @@ public class Player : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
-        jumpImmuneDuration = 1f;
+        //jumpImmuneDuration = 1f;
     }
 
 }

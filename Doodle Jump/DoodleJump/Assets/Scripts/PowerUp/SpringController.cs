@@ -32,16 +32,17 @@ public class SpringController : MonoBehaviour
         if (!hasSprung && collision.gameObject.CompareTag("Player") && collision.relativeVelocity.y <= 0f)
         {
             Player _player = collision.gameObject.GetComponent<Player>();
-            _player.JumpImmunity();
+            
             hasSprung = true;
             spriteRenderer.sprite = _spriteSprung;
-
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
                 if (transform.CompareTag("Eye"))
                 {
+                    _player.Immunity();
                     _player.TakeAFullTurn();
+                    _player.ResetImmunity(1.7f);
                 }
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 _audioSource.Play();   

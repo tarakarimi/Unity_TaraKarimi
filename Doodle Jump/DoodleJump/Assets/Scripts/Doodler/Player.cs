@@ -80,7 +80,9 @@ public class Player : MonoBehaviour
     {
         if (useGyroscope)
         {
-            horizontalMovement = -Input.gyro.rotationRateUnbiased.z * movementSpeed;
+            horizontalMovement = 0;
+            //horizontalMovement = -Input.gyro.rotationRateUnbiased.z * movementSpeed * 2;
+            horizontalMovement = Input.acceleration.x * movementSpeed * 3f;
         }
         else
         {

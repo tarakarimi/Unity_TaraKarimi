@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
         {
             horizontalMovement = 0;
             //horizontalMovement = -Input.gyro.rotationRateUnbiased.z * movementSpeed * 2;
-            horizontalMovement = Input.acceleration.x * movementSpeed * 3f;
+            horizontalMovement = Input.acceleration.x * movementSpeed * 1.35f;
         }
         else
         {

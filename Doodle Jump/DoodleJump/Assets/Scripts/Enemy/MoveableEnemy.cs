@@ -46,6 +46,7 @@ public class MoveableEnemy : MonoBehaviour
                     collision.transform.GetChild(1).gameObject.SetActive(false);
                     Destroy(collision.collider);
                     _gameManagerScript.GameOverActions();
+                    collision.gameObject.GetComponent<AudioSource>().Play();
                     Destroy(gameObject);
                 }
             }

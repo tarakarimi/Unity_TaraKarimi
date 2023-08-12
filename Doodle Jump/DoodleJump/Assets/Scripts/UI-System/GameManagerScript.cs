@@ -15,6 +15,7 @@ public class GameManagerScript : MonoBehaviour
     public bool isPaused = false;
     private SaveScoreHandler _saveScoreHandler;
     private LevelGenerator _lvlGen;
+    [SerializeField] private GameObject rainParticleSystem;
     
     void Start()
     {
@@ -42,7 +43,19 @@ public class GameManagerScript : MonoBehaviour
                 _lvlGen.SetScore(_score);
                 UpdateScoreText();
             }
+            if (_score % 500 == 0)
+            {
+                rainParticleSystem.SetActive(true);
+                // Start a coroutine to disable the particle system after a delay
+                StartCoroutine(DisableParticleSystemAfterDelay());
+            }
         }
+    }
+    private IEnumerator DisableParticleSystemAfterDelay()
+    {
+        
+        yield return new WaitForSeconds(5f);
+        rainParticleSystem.SetActive(false);
     }
 
     private void UpdateScoreText()

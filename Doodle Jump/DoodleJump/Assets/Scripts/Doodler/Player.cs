@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
     private bool useGyroscope; // Set this to false for touch controls
     private Vector3 initialGyroRotation;
     private Rigidbody2D _rigidbody2D;
+
+    private float gyroSpeed = 1.38f;
     // Start is called before the first frame update
     void Start()
     {
@@ -84,7 +86,7 @@ public class Player : MonoBehaviour
         {
             horizontalMovement = 0;
             //horizontalMovement = -Input.gyro.rotationRateUnbiased.z * movementSpeed * 2;
-            horizontalMovement = Input.acceleration.x * movementSpeed * 1.35f;
+            horizontalMovement = Input.acceleration.x * movementSpeed * gyroSpeed;
         }
         else
         {
@@ -192,7 +194,7 @@ public class Player : MonoBehaviour
             GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(direction);
             shootCoolDownTime = Time.time + 0.4f;
-            _audioSource.Play();
+            //_audioSource.Play();
             StartCoroutine(ReturnSpriteToIdle());
         }
     }
@@ -207,7 +209,7 @@ public class Player : MonoBehaviour
             bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
             weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
             shootCoolDownTime = Time.time + 0.4f;
-            _audioSource.Play();
+            //_audioSource.Play();
             StartCoroutine(ReturnSpriteToIdle());
         }
     }

@@ -71,12 +71,9 @@ public class LeaderboardManager : MonoBehaviour
         {
             string name = PlayerPrefs.GetString("ScoreName" + i, "Doodler");
             int score = PlayerPrefs.GetInt("ScoreValue" + i, 0);
-
-            //if (!string.IsNullOrEmpty(name) && score > 0)
-            //{
+            
             topScores[i - 1] = new ScoreEntry(name, score);
             Debug.Log(topScores);
-            //}
         }
         return topScores;
     }

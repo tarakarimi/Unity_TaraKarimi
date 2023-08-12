@@ -63,6 +63,7 @@ public class TwoHPEnemy : MonoBehaviour
                         collision.transform.GetChild(1).gameObject.SetActive(false);
                         Destroy(collision.GetComponent<Collider>());
                         _gameManagerScript.GameOverActions();
+                        collision.gameObject.GetComponent<AudioSource>().Play();
                         Destroy(gameObject);
                     }
                 }

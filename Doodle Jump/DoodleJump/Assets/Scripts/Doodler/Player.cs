@@ -29,9 +29,11 @@ public class Player : MonoBehaviour
     private float rotationSpeed = 1f;
     private bool useGyroscope; // Set this to false for touch controls
     private Vector3 initialGyroRotation;
+    private Rigidbody2D _rigidbody2D;
     // Start is called before the first frame update
     void Start()
     {
+        _rigidbody2D = transform.GetComponent<Rigidbody2D>();
         if (Application.platform == RuntimePlatform.Android)
         {
             useGyroscope = true;
@@ -59,7 +61,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //_rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 70);
         if (_gameManagerScript.isGameOver == false)
         {
             MovementHandler();
@@ -95,12 +97,19 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) & Time.time > shootCoolDownTime)
         {
-            ShootUpward();
+            if (!transform.GetChild(3).gameObject.activeSelf)
+            {
+                ShootUpward();
+            }
+            
         }
         
         if ((Input.GetMouseButtonDown(0) || Input.touchCount > 0) && Time.time > shootCoolDownTime)
         {
-            ShootInDirection();
+            if (!transform.GetChild(3).gameObject.activeSelf)
+            {
+                ShootInDirection();
+            }
         }
     }
 
@@ -249,7 +258,10 @@ public class Player : MonoBehaviour
     
         jumpImmuneTimer = 0f;
         _immune = false;
-        playerCollider.enabled = true;
+        if (!_gameManagerScript.isGameOver)
+        {
+            playerCollider.enabled = true;
+        }
     }
     public void Immunity()
     {

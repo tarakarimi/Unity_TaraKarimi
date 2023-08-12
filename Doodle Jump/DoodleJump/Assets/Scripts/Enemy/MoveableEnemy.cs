@@ -3,16 +3,19 @@ using UnityEngine;
 
 public class MoveableEnemy : MonoBehaviour
 {
-    float moveSpeed = 1.1f; // Speed of movement
-    private int direction = 1; // Initial direction
+    float moveSpeed = 1.1f;
+    private int direction = 1;
     private GameManagerScript _gameManagerScript;
-    float leftBoundary = -1f; // Left movement boundary
-    float rightBoundary = 1f; // Right movement boundary
-
+    float leftBoundary = -1f;
+    float rightBoundary = 1f;
+    [SerializeField] private Collider2D platformChildCollider;
+    public LayerMask playerLayer;
+    private AudioSource _audioSource;
 
     private void Start()
     {
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -33,34 +36,33 @@ public class MoveableEnemy : MonoBehaviour
             // Destroy the enemy when hit by a bullet
             Destroy(gameObject);
         }
-        
-        if (collision.gameObject.CompareTag("Player"))
+
+        if (platformChildCollider != null && !platformChildCollider.IsTouchingLayers(playerLayer))
         {
-            if (collision.gameObject.GetComponent<Player>()._immune == false)
+            if (collision.gameObject.CompareTag("Player"))
             {
-                collision.transform.GetChild(1).gameObject.SetActive(false);
-                Destroy(collision.collider);
-                _gameManagerScript.GameOverActions();
-                Destroy(gameObject);
+                if (collision.gameObject.GetComponent<Player>()._immune == false)
+                {
+                    collision.transform.GetChild(1).gameObject.SetActive(false);
+                    Destroy(collision.collider);
+                    _gameManagerScript.GameOverActions();
+                    Destroy(gameObject);
+                }
             }
+        } else if (platformChildCollider != null && platformChildCollider.IsTouchingLayers(playerLayer))
+        {
+            Destroy(gameObject);
         }
+        
     }
 
     void Movement()
     {
-        // Calculate the new X position based on the current direction and movement speed
         float newX = transform.position.x + moveSpeed * direction * Time.deltaTime;
-
-        // Clamp the new X position within the left and right boundaries
         float clampedX = Mathf.Clamp(newX, leftBoundary, rightBoundary);
-
-        // Update the enemy's position
         transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
-
-        // Check if the enemy has reached the left or right boundary
         if (transform.position.x >= rightBoundary || transform.position.x <= leftBoundary)
         {
-            // Change direction
             direction *= -1;
         }
     }

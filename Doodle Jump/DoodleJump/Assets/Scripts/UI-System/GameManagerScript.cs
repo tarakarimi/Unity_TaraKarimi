@@ -36,9 +36,12 @@ public class GameManagerScript : MonoBehaviour
         // Update the _score if it has changed.
         if (newScore > _score) 
         {
-            _score = newScore;
-            _lvlGen.SetScore(_score);
-            UpdateScoreText();
+            if (!isGameOver)
+            {
+                _score = newScore;
+                _lvlGen.SetScore(_score);
+                UpdateScoreText();
+            }
         }
     }
 

@@ -2374,6 +2374,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1827984047}
   - component: {fileID: 1827984046}
+  - component: {fileID: 1827984050}
   - component: {fileID: 1827984048}
   - component: {fileID: 1827984049}
   m_Layer: 0
@@ -2537,6 +2538,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1827984050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827984045}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f8236ee809a6234fb7549f99e559cdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrthoSize: 3
 --- !u!1 &2028784012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2773,9 +2787,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1698182094, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
-      propertyPath: m_PlayOnAwake
+    - target: {fileID: 1874155488, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874155491, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: useUnscaledTime
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874155491, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874155491, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: EmissionModule.rateOverDistance.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2882544937368064800, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4572413701196230516, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
       propertyPath: m_RootOrder
@@ -2824,14 +2854,6 @@ PrefabInstance:
     - target: {fileID: 4572413701196230521, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
       propertyPath: m_Name
       value: Doodler
-      objectReference: {fileID: 0}
-    - target: {fileID: 7111483123384559487, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7653463704205998534, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}

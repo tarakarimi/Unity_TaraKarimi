@@ -13,6 +13,7 @@ public class MovablePlatform : MonoBehaviour
     {
         goRight = (Random.value > 0.5f); //0: left   1: right
         _audioSource = GetComponent<AudioSource>();
+        boundLimit = GameObject.Find("GameManager").GetComponent<LevelGenerator>().levelWidth;
     }
 
     private void Update()

@@ -43,7 +43,7 @@ public class GameManagerScript : MonoBehaviour
                 _lvlGen.SetScore(_score);
                 UpdateScoreText();
             }
-            if (_score % 500 == 0)
+            if (_score % 1000 == 0)
             {
                 rainParticleSystem.SetActive(true);
                 // Start a coroutine to disable the particle system after a delay

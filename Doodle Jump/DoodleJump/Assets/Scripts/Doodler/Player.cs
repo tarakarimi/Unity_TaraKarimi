@@ -35,6 +35,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CalculateHorizontalBound();
         _rigidbody2D = transform.GetComponent<Rigidbody2D>();
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -294,5 +295,11 @@ public class Player : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
         //jumpImmuneDuration = 1f;
     }
-
+    
+    private void CalculateHorizontalBound() 
+    {
+        float screenHeight = 2f * Camera.main.orthographicSize;
+        float screenWidth = screenHeight * Camera.main.aspect;
+        horizontalBound = screenWidth / 2f;
+    }
 }

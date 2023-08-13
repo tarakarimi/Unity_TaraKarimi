@@ -15,12 +15,14 @@ public class LevelGenerator : MonoBehaviour
     private GameObject prefabToSpawn,tempPlat;
     private float nextYPosition ;
     private int _score;
-    private float initialMaxY = 1, maxMaxY = 2.9f, currentMaxY = 1, minY = 0.4f, levelWidth = 2.6f;
+    private float initialMaxY = 1, maxMaxY = 2.9f, currentMaxY = 1, minY = 0.4f;
+    public float levelWidth = 2.6f;
     private float allFeatureScore = 3000;
     private bool spawnSpring, spawnJetpack, spawnHelicopter;
 
     void Start()
     {
+        levelWidth = CalculateLevelWidth();
         spawnPosition = firstPlat.transform.position;
         tempPlat = firstPlat;
         SpawnPlatforms();
@@ -174,5 +176,14 @@ public class LevelGenerator : MonoBehaviour
                 
             }
         }*/
+    }
+    
+    private float CalculateLevelWidth()
+    {
+        float screenHeight = 2f * Camera.main.orthographicSize;
+        float screenWidth = screenHeight * Camera.main.aspect;
+        float levelWidth = screenWidth / 2f;
+        levelWidth -= 0.5f;
+        return levelWidth;
     }
 }

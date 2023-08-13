@@ -11,6 +11,7 @@ public class MoveableEnemy : MonoBehaviour
     [SerializeField] private Collider2D platformChildCollider;
     public LayerMask playerLayer;
     private AudioSource _audioSource;
+    [SerializeField] private AudioClip _audioClip;
 
     private void Start()
     {
@@ -53,6 +54,9 @@ public class MoveableEnemy : MonoBehaviour
             }
         } else if (platformChildCollider != null && platformChildCollider.IsTouchingLayers(playerLayer))
         {
+            Debug.Log("getting destroyed");
+            collision.gameObject.GetComponent<AudioSource>().Play();
+            //AudioSource.PlayClipAtPoint(_audioClip, transform.position, 2);
             Destroy(gameObject);
         }
         

@@ -106,6 +106,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  _audioClip: {fileID: 8300000, guid: 51d840f71cba3b3479e5ce0f039bcdfb, type: 3}
 --- !u!61 &362951581096217686
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0060499907, y: 0.042105317}
+  m_Offset: {x: -0.0060499907, y: 0.007778764}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -130,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4112387, y: 0.5287745}
+  m_Size: {x: 1.4112387, y: 0.4601214}
   m_EdgeRadius: 0
 --- !u!82 &-344053303470441744
 AudioSource:
@@ -268,7 +269,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!1001 &493824886
 PrefabInstance:
@@ -291,7 +292,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5753821789741603858, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.37
+      value: 0.358
       objectReference: {fileID: 0}
     - target: {fileID: 5753821789741603858, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -333,13 +334,21 @@ PrefabInstance:
       propertyPath: _audioSource
       value: 
       objectReference: {fileID: 7601823330338532057}
+    - target: {fileID: 5753821789741603884, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 5753821789741603884, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
+      propertyPath: m_EdgeRadius
+      value: 0.09
+      objectReference: {fileID: 0}
     - target: {fileID: 5753821789741603885, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
       propertyPath: m_Color.a
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5753821789741603885, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
       propertyPath: m_SortingOrder
-      value: 2
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5753821789741603885, guid: 146a9329fc19c734d952c299142a99b9, type: 3}
       propertyPath: m_MaskInteraction

@@ -12,9 +12,6 @@ public class TwoHPEnemy : MonoBehaviour
     private int direction = 2;
     float leftBoundary = -0.2f;
     float rightBoundary = 0.2f;
-    [SerializeField] private Collider2D platformChildCollider;
-    public LayerMask playerLayer;
-
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -52,12 +49,8 @@ public class TwoHPEnemy : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (platformChildCollider != null)
+        if (collision.gameObject.CompareTag("Player"))
         {
-            if (!platformChildCollider.IsTouchingLayers(playerLayer))
-            {
-                if (collision.gameObject.CompareTag("Player"))
-                {
                     if (collision.gameObject.GetComponent<Player>()._immune == false)
                     {
                         collision.transform.GetChild(1).gameObject.SetActive(false);
@@ -67,13 +60,10 @@ public class TwoHPEnemy : MonoBehaviour
                         collision.gameObject.GetComponent<AudioSource>().Play();
                         Destroy(gameObject);
                     }
-                }
-            } else if (platformChildCollider.IsTouchingLayers(playerLayer))
-            {
-                Destroy(gameObject);
-            }
-            
         }
+            
+            
+        
     }
     void Movement()
     {

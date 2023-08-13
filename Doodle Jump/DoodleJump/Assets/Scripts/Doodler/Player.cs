@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
 
     private float gyroSpeed = 1.38f;
+    private bool isShootingDirectional;
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +60,8 @@ public class Player : MonoBehaviour
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
         _audioSource = GetComponent<AudioSource>();
         playerCollider = GetComponent<BoxCollider2D>();
+        
+        isShootingDirectional = PlayerPrefs.GetInt("ShootingMode", 1) == 1;
     }
 
     // Update is called once per frame
@@ -111,7 +114,21 @@ public class Player : MonoBehaviour
         {
             if (!transform.GetChild(3).gameObject.activeSelf)
             {
-                ShootInDirection();
+                if (isShootingDirectional)
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        ShootInDirection();
+                    }
+                }
+                else
+                {
+                    if (Input.GetMouseButtonDown(0))
+                    {
+                        ShootUpward();
+                    }
+                }
+
             }
         }
     }

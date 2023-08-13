@@ -22,6 +22,8 @@ public class GameManagerScript : MonoBehaviour
         _Player = GameObject.Find("Doodler").GetComponent<Player>();
         _lvlGen = transform.GetComponent<LevelGenerator>();
         UpdateScoreText();
+        int soundMode = PlayerPrefs.GetInt("SoundMode", 1);
+        SetSoundMode(soundMode == 1);
     }
 
     void Update()
@@ -114,6 +116,16 @@ public class GameManagerScript : MonoBehaviour
         gameOverPanel.transform.GetComponent<SaveScoreHandler>().SaveRecord();
         SceneManager.LoadScene("MainMenu");
     }
+
+
+    public void SetSoundMode(bool isSoundOn)
+    {
+            // Mute or unmute all sounds in the game
+            AudioListener.volume = isSoundOn ? 1 : 0;
+    }
+        
+    
+
 }
 
 

@@ -19,6 +19,7 @@ public class LevelGenerator : MonoBehaviour
     public float levelWidth = 2.6f;
     private float allFeatureScore = 10000;
     private bool spawnSpring, spawnJetpack, spawnHelicopter;
+    
 
     void Start()
     {
@@ -38,6 +39,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void SpawnPlatforms()
     {
+        bool hasSpawnedJetpack  = false, hasSpawnedHelicopter = false, hasSpawnedEnemy = false;
         for (int i = 0; i < numberOfPlatforms; i++)
         {
             spawnSpring = spawnJetpack = spawnHelicopter = false;
@@ -51,13 +53,16 @@ public class LevelGenerator : MonoBehaviour
                 {
                     spawnSpring = true;
                 }
-                else if (Random.Range(0f,1f)<0.02 && _score > 400)
+                else if (Random.Range(0f,1f)<0.02 && _score > 400 && !hasSpawnedHelicopter)
                 {
-                    spawnHelicopter = true;
+                
+                        spawnHelicopter = true;
+                        hasSpawnedHelicopter = true;
                 }
-                else if (Random.Range(0f,1f)<0.02 && _score > 500)
+                else if (Random.Range(0f,1f)<0.02 && _score > 500 && !hasSpawnedJetpack)
                 {
                     spawnJetpack = true;
+                    hasSpawnedJetpack = true;
                 }
 
             }
@@ -75,11 +80,12 @@ public class LevelGenerator : MonoBehaviour
                     spawnSpring = true;
                 }
             }
-            else if( Random.Range(0f, 1f) < 0.2f && _score > 1000)
+            else if( Random.Range(0f, 1f) < 0.2f && _score > 1000 && !hasSpawnedEnemy)
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Count);
                 prefabToSpawn = enemyPrefabs[randomIndex];
                 lastInstanceWasNotJumpable = true;
+                hasSpawnedEnemy = true;
             }
             else
             {

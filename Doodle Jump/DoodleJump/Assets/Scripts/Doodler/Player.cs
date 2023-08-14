@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
     private BoxCollider2D playerCollider;
     private AudioSource _audioSource;
     private float jumpImmuneTimer;
-    private float rotationSpeed = 1f;
     private bool useGyroscope;
     private Vector3 initialGyroRotation;
     private Rigidbody2D _rigidbody2D;

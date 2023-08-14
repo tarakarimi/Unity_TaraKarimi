@@ -41,7 +41,7 @@ public class Platform : MonoBehaviour
             Rigidbody2D rb = col.transform.GetComponent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                rb.velocity = new Vector2(0, jumpForce);
                 if (_audioSource != null)
                 {
                     _audioSource.Play();   

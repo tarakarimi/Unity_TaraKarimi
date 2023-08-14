@@ -175,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -678,7 +678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1694,7 +1694,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1930,7 +1930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.474717, b: 0.23018867, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2893,6 +2893,14 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 368638106}
+    - target: {fileID: 3847225482149722301, guid: 02bda712778a0de449b9194f65381154, type: 3}
+      propertyPath: m_NormalizedViewPortRect.width
+      value: 640
+      objectReference: {fileID: 0}
+    - target: {fileID: 3847225482149722301, guid: 02bda712778a0de449b9194f65381154, type: 3}
+      propertyPath: m_NormalizedViewPortRect.height
+      value: 1024
+      objectReference: {fileID: 0}
     - target: {fileID: 3847225482149722302, guid: 02bda712778a0de449b9194f65381154, type: 3}
       propertyPath: m_Name
       value: Main Camera

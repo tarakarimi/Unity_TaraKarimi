@@ -27,13 +27,11 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private float jumpImmuneTimer;
     private float rotationSpeed = 1f;
-    private bool useGyroscope; // Set this to false for touch controls
+    private bool useGyroscope;
     private Vector3 initialGyroRotation;
     private Rigidbody2D _rigidbody2D;
-
     private float gyroSpeed = 1.38f;
     private bool isShootingDirectional;
-    // Start is called before the first frame update
     void Start()
     {
         CalculateHorizontalBound();
@@ -63,11 +61,9 @@ public class Player : MonoBehaviour
         
         isShootingDirectional = PlayerPrefs.GetInt("ShootingMode", 1) == 1;
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        //_rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, 70);
         if (_gameManagerScript.isGameOver == false)
         {
             MovementHandler();
@@ -145,7 +141,6 @@ public class Player : MonoBehaviour
             spriteRenderer.sprite = rightSprite;
              if (horizontalMovement < 0)
              {
-                 //spriteRenderer.sprite = leftSprite;
                  Vector3 newScale = transform.localScale;
                  newScale.x = -1f;
                  transform.localScale = newScale;
@@ -273,6 +268,11 @@ public class Player : MonoBehaviour
         while (jumpImmuneTimer < duration)
         {
             jumpImmuneTimer += Time.deltaTime;
+            /*if (_rigidbody2D.velocity.y<=0)
+            {
+                Debug.Log("timer: "+jumpImmuneTimer);
+            }*/
+            
             yield return null;
         }
     
@@ -298,20 +298,21 @@ public class Player : MonoBehaviour
     {
         float startRotation = transform.rotation.eulerAngles.z;
         float targetRotation = transform.eulerAngles.z + 360f;
+        float duration = 0.8f;
         float elapsedTime = 0f;
-    
-        while (elapsedTime < 1f)
+
+        while (elapsedTime < duration)
         {
-            float currentRotation = Mathf.Lerp(startRotation, targetRotation, elapsedTime);
+            float currentRotation = Mathf.Lerp(startRotation, targetRotation, elapsedTime / duration);
             transform.rotation = Quaternion.Euler(0f, 0f, currentRotation);
-        
-            elapsedTime += Time.deltaTime * rotationSpeed;
+
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         transform.rotation = Quaternion.Euler(0f, 0f, targetRotation);
-        //jumpImmuneDuration = 1f;
     }
+
     
     private void CalculateHorizontalBound() 
     {

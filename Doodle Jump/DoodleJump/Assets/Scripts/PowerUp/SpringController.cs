@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpringController : MonoBehaviour
@@ -10,12 +12,15 @@ public class SpringController : MonoBehaviour
     private bool hasSprung;
     private Sprite _spriteIdle;
     private AudioSource _audioSource;
+
+    private AudioClip _audioClip;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         _spriteIdle = spriteRenderer.sprite;
         _audioSource = GetComponent<AudioSource>();
+        _audioClip = _audioSource.clip;
     }
 
     // Update is called once per frame
@@ -27,33 +32,39 @@ public class SpringController : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    
-    private void OnCollisionEnter2D(Collision2D collision)
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (!hasSprung && collision.gameObject.CompareTag("Player") && collision.relativeVelocity.y <= 0f)
+
+        if (!hasSprung && other.gameObject.CompareTag("Player"))
         {
-            Player _player = collision.gameObject.GetComponent<Player>();
-            
-            hasSprung = true;
-            if (spriteRenderer != null)
+            Player _player = other.gameObject.GetComponent<Player>();
+            Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
+            if (rb != null && rb.velocity.y <= 0f)
             {
-                spriteRenderer.sprite = _spriteSprung;
-            }
-            
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-            if (rb != null)
-            {
-                if (transform.CompareTag("Eye"))
+                hasSprung = true;
+                if (spriteRenderer != null)
                 {
-                    _player.Immunity();
-                    _player.TakeAFullTurn();
-                    _player.ResetImmunity(1.7f);
+                    spriteRenderer.sprite = _spriteSprung;
                 }
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                _audioSource.Play();   
+
+                if (rb != null)
+                {
+                    rb.velocity = new Vector2(0, jumpForce);
+                    AudioSource.PlayClipAtPoint(_audioClip, Camera.main.transform.position);
+                    
+                    if (transform.CompareTag("Eye"))
+                    {
+                        _player.Immunity();
+                        _player.TakeAFullTurn();
+                        _player.ResetImmunity(1.7f);
+                    }
+
+                }
+
+                StartCoroutine(Reset());
             }
 
-            StartCoroutine(Reset());
         }
     }
 

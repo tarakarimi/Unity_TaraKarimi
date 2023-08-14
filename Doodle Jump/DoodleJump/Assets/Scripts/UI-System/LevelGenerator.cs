@@ -122,7 +122,7 @@ public class LevelGenerator : MonoBehaviour
                 {
                     int randomIndex = Random.Range(0, 2);
                     GameObject jumpingPrefab = (randomIndex == 0) ? SpringPrefab : eyeTrampolinePrefab;
-                    GameObject tempSpring = Instantiate(jumpingPrefab, spawnPosition + new Vector3(0.25f,0.25f,0), Quaternion.identity);
+                    GameObject tempSpring = Instantiate(jumpingPrefab, spawnPosition + new Vector3(0.2f,0.12f,0), Quaternion.identity);
                     tempSpring.transform.parent = tempPlat.transform;
                 } 
                 else if (spawnJetpack)

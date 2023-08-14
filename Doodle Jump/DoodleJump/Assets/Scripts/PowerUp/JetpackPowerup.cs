@@ -26,13 +26,13 @@ public class JetpackPowerup : MonoBehaviour
         {
             childNum = 3;
             jetpackForce = 30f;
-            jetpackDuration = 2f;
+            jetpackDuration = 1.59f;
         }
         if (transform.tag == "JetpackPowerup")
         {
             childNum = 2;
             jetpackForce = 80f;
-            jetpackDuration = 5.5f;
+            jetpackDuration = 5.43f;
         }
     }
 
@@ -59,7 +59,7 @@ public class JetpackPowerup : MonoBehaviour
             jetpackVisual = other.transform.GetChild(childNum).gameObject;
             jetpackVisual.SetActive(true);
             rb = other.GetComponent<Rigidbody2D>();
-            rb.velocity = new Vector2(rb.velocity.x, jetpackForce);
+            rb.velocity = new Vector2(0, jetpackForce);
             playerController = other.GetComponent<Player>();
             playerController.Immunity();
             if (spriteRenderer != null)

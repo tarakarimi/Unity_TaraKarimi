@@ -101,8 +101,8 @@ EdgeCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 1
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.09}
-  m_EdgeRadius: 0.1
+  m_Offset: {x: 0, y: -0.01}
+  m_EdgeRadius: 0.02
   m_Points:
   - {x: -0.41817024, y: 0.12621212}
   - {x: 0.4540108, y: 0.12433907}

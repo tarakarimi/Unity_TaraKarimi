@@ -4,8 +4,8 @@ using UnityEngine.UI;
 
 public class LeaderboardManager : MonoBehaviour
 {
-    public GameObject listItemPrefab; // Assign your prefab here
-    public int numberOfItems = 10;    // Number of items you want in the list
+    public GameObject listItemPrefab;
+    public int numberOfItems = 10;
     [SerializeField] private GameObject recordsParent;
     [SerializeField] private Sprite _imageType1;
     [SerializeField] private Sprite _imageType2;

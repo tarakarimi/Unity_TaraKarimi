@@ -61,7 +61,7 @@ public class TwoHPEnemy : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (platformChildCollider != null && !platformChildCollider.IsTouchingLayers(playerLayer))
+        //if (platformChildCollider != null && !platformChildCollider.IsTouchingLayers(playerLayer))
         {
             if (collision.gameObject.CompareTag("Player"))
             {

@@ -12,12 +12,48 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 263018436ed132347aa41ebcf9219257, type: 3}
     - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_Offset.y
-      value: -0.02
+      value: 0.12
       objectReference: {fileID: 0}
     - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_EdgeRadius
-      value: 0.05
+      value: 0.09
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_UsedByEffector
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[0].x
+      value: -0.30033284
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[0].y
+      value: -0.033507906
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[1].x
+      value: -0.0047642384
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[1].y
+      value: 0.10841767
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[2].x
+      value: 0.31668115
+      objectReference: {fileID: 0}
+    - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Points.Array.data[2].y
+      value: -0.027867049
       objectReference: {fileID: 0}
     - target: {fileID: 489593249113060381, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: jumpForce
@@ -86,6 +122,10 @@ PrefabInstance:
     - target: {fileID: 6738167596342574354, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_TagString
       value: Eye
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904134637010902219, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7904134637010902219, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_UseColliderMask

@@ -33,10 +33,8 @@ public class GameManagerScript : MonoBehaviour
 
     private void UpdateScore()
     {
-        // Calculate the _score based on the Doodler's height.
         int newScore = Mathf.FloorToInt(_Player.transform.position.y * 100)/10;
-
-        // Update the _score if it has changed.
+        
         if (newScore > _score) 
         {
             if (!isGameOver)
@@ -48,7 +46,6 @@ public class GameManagerScript : MonoBehaviour
             if (_score % 1000 == 0)
             {
                 rainParticleSystem.SetActive(true);
-                // Start a coroutine to disable the particle system after a delay
                 StartCoroutine(DisableParticleSystemAfterDelay());
             }
         }
@@ -120,8 +117,7 @@ public class GameManagerScript : MonoBehaviour
 
     public void SetSoundMode(bool isSoundOn)
     {
-            // Mute or unmute all sounds in the game
-            AudioListener.volume = isSoundOn ? 1 : 0;
+        AudioListener.volume = isSoundOn ? 1 : 0;
     }
         
     

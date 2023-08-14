@@ -107,7 +107,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _audioClip: {fileID: 8300000, guid: 51d840f71cba3b3479e5ce0f039bcdfb, type: 3}
-  _doodlerAudioSource: {fileID: 1718846367, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
 --- !u!61 &362951581096217686
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -119,7 +118,7 @@ BoxCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0060499907, y: 0.007778764}
   m_SpriteTilingProperty:

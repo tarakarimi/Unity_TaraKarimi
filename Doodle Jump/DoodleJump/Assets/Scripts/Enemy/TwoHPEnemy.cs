@@ -12,6 +12,9 @@ public class TwoHPEnemy : MonoBehaviour
     private int direction = 2;
     float leftBoundary = -0.2f;
     float rightBoundary = 0.2f;
+    [SerializeField] private Collider2D platformChildCollider;
+    public LayerMask playerLayer;
+    [SerializeField] private AudioClip _audioClip;
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -24,6 +27,15 @@ public class TwoHPEnemy : MonoBehaviour
         float cameraBottomY = Camera.main.transform.position.y - Camera.main.orthographicSize;
         if (transform.position.y < cameraBottomY)
         {
+            Destroy(this.gameObject);
+        }
+        
+        if (platformChildCollider.IsTouchingLayers(playerLayer))
+        {
+            Debug.Log("jumped on");
+            //_doodlerAudioSource.enabled = true;
+            //_doodlerAudioSource.gameObject.GetComponent<AudioSource>().Play();
+            AudioSource.PlayClipAtPoint(_audioClip, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
     }
@@ -49,21 +61,24 @@ public class TwoHPEnemy : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.CompareTag("Player"))
+        if (platformChildCollider != null && !platformChildCollider.IsTouchingLayers(playerLayer))
         {
-                    if (collision.gameObject.GetComponent<Player>()._immune == false)
-                    {
-                        collision.transform.GetChild(1).gameObject.SetActive(false);
-                        Destroy(collision.GetComponent<Collider>());
-                        _gameManagerScript.GameOverActions();
-                        collision.gameObject.transform.GetChild(4).gameObject.SetActive(true);
-                        collision.gameObject.GetComponent<AudioSource>().Play();
-                        Destroy(gameObject);
-                    }
+            if (collision.gameObject.CompareTag("Player"))
+            {
+                if (collision.gameObject.GetComponent<Player>()._immune == false)
+                {
+                    collision.transform.GetChild(1).gameObject.SetActive(false);
+                    Destroy(collision.GetComponent<Collider>());
+                    _gameManagerScript.GameOverActions();
+                    collision.gameObject.transform.GetChild(4).gameObject.SetActive(true);
+                    collision.gameObject.GetComponent<AudioSource>().Play();
+                    Destroy(gameObject);
+                }
+            }
         }
-            
-            
-        
+
+
+
     }
     void Movement()
     {

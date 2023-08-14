@@ -66,7 +66,7 @@ public class LevelGenerator : MonoBehaviour
                 prefabToSpawn = breakablePlatformPrefab;
                 lastInstanceWasNotJumpable = true;
             }
-            else if ( Random.Range(0f, 1f) >  0.5f && _score > 300)
+            else if ( Random.Range(0f, 1f) > 0.5f && _score > 300)
             {
                 prefabToSpawn = moveablePlatformPrefab;
                 lastInstanceWasNotJumpable = false;

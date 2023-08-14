@@ -10,14 +10,10 @@ public class MoveableEnemy : MonoBehaviour
     float rightBoundary = 1f;
     [SerializeField] private Collider2D platformChildCollider;
     public LayerMask playerLayer;
-    private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
-    [SerializeField] private AudioSource _doodlerAudioSource;
-
     private void Start()
     {
         _gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManagerScript>();
-        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()

@@ -5,15 +5,16 @@ using UnityEngine;
 public class SpringController : MonoBehaviour
 {
     [SerializeField] private Sprite _spriteSprung;
-    [SerializeField] private float jumpForce = 16f; // Adjust the force strength
+    [SerializeField] private float jumpForce = 15f; // Adjust the force strength
     private SpriteRenderer spriteRenderer;
     private bool hasSprung;
-
+    private Sprite _spriteIdle;
     private AudioSource _audioSource;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteIdle = spriteRenderer.sprite;
         _audioSource = GetComponent<AudioSource>();
     }
 
@@ -51,6 +52,15 @@ public class SpringController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 _audioSource.Play();   
             }
+
+            StartCoroutine(Reset());
         }
+    }
+
+    IEnumerator Reset()
+    {
+        yield return new WaitForSeconds(0.2f);
+        hasSprung = false;
+        spriteRenderer.sprite = _spriteIdle;
     }
 }

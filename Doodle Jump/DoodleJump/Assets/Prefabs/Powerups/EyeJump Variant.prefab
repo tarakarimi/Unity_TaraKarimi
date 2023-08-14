@@ -13,11 +13,11 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 263018436ed132347aa41ebcf9219257, type: 3}
     - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_Offset.y
-      value: -0.16
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 243573540628808249, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: m_EdgeRadius
-      value: 0.2
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 489593249113060381, guid: 4191d9bbab998894dbd3e67e9248f20f, type: 3}
       propertyPath: jumpForce

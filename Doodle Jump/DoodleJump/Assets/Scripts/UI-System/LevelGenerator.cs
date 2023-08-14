@@ -15,9 +15,9 @@ public class LevelGenerator : MonoBehaviour
     private GameObject prefabToSpawn,tempPlat;
     private float nextYPosition ;
     private int _score;
-    private float initialMaxY = 1, maxMaxY = 2.9f, currentMaxY = 1, minY = 0.4f;
+    private float initialMaxY = 1, maxMaxY = 2.9f, currentMaxY = 0.6f, minY = 0.4f;
     public float levelWidth = 2.6f;
-    private float allFeatureScore = 3000;
+    private float allFeatureScore = 10000;
     private bool spawnSpring, spawnJetpack, spawnHelicopter;
 
     void Start()
@@ -40,35 +40,33 @@ public class LevelGenerator : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlatforms; i++)
         {
-            spawnSpring = false;
-            spawnJetpack = false;
-            spawnHelicopter = false;
-            
+            spawnSpring = spawnJetpack = spawnHelicopter = false;
+
             if (lastInstanceWasNotJumpable || Random.Range(0f, 1f) < 0.4f)
             {
                 prefabToSpawn = platformPrefab;
                 lastInstanceWasNotJumpable = false;
                 
-                if (Random.Range(0f,1f) < 0.12f)
+                if (Random.Range(0f,1f) < 0.25f)
                 {
                     spawnSpring = true;
                 }
-                else if (Random.Range(0f,1f)<0.08)
+                else if (Random.Range(0f,1f)<0.02 && _score > 400)
                 {
                     spawnHelicopter = true;
                 }
-                else if (Random.Range(0f,1f)<0.05)
+                else if (Random.Range(0f,1f)<0.02 && _score > 500)
                 {
                     spawnJetpack = true;
                 }
 
             }
-            else if (Random.Range(0f, 1f) < 0.5f)
+            else if (Random.Range(0f, 1f) < 0.5f && _score > 100)
             {
                 prefabToSpawn = breakablePlatformPrefab;
                 lastInstanceWasNotJumpable = true;
             }
-            else if ( Random.Range(0f, 1f) < 0.7f && _score > 100)
+            else if ( Random.Range(0f, 1f) >  0.5f && _score > 300)
             {
                 prefabToSpawn = moveablePlatformPrefab;
                 lastInstanceWasNotJumpable = false;
@@ -77,7 +75,7 @@ public class LevelGenerator : MonoBehaviour
                     spawnSpring = true;
                 }
             }
-            else if( _score > 500)
+            else if( Random.Range(0f, 1f) < 0.2f && _score > 1000)
             {
                 int randomIndex = Random.Range(0, enemyPrefabs.Count);
                 prefabToSpawn = enemyPrefabs[randomIndex];

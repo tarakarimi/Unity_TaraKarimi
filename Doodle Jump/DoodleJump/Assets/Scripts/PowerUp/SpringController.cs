@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpringController : MonoBehaviour
 {
     [SerializeField] private Sprite _spriteSprung;
-    [SerializeField] private float jumpForce = 15f; // Adjust the force strength
+    [SerializeField] private float jumpForce = 16f; // Adjust the force strength
     private SpriteRenderer spriteRenderer;
     private bool hasSprung;
 
@@ -34,7 +34,11 @@ public class SpringController : MonoBehaviour
             Player _player = collision.gameObject.GetComponent<Player>();
             
             hasSprung = true;
-            spriteRenderer.sprite = _spriteSprung;
+            if (spriteRenderer != null)
+            {
+                spriteRenderer.sprite = _spriteSprung;
+            }
+            
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
             if (rb != null)
             {

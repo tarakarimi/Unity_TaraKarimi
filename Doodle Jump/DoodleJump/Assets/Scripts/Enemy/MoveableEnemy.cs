@@ -12,6 +12,7 @@ public class MoveableEnemy : MonoBehaviour
     public LayerMask playerLayer;
     private AudioSource _audioSource;
     [SerializeField] private AudioClip _audioClip;
+    [SerializeField] private AudioSource _doodlerAudioSource;
 
     private void Start()
     {
@@ -28,9 +29,17 @@ public class MoveableEnemy : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        
+        if (platformChildCollider.IsTouchingLayers(playerLayer))
+        {
+            //_doodlerAudioSource.enabled = true;
+            //_doodlerAudioSource.gameObject.GetComponent<AudioSource>().Play();
+            AudioSource.PlayClipAtPoint(_audioClip, Camera.main.transform.position);
+            Destroy(this.gameObject);
+        }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
@@ -42,23 +51,19 @@ public class MoveableEnemy : MonoBehaviour
         {
             if (collision.gameObject.CompareTag("Player"))
             {
+                Debug.Log("collide with player");
                 if (collision.gameObject.GetComponent<Player>()._immune == false)
                 {
                     collision.transform.GetChild(1).gameObject.SetActive(false);
-                    Destroy(collision.collider);
+                    Destroy(collision);
                     _gameManagerScript.GameOverActions();
                     collision.gameObject.transform.GetChild(4).gameObject.SetActive(true);
                     collision.gameObject.GetComponent<AudioSource>().Play();
-                    Destroy(gameObject);
+                    Destroy(this.gameObject);
                 }
             }
-        } else if (platformChildCollider != null && platformChildCollider.IsTouchingLayers(playerLayer))
-        {
-            Debug.Log("getting destroyed");
-            collision.gameObject.GetComponent<AudioSource>().Play();
-            //AudioSource.PlayClipAtPoint(_audioClip, transform.position, 2);
-            Destroy(gameObject);
         }
+        
         
     }
 

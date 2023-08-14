@@ -107,6 +107,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   _audioClip: {fileID: 8300000, guid: 51d840f71cba3b3479e5ce0f039bcdfb, type: 3}
+  _doodlerAudioSource: {fileID: 1718846367, guid: 9121e96cd12474b408f11f0d5413f92f, type: 3}
 --- !u!61 &362951581096217686
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -270,7 +271,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!1001 &493824886
 PrefabInstance:
   m_ObjectHideFlags: 0

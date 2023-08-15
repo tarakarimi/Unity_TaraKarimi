@@ -20,12 +20,15 @@ public class LeaderboardManager : MonoBehaviour
     {
         ScoreEntry[] topScores = LoadTopScores();
 
+        // Sort the topScores array in descending order based on score
+        System.Array.Sort(topScores, (x, y) => y.score.CompareTo(x.score));
+
         for (int i = 0; i < numberOfItems; i++)
         {
             GameObject listItem = Instantiate(listItemPrefab, recordsParent.transform);
             listItem.transform.position -= new Vector3(0, i * 70, 0);
             listItem.transform.parent = recordsParent.transform;
-        
+    
             // Find the child Text components for ranking, name, and score
             Text rankText = listItem.transform.Find("RankText").GetComponent<Text>();
             Text nameText = listItem.transform.Find("NameText").GetComponent<Text>();
@@ -35,7 +38,7 @@ public class LeaderboardManager : MonoBehaviour
             int ranking = i + 1;
 
             // Check if there is data for this index
-            if (i < topScores.Length && topScores[i] != null)
+            if (i < topScores.Length && topScores[i] != null && (topScores[i].score > 0))
             {
                 rankText.text = ranking.ToString() + ". ";
                 nameText.text = topScores[i].name;
@@ -54,6 +57,7 @@ public class LeaderboardManager : MonoBehaviour
             }
         }
     }
+
 
 
 

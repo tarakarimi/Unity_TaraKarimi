@@ -20,24 +20,51 @@ public class SaveScoreHandler : MonoBehaviour
 
     public void SaveRecord()
     {
-        //load in a list
+        // Load the existing top scores
         ScoreEntry[] topScores = LoadTopScores();
-        
-        //compare
-        //bool isHighScore = false;
+
+        // Find if the current name already exists in the top scores
+        bool foundName = false;
 
         for (int i = 0; i < topScores.Length; i++)
         {
-            if (_currentScore > topScores[i].score)
+            if (_currentName == topScores[i].name)
             {
-                //isHighScore = true;
-                topScores[i] = new ScoreEntry(_currentName, _currentScore);
-                SaveTopScores(topScores);
-                break;
+                foundName = true;
+
+                // If the current score is higher, update the score
+                if (_currentScore > topScores[i].score)
+                {
+                    topScores[i] = new ScoreEntry(_currentName, _currentScore);
+                    SaveTopScores(topScores);
+                    break;
+                }
             }
         }
-        
+
+        // If the current name was not found in top scores, and the current score is eligible,
+        // add the name and score as a new entry
+        if (!foundName && _currentScore > 0)
+        {
+            for (int i = 0; i < topScores.Length; i++)
+            {
+                if (_currentScore > topScores[i].score)
+                {
+                    // Shift down the existing entries to make room for the new entry
+                    for (int j = topScores.Length - 1; j > i; j--)
+                    {
+                        topScores[j] = topScores[j - 1];
+                    }
+
+                    // Add the new entry
+                    topScores[i] = new ScoreEntry(_currentName, _currentScore);
+                    SaveTopScores(topScores);
+                    break;
+                }
+            }
+        }
     }
+
     
 
     // Load the top scores from PlayerPrefs

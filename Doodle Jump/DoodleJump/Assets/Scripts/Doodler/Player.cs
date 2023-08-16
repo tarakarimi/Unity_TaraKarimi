@@ -219,7 +219,7 @@ public class Player : MonoBehaviour
             weapon.SetActive(true);
             GameObject bullet = Instantiate(bulletPrefab, transform.position, quaternion.identity);
             bullet.GetComponent<Bullet>().SetDirection(Vector3.up);
-            weapon.transform.rotation = Quaternion.Euler(0, 0, 90);
+            weapon.transform.rotation = Quaternion.Euler(0, 0, transform.localScale.x * 90);
             shootCoolDownTime = Time.time + 0.4f;
             //_audioSource.Play();
             StartCoroutine(ReturnSpriteToIdle());

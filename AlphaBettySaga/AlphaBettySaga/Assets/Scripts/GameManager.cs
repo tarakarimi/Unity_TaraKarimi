@@ -5,7 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject tilePrefab;
-    public int gridSize = 5;
+    [SerializeField] private Transform tileParent;
+    [SerializeField] int gridSize = 5;
     private float tileSize = 1.1f;
 
     private void Start()
@@ -24,6 +25,7 @@ public class GameManager : MonoBehaviour
             {
                 Vector3 tilePosition = new Vector3(x * tileSize, y * tileSize + 10, 0) - centerOffset;
                 GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity, transform);
+                tempTile.transform.SetParent(tileParent);
                 tempTile.transform.GetComponent<TileScript>().StartTileFall(delay_time);
                 delay_time += delay_speed;
             }

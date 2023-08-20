@@ -1,15 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileScript : MonoBehaviour
 {
     private float fallDuration = 0.5f;
     private Vector3 startPos;
+    private char letter;
+
+    private LetterGenerator _letterGenerator;
+
+    [SerializeField] private Text tileText;
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
+        _letterGenerator = new LetterGenerator();
+        letter = _letterGenerator.GetRandomLetter();
+        UpdateTileLetter(letter);
     }
 
     // Update is called once per frame
@@ -38,5 +47,10 @@ public class TileScript : MonoBehaviour
     {
         
         StartCoroutine(FallingCoroutine(delayTime));
+    }
+
+    private void UpdateTileLetter(char letter)
+    {
+        tileText.text = letter.ToString();
     }
 }

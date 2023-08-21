@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 911187028608630423}
   m_Layer: 6
   m_Name: tile_normal
-  m_TagString: Untagged
+  m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -114,6 +114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 3ecd8558ca703d047b642e9a7d21a5ef, type: 3}
+  defaultSprite: {fileID: 21300000, guid: 89f0ec79059d5d74883473cdd3822c64, type: 3}
 --- !u!61 &911187028608630423
 BoxCollider2D:
   m_ObjectHideFlags: 0

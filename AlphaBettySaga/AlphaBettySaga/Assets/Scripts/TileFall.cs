@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TileFall : MonoBehaviour
 {
-    private float fallDuration = 0.5f;
+    private float fallDuration = 0.4f;
     private Vector3 startPos;
     private char letter;
 

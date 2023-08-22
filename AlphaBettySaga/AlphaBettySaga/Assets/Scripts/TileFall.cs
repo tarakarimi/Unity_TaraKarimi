@@ -7,18 +7,10 @@ public class TileFall : MonoBehaviour
 {
     private float fallDuration = 0.4f;
     private Vector3 startPos;
-    private char letter;
-
-    private LetterGenerator _letterGenerator;
-
-    [SerializeField] private Text tileText;
     // Start is called before the first frame update
     void Start()
     {
         startPos = transform.position;
-        _letterGenerator = new LetterGenerator();
-        letter = _letterGenerator.GetRandomLetter();
-        UpdateTileLetter(letter);
     }
 
     IEnumerator FallingCoroutine(float delayTime)
@@ -41,10 +33,5 @@ public class TileFall : MonoBehaviour
     {
         
         StartCoroutine(FallingCoroutine(delayTime));
-    }
-
-    private void UpdateTileLetter(char letter)
-    {
-        tileText.text = letter.ToString();
     }
 }

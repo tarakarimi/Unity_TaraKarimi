@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3660587d5eaffc744a3177cd57d7cf3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileText: {fileID: 1566877355258176890}
 --- !u!114 &5685895377575476925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115,6 +114,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 3ecd8558ca703d047b642e9a7d21a5ef, type: 3}
   defaultSprite: {fileID: 21300000, guid: 89f0ec79059d5d74883473cdd3822c64, type: 3}
+  tileLetter: {fileID: 1566877355258176890}
 --- !u!61 &911187028608630423
 BoxCollider2D:
   m_ObjectHideFlags: 0

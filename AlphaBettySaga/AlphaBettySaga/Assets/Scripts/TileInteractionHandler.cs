@@ -10,11 +10,11 @@ public class TileInteractionHandler : MonoBehaviour
     private List<Tile> selectedTiles = new List<Tile>();
     private Tile selectedTile;
     private float distanceThreshold;
+    private List<char> tileLetters = new List<char>();
     void Start()
     {
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
-
     }
     
     void Update()
@@ -34,10 +34,11 @@ public class TileInteractionHandler : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
         if (hit.collider != null && hit.collider.CompareTag("Tile")) {
             Tile tile = hit.collider.GetComponent<Tile>();
-            if ((selectedTile == null || IsAdjacent(tile, selectedTile)))
+            if (!selectedTiles.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
                 tile.TileSelect();
                 selectedTiles.Add(tile);
+                tileLetters.Add(tile.GetLetter());
                 selectedTile = tile;
             }
         }
@@ -52,6 +53,11 @@ public class TileInteractionHandler : MonoBehaviour
         }
         selectedTiles.Clear();
         selectedTile = null;
+        
+        // Form the chain of letters
+        string chain = string.Join("", tileLetters);
+        Debug.Log("Chain: " + chain);
+        tileLetters.Clear();
     }
     
     bool IsAdjacent(Tile tile1, Tile tile2)
@@ -69,6 +75,5 @@ public class TileInteractionHandler : MonoBehaviour
         distanceThreshold = MathF.Sqrt(2 * MathF.Pow(dist, 2))+0.01f;
         return distanceThreshold;
     }
-
 
 }

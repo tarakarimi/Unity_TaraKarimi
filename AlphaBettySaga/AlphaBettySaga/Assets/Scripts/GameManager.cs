@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private Transform tileParent;
     [SerializeField] int gridSize = 5;
-    public float tileSize = 1.8f;
+    public float tileSize = 1.1f;
     private void Start()
     {
         CreateGrid();

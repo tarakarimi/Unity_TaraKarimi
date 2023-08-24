@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
@@ -6,32 +7,39 @@ public class WordDatabase : MonoBehaviour
 {
     private List<string> validWords = new List<string>();
     [SerializeField] private TextAsset textAsset; 
-    void Start()
+    
+    private void Start()
     {
-        
+        StartCoroutine(LoadWordsCoroutine());
     }
 
-    public void LoadWordsFromFile()
+    private IEnumerator LoadWordsCoroutine()
     {
-        //TextAsset textAsset = Resources.Load<TextAsset>(fileName);
         if (textAsset != null)
         {
             string[] lines = textAsset.text.Split('\n');
-            foreach (string line in lines)
+            int batchSize = 4500;
+            int currentBatch = 0;
+
+            while (currentBatch < lines.Length)
             {
-                string word = line.Trim();
-                if (!string.IsNullOrEmpty(word) && word.Length > 2)
+                for (int i = currentBatch; i < currentBatch + batchSize && i < lines.Length; i++)
                 {
-                    validWords.Add(word);
-                    Debug.Log("count: "+ validWords.Count + "time: " + Time.time);
+                    string word = lines[i].Trim();
+                    if (!string.IsNullOrEmpty(word) && word.Length > 2)
+                    {
+                        validWords.Add(word);
+                    }
                 }
+
+                currentBatch += batchSize;
+                yield return null;
             }
         }
-        else
-        {
-            Debug.LogError("no data");
-        }
+    
+        Debug.Log("Word loading complete. Total words: " + validWords.Count + "time: " + Time.time);
     }
+
 
     public bool IsWordValid(string word)
     {

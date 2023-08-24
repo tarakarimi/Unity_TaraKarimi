@@ -36,6 +36,6 @@ public class GameManager : MonoBehaviour
     IEnumerator ProcessWords()
     {
         yield return new WaitForSeconds(10);
-        GetComponent<WordDatabase>().LoadWordsFromFile();
+        //GetComponent<WordDatabase>().LoadWordsFromFile();
     }
 }

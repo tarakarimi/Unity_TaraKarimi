@@ -12,11 +12,13 @@ public class TileInteractionHandler : MonoBehaviour
     private float distanceThreshold;
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
+    public List<GameObject> ListOfTiles = new List<GameObject>();
     void Start()
     {
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
         db = GetComponent<WordDatabase>();
+        ListOfTiles.AddRange(GameObject.FindGameObjectsWithTag("Tile"));
     }
     
     void Update()
@@ -51,23 +53,20 @@ public class TileInteractionHandler : MonoBehaviour
     {
         // Form the chain of letters
         string chain = string.Join("", tileLetters);
-        Debug.Log("Chain: " + chain);
         if (db.IsWordValid(chain))
         {
-            //get points & stuff
-            Debug.Log("Valid");
+            //Add get points Logic
+            Debug.Log("Word: " + chain+ "is Valid");
+            
             foreach (var tile in selectedTilesList)
             {
+                ShiftTiles(tile.row, tile.col);
+                ListOfTiles.Remove(tile.gameObject);
                 Destroy(tile.gameObject);
             }
-            selectedTilesList.Clear();
-            selectedTile = null;
         }
-        else
-        {
-            Debug.Log("Not valid");
-            DeselectAllTiles();
-        }
+
+        DeselectAllTiles();
     }
     void DeselectAllTiles()
     {
@@ -77,10 +76,6 @@ public class TileInteractionHandler : MonoBehaviour
         }
         selectedTilesList.Clear();
         selectedTile = null;
-        
-        // Form the chain of letters
-        string chain = string.Join("", tileLetters);
-        Debug.Log("Chain: " + chain);
         tileLetters.Clear();
     }
     
@@ -98,6 +93,20 @@ public class TileInteractionHandler : MonoBehaviour
         float dist = _gameManager.tileSize;
         distanceThreshold = MathF.Sqrt(2 * MathF.Pow(dist, 2))+0.01f;
         return distanceThreshold;
+    }
+    
+    public void ShiftTiles(int row, int col)
+    {
+        foreach (GameObject tileObject in ListOfTiles)
+        {
+            Tile tileScript = tileObject.GetComponent<Tile>();
+            if (tileScript != null)
+            if (tileScript.col == col && tileScript.row > row)
+            {
+                    tileScript.shiftDownStep++;
+                    tileScript.ShiftDown();
+            }
+        }
     }
 
 }

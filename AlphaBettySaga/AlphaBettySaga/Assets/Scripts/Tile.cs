@@ -11,23 +11,28 @@ public class Tile : MonoBehaviour
     private char letter;
     private LetterGenerator _letterGenerator;
     [SerializeField] private Text tileLetter;
+    public int row, col;
+    public int shiftDownStep;
+    private float size;
+    private float elapsedTime = 0f;
+    private float duration = 0.25f;
+    private bool isShifting;
+
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _letterGenerator = new LetterGenerator();
         letter = _letterGenerator.GetRandomLetter();
         UpdateTileLetter(letter);
+        size = GameObject.Find("GameManager").GetComponent<GameManager>().tileSize;
+
     }
 
-    private void Update()
-    {
-        
-    }
     public void TileSelect()
     {
         _spriteRenderer.sprite = selectedSprite;
     }
-    
+
     public void TileDeSelect()
     {
         _spriteRenderer.sprite = defaultSprite;
@@ -43,4 +48,41 @@ public class Tile : MonoBehaviour
         return letter;
     }
 
+    public void SetGridPosition(int x, int y)
+    {
+        row = y;
+        col = x;
+    }
+
+    public void ShiftDown()
+    {
+        StartCoroutine(MovingDownCoroutine(0.1f));
+    }
+
+    IEnumerator MovingDownCoroutine(float time)
+    {
+        if (!isShifting)
+        {
+            isShifting = true;
+            yield return new WaitForSeconds(time);
+        
+            Vector3 startPosition = transform.position;
+            Vector3 targetPosition = startPosition + new Vector3(0, -shiftDownStep * size, 0);
+            transform.position = targetPosition;
+        
+            while (elapsedTime <= duration)
+            {
+                float t = Mathf.Clamp01(elapsedTime / duration);
+                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            transform.position = targetPosition;
+            row -= shiftDownStep;
+            shiftDownStep = 0;
+            elapsedTime = 0f;
+            isShifting = false;
+        }
+    }
 }

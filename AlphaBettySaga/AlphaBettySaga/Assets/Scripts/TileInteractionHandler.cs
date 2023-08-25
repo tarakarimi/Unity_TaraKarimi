@@ -7,14 +7,16 @@ using UnityEngine;
 public class TileInteractionHandler : MonoBehaviour
 {
     private Camera _camera;
-    private List<Tile> selectedTiles = new List<Tile>();
+    private List<Tile> selectedTilesList = new List<Tile>();
     private Tile selectedTile;
     private float distanceThreshold;
     private List<char> tileLetters = new List<char>();
+    private WordDatabase db;
     void Start()
     {
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
+        db = GetComponent<WordDatabase>();
     }
     
     void Update()
@@ -24,7 +26,7 @@ public class TileInteractionHandler : MonoBehaviour
             DetectMouseOverTiles();
         } else if (Input.GetMouseButtonUp(0))
         {
-            DeselectAllTiles();
+            WordValidation();
         }
     }
     
@@ -34,10 +36,10 @@ public class TileInteractionHandler : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
         if (hit.collider != null && hit.collider.CompareTag("Tile")) {
             Tile tile = hit.collider.GetComponent<Tile>();
-            if (!selectedTiles.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
+            if (!selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
                 tile.TileSelect();
-                selectedTiles.Add(tile);
+                selectedTilesList.Add(tile);
                 tileLetters.Add(tile.GetLetter());
                 selectedTile = tile;
             }
@@ -45,13 +47,33 @@ public class TileInteractionHandler : MonoBehaviour
         
     }
     
+    void WordValidation()
+    {
+        // Form the chain of letters
+        string chain = string.Join("", tileLetters);
+        Debug.Log("Chain: " + chain);
+        if (db.IsWordValid(chain))
+        {
+            //get points & stuff
+            Debug.Log("Valid");
+            foreach (var tile in selectedTilesList)
+            {
+                Destroy(tile.gameObject);
+            }
+        }
+        else
+        {
+            Debug.Log("Not valid");
+            DeselectAllTiles();
+        }
+    }
     void DeselectAllTiles()
     {
-        foreach (Tile tile in selectedTiles)
+        foreach (Tile tile in selectedTilesList)
         {
             tile.TileDeSelect();
         }
-        selectedTiles.Clear();
+        selectedTilesList.Clear();
         selectedTile = null;
         
         // Form the chain of letters

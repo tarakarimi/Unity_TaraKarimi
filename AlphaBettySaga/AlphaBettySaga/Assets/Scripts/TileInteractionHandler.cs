@@ -24,7 +24,7 @@ public class TileInteractionHandler : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             DetectMouseOverTiles();
-        } else if (Input.GetMouseButtonUp(0))
+        } else if (Input.GetMouseButtonUp(0) && selectedTilesList.Count > 0)
         {
             WordValidation();
         }
@@ -60,6 +60,8 @@ public class TileInteractionHandler : MonoBehaviour
             {
                 Destroy(tile.gameObject);
             }
+            selectedTilesList.Clear();
+            selectedTile = null;
         }
         else
         {

@@ -13,7 +13,7 @@ public class TileFall : MonoBehaviour
         startPos = transform.position;
     }
 
-    IEnumerator FallingCoroutine(float delayTime)
+    IEnumerator FallingCoroutine(float delayTime, float ypos)
     {
         yield return new WaitForSeconds(delayTime);
         
@@ -22,16 +22,16 @@ public class TileFall : MonoBehaviour
         while (Time.time - startTime < fallDuration)
         {
             float progress = (Time.time - startTime) / fallDuration;
-            Vector3 currentPos = new Vector3(startPos.x, Mathf.Lerp(startPos.y, startPos.y - 10.0f, progress), startPos.z);
+            Vector3 currentPos = new Vector3(startPos.x, Mathf.Lerp(startPos.y, startPos.y - ypos, progress), startPos.z);
             transform.position = currentPos;
             yield return null;
         }
         transform.position = new Vector3(startPos.x, startPos.y - 10.0f, startPos.z);
     }
 
-    public void StartTileFall(float delayTime)
+    public void StartTileFall(float delayTime, float ypos)
     {
         
-        StartCoroutine(FallingCoroutine(delayTime));
+        StartCoroutine(FallingCoroutine(delayTime,ypos));
     }
 }

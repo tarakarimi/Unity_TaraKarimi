@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour
     private float elapsedTime = 0f;
     private float duration = 0.25f;
     private bool isShifting;
+    private TileInteractionHandler _tileInteractionHandler;
 
     void Start()
     {
@@ -24,8 +25,9 @@ public class Tile : MonoBehaviour
         _letterGenerator = new LetterGenerator();
         letter = _letterGenerator.GetRandomLetter();
         UpdateTileLetter(letter);
-        size = GameObject.Find("GameManager").GetComponent<GameManager>().tileSize;
-
+        GameObject GM = GameObject.Find("GameManager");
+        size = GM.GetComponent<GameManager>().tileSize;
+        _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
     }
 
     public void TileSelect()
@@ -65,11 +67,11 @@ public class Tile : MonoBehaviour
         {
             isShifting = true;
             yield return new WaitForSeconds(time);
-        
+            _tileInteractionHandler.tileMatrix[row, col] = null;
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = startPosition + new Vector3(0, -shiftDownStep * size, 0);
             transform.position = targetPosition;
-        
+            
             while (elapsedTime <= duration)
             {
                 float t = Mathf.Clamp01(elapsedTime / duration);
@@ -80,6 +82,7 @@ public class Tile : MonoBehaviour
 
             transform.position = targetPosition;
             row -= shiftDownStep;
+            _tileInteractionHandler.tileMatrix[row, col] = this.gameObject;
             shiftDownStep = 0;
             elapsedTime = 0f;
             isShifting = false;

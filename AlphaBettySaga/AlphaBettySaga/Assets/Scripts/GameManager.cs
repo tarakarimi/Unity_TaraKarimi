@@ -6,12 +6,14 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject tilePrefab;
     [SerializeField] private Transform tileParent;
-    [SerializeField] int gridSize = 5;
+    [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
+    public GameObject[,] tileMatrix;
     
 
     private void Start()
     {
+        tileMatrix = new GameObject[gridSize, gridSize];
         CreateGrid();
     }
 
@@ -27,8 +29,9 @@ public class GameManager : MonoBehaviour
                 Vector3 tilePosition = new Vector3(x * tileSize, y * tileSize + 10, 0) - centerOffset;
                 GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity, transform);
                 tempTile.transform.SetParent(tileParent);
-                tempTile.transform.GetComponent<TileFall>().StartTileFall(delay_time);
+                tempTile.transform.GetComponent<TileFall>().StartTileFall(delay_time, 10f);
                 tempTile.GetComponent<Tile>().SetGridPosition(x,y);
+                tileMatrix[y, x] = tempTile;
                 delay_time += delay_speed;
             }
         }

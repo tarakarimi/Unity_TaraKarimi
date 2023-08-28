@@ -13,12 +13,21 @@ public class TileInteractionHandler : MonoBehaviour
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
     public List<GameObject> ListOfTiles = new List<GameObject>();
+    private int gridSize = 5;
+    [SerializeField] private GameObject tilePrefab;
+    private float tileSize = 1.1f;
+    private Vector3 centerOffset;
+    public GameObject[,] tileMatrix;
     void Start()
     {
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
         db = GetComponent<WordDatabase>();
         ListOfTiles.AddRange(GameObject.FindGameObjectsWithTag("Tile"));
+        gridSize = GetComponent<GameManager>().gridSize;
+        tileSize = GetComponent<GameManager>().tileSize;
+        centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2, 0);
+        tileMatrix = GameObject.Find("GameManager").GetComponent<GameManager>().tileMatrix;
     }
     
     void Update()
@@ -56,7 +65,7 @@ public class TileInteractionHandler : MonoBehaviour
         if (db.IsWordValid(chain))
         {
             //Add get points Logic
-            Debug.Log("Word: " + chain+ "is Valid");
+            Debug.Log("Word: " + chain+ " is Valid");
             
             foreach (var tile in selectedTilesList)
             {
@@ -66,6 +75,7 @@ public class TileInteractionHandler : MonoBehaviour
             }
         }
 
+        StartCoroutine(LogNullHouses());
         DeselectAllTiles();
     }
     void DeselectAllTiles()
@@ -101,10 +111,31 @@ public class TileInteractionHandler : MonoBehaviour
         {
             Tile tileScript = tileObject.GetComponent<Tile>();
             if (tileScript != null)
-            if (tileScript.col == col && tileScript.row > row)
             {
+                if (tileScript.col == col && tileScript.row > row)
+                {
                     tileScript.shiftDownStep++;
                     tileScript.ShiftDown();
+                }
+            }
+        }
+    }
+
+    IEnumerator LogNullHouses()
+    {
+        yield return new WaitForSeconds(0.2f);
+        
+        for (int row = 0; row < gridSize; row++)
+        {
+            for (int col = 0; col < gridSize; col++)
+            {
+                //Debug.Log(row + col + "OK");
+                if (tileMatrix[row, col] == null)
+                {
+                    Debug.Log($"House at col {col}, row {row} is null.");
+                    Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
+                    Instantiate(tilePrefab, tilePosition, Quaternion.identity);
+                }
             }
         }
     }

@@ -26,7 +26,7 @@ public class TileFall : MonoBehaviour
             transform.position = currentPos;
             yield return null;
         }
-        transform.position = new Vector3(startPos.x, startPos.y - 10.0f, startPos.z);
+        transform.position = new Vector3(startPos.x, startPos.y - ypos, startPos.z);
     }
 
     public void StartTileFall(float delayTime, float ypos)

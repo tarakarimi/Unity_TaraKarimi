@@ -39,6 +39,11 @@ public class TileInteractionHandler : MonoBehaviour
         {
             WordValidation();
         }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(LogNullHouses());
+        }
     }
     
     private void DetectMouseOverTiles()
@@ -69,6 +74,7 @@ public class TileInteractionHandler : MonoBehaviour
             
             foreach (var tile in selectedTilesList)
             {
+                tileMatrix[tile.row, tile.col] = null;
                 ShiftTiles(tile.row, tile.col);
                 ListOfTiles.Remove(tile.gameObject);
                 Destroy(tile.gameObject);
@@ -123,18 +129,21 @@ public class TileInteractionHandler : MonoBehaviour
 
     IEnumerator LogNullHouses()
     {
-        yield return new WaitForSeconds(0.2f);
-        
+        yield return new WaitForSeconds(1f);
+
+
         for (int row = 0; row < gridSize; row++)
         {
             for (int col = 0; col < gridSize; col++)
             {
-                //Debug.Log(row + col + "OK");
                 if (tileMatrix[row, col] == null)
                 {
                     Debug.Log($"House at col {col}, row {row} is null.");
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
-                    Instantiate(tilePrefab, tilePosition, Quaternion.identity);
+                    GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
+                    tempTile.transform.GetComponent<TileFall>().StartTileFall(0f, gridSize * tileSize);
+                    tempTile.GetComponent<Tile>().SetGridPosition(row,col);
+                    tileMatrix[row, col] = tempTile;
                 }
             }
         }

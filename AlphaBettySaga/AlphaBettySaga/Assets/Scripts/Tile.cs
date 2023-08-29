@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
     public int shiftDownStep;
     private float size;
     private float elapsedTime = 0f;
-    private float duration = 0.25f;
+    private float duration = 0.2f;
     private bool isShifting;
     private TileInteractionHandler _tileInteractionHandler;
 
@@ -66,8 +66,9 @@ public class Tile : MonoBehaviour
         if (!isShifting)
         {
             isShifting = true;
-            yield return new WaitForSeconds(time);
             _tileInteractionHandler.tileMatrix[row, col] = null;
+            
+            yield return new WaitForSeconds(time);
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = startPosition + new Vector3(0, -shiftDownStep * size, 0);
             transform.position = targetPosition;
@@ -88,4 +89,6 @@ public class Tile : MonoBehaviour
             isShifting = false;
         }
     }
+    
+    
 }

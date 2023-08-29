@@ -35,13 +35,5 @@ public class GameManager : MonoBehaviour
                 delay_time += delay_speed;
             }
         }
-
-        StartCoroutine(ProcessWords());
-    }
-
-    IEnumerator ProcessWords()
-    {
-        yield return new WaitForSeconds(10);
-        //GetComponent<WordDatabase>().LoadWordsFromFile();
     }
 }

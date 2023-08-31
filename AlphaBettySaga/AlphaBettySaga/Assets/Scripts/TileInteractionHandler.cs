@@ -134,7 +134,7 @@ public class TileInteractionHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
 
-
+        float delatTime = 0;
         for (int row = 0; row < gridSize; row++)
         {
             for (int col = 0; col < gridSize; col++)
@@ -144,9 +144,10 @@ public class TileInteractionHandler : MonoBehaviour
                     //Debug.Log($"House at col {col}, row {row} is null.");
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
                     GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
-                    tempTile.transform.GetComponent<TileFall>().StartTileFall(0f, gridSize * tileSize);
+                    tempTile.transform.GetComponent<TileFall>().StartTileFall(delatTime, gridSize * tileSize);
                     tempTile.GetComponent<Tile>().SetGridPosition(row,col);
                     tileMatrix[row, col] = tempTile;
+                    delatTime += 0.05f;
                 }
             }
         }

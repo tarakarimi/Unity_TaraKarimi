@@ -9,8 +9,9 @@ public class Tile : MonoBehaviour
     [SerializeField] private Sprite selectedSprite, defaultSprite;
     private SpriteRenderer _spriteRenderer;
     private char letter;
+    private int score;
     private LetterGenerator _letterGenerator;
-    [SerializeField] private Text tileLetter;
+    [SerializeField] private Text tileLetter, tileScore;
     public int row, col;
     public int shiftDownStep;
     private float size;
@@ -18,6 +19,7 @@ public class Tile : MonoBehaviour
     private float duration = 0.2f;
     private bool isShifting;
     private TileInteractionHandler _tileInteractionHandler;
+    private LetterScoreMap letterScoreMap;
 
     void Start()
     {
@@ -28,6 +30,9 @@ public class Tile : MonoBehaviour
         GameObject GM = GameObject.Find("GameManager");
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
+        letterScoreMap = LetterScoreMap.Instance;
+        score = letterScoreMap.GetScoreForLetter(letter);
+        tileScore.text = score.ToString().ToUpper();
     }
 
     public void TileSelect()
@@ -49,6 +54,10 @@ public class Tile : MonoBehaviour
     {
         return letter;
     }
+    public int GetScore()
+    {
+        return score;
+    }
 
     public void SetGridPosition(int rowToBe, int colToBe)
     {
@@ -58,7 +67,7 @@ public class Tile : MonoBehaviour
 
     public void ShiftDown()
     {
-        StartCoroutine(MovingDownCoroutine(0.1f));
+        StartCoroutine(MovingDownCoroutine(0.01f));
     }
 
     IEnumerator MovingDownCoroutine(float time)
@@ -83,7 +92,7 @@ public class Tile : MonoBehaviour
 
             transform.position = targetPosition;
             row -= shiftDownStep;
-            Debug.Log("tile: " + letter + "moves "+shiftDownStep+" steps and new row & col is: "+row+", " + col);
+            //Debug.Log("tile: " + letter + "moves "+shiftDownStep+" steps and new row & col is: "+row+", " + col);
             _tileInteractionHandler.tileMatrix[row, col] = this.gameObject;
             shiftDownStep = 0;
             elapsedTime = 0f;

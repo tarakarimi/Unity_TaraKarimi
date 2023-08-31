@@ -17,6 +17,7 @@ public class TileInteractionHandler : MonoBehaviour
     private float tileSize = 1.1f;
     private Vector3 centerOffset;
     public GameObject[,] tileMatrix;
+    private GameManager GM;
     void Start()
     {
         _camera = Camera.main;
@@ -25,7 +26,8 @@ public class TileInteractionHandler : MonoBehaviour
         gridSize = GetComponent<GameManager>().gridSize;
         tileSize = GetComponent<GameManager>().tileSize;
         centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2, 0);
-        tileMatrix = GameObject.Find("GameManager").GetComponent<GameManager>().tileMatrix;
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        tileMatrix = GM.tileMatrix;
     }
     
     void Update()
@@ -67,7 +69,8 @@ public class TileInteractionHandler : MonoBehaviour
         string chain = string.Join("", tileLetters);
         if (db.IsWordValid(chain))
         {
-            //Add get points Logic
+            CalculateScore();
+            
             Debug.Log("Word: " + chain+ " is Valid");
             
             foreach (var tile in selectedTilesList)
@@ -129,7 +132,7 @@ public class TileInteractionHandler : MonoBehaviour
 
     IEnumerator LogNullHouses()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.3f);
 
 
         for (int row = 0; row < gridSize; row++)
@@ -138,7 +141,7 @@ public class TileInteractionHandler : MonoBehaviour
             {
                 if (tileMatrix[row, col] == null)
                 {
-                    Debug.Log($"House at col {col}, row {row} is null.");
+                    //Debug.Log($"House at col {col}, row {row} is null.");
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
                     GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
                     tempTile.transform.GetComponent<TileFall>().StartTileFall(0f, gridSize * tileSize);
@@ -147,6 +150,12 @@ public class TileInteractionHandler : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void CalculateScore()
+    {
+        int score = ScoringManager.CalculateScore(selectedTilesList);
+        GM.AddScore(score);
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,7 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
     public GameObject[,] tileMatrix;
+    private int score;
+    [SerializeField] private Text scoreText;
     
+    private int currentScore = 0;
+    private int targetScore = 0;
 
     private void Start()
     {
@@ -36,4 +41,21 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    public void AddScore(int addingScore)
+    {
+        targetScore = currentScore + addingScore;
+        StartCoroutine(IncrementScoreCoroutine(targetScore));
+    }
+
+    private IEnumerator IncrementScoreCoroutine(int targetScore)
+    {
+        while (currentScore < targetScore)
+        {
+            currentScore += 10;
+            scoreText.text = currentScore.ToString();
+            yield return null;
+        }
+    }
+
 }

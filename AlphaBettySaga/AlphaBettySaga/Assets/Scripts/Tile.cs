@@ -50,10 +50,10 @@ public class Tile : MonoBehaviour
         return letter;
     }
 
-    public void SetGridPosition(int x, int y)
+    public void SetGridPosition(int rowToBe, int colToBe)
     {
-        row = y;
-        col = x;
+        row = rowToBe;
+        col= colToBe;
     }
 
     public void ShiftDown()
@@ -66,9 +66,9 @@ public class Tile : MonoBehaviour
         if (!isShifting)
         {
             isShifting = true;
-            _tileInteractionHandler.tileMatrix[row, col] = null;
-            
+
             yield return new WaitForSeconds(time);
+            _tileInteractionHandler.tileMatrix[row, col] = null;
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = startPosition + new Vector3(0, -shiftDownStep * size, 0);
             transform.position = targetPosition;
@@ -83,6 +83,7 @@ public class Tile : MonoBehaviour
 
             transform.position = targetPosition;
             row -= shiftDownStep;
+            Debug.Log("tile: " + letter + "moves "+shiftDownStep+" steps and new row & col is: "+row+", " + col);
             _tileInteractionHandler.tileMatrix[row, col] = this.gameObject;
             shiftDownStep = 0;
             elapsedTime = 0f;

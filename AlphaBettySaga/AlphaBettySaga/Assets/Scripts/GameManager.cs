@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
                 GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity, transform);
                 tempTile.transform.SetParent(tileParent);
                 tempTile.transform.GetComponent<TileFall>().StartTileFall(delay_time, 10f);
-                tempTile.GetComponent<Tile>().SetGridPosition(x,y);
+                tempTile.GetComponent<Tile>().SetGridPosition(y,x);
                 tileMatrix[y, x] = tempTile;
                 delay_time += delay_speed;
             }

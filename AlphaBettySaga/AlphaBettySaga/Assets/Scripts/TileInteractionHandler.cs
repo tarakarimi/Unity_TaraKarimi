@@ -12,7 +12,6 @@ public class TileInteractionHandler : MonoBehaviour
     private float distanceThreshold;
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
-    public List<GameObject> ListOfTiles = new List<GameObject>();
     private int gridSize = 5;
     [SerializeField] private GameObject tilePrefab;
     private float tileSize = 1.1f;
@@ -23,7 +22,6 @@ public class TileInteractionHandler : MonoBehaviour
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
         db = GetComponent<WordDatabase>();
-        ListOfTiles.AddRange(GameObject.FindGameObjectsWithTag("Tile"));
         gridSize = GetComponent<GameManager>().gridSize;
         tileSize = GetComponent<GameManager>().tileSize;
         centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2, 0);
@@ -75,9 +73,10 @@ public class TileInteractionHandler : MonoBehaviour
             foreach (var tile in selectedTilesList)
             {
                 tileMatrix[tile.row, tile.col] = null;
-                ShiftTiles(tile.row, tile.col);
-                ListOfTiles.Remove(tile.gameObject);
+                var tempRow = tile.row;
+                var tempCol = tile.col;
                 Destroy(tile.gameObject);
+                ShiftTiles(tempRow, tempCol);
             }
         }
 
@@ -113,12 +112,13 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void ShiftTiles(int row, int col)
     {
-        foreach (GameObject tileObject in ListOfTiles)
+        for(int i = row+1; i < gridSize; i++)
         {
-            Tile tileScript = tileObject.GetComponent<Tile>();
-            if (tileScript != null)
+            GameObject tileObject = tileMatrix[i, col];
+            if (tileObject != null)
             {
-                if (tileScript.col == col && tileScript.row > row)
+                Tile tileScript = tileMatrix[i,col].GetComponent<Tile>();
+                if (tileScript != null)
                 {
                     tileScript.shiftDownStep++;
                     tileScript.ShiftDown();
@@ -129,7 +129,7 @@ public class TileInteractionHandler : MonoBehaviour
 
     IEnumerator LogNullHouses()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
 
 
         for (int row = 0; row < gridSize; row++)

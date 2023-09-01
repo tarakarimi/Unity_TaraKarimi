@@ -10,21 +10,28 @@ public class GameManager : MonoBehaviour
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
     public GameObject[,] tileMatrix;
-    private int score;
-    [SerializeField] private Text scoreText;
-    
-    private int currentScore = 0;
-    private int targetScore = 0;
+    [SerializeField] private Text scoreText, movesText, goalText;
+    public Text wordInProgress, scoreOfWordInProgress;
+    public Vector3 centerOffset;
+    [SerializeField] private int numberOfMoves, goalScore, levelNumber;
+    [SerializeField] private int currentScore, targetScore;
 
     private void Start()
     {
         tileMatrix = new GameObject[gridSize, gridSize];
+        movesText.text = numberOfMoves.ToString();
+        goalText.text = "/ " + goalScore;
         CreateGrid();
+
+        if (levelNumber == 1)
+        {
+            StartCoroutine(SetMidRowLetters());
+        }
     }
 
     private void CreateGrid()
     {
-        Vector3 centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2, 0);
+        centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2 + 0.5f, 0);
         float delay_time = 0.5f;
         float delay_speed = 0.1f;
         for (int y = 0; y < gridSize; y++)
@@ -48,13 +55,37 @@ public class GameManager : MonoBehaviour
         StartCoroutine(IncrementScoreCoroutine(targetScore));
     }
 
+    public void SubtractMove()
+    {
+        if (numberOfMoves>0)
+        {
+            numberOfMoves--;
+            movesText.text = numberOfMoves.ToString();
+        }
+    }
+
     private IEnumerator IncrementScoreCoroutine(int targetScore)
     {
         while (currentScore < targetScore)
         {
-            currentScore += 10;
+            currentScore += 20;
             scoreText.text = currentScore.ToString();
             yield return null;
+        }
+    }
+
+    private IEnumerator SetMidRowLetters()
+    {
+        yield return null;
+        tileMatrix[2, 0].gameObject.GetComponent<Tile>().letter = 'a';
+        tileMatrix[2, 1].gameObject.GetComponent<Tile>().letter = 'l';
+        tileMatrix[2, 2].gameObject.GetComponent<Tile>().letter = 'p';
+        tileMatrix[2, 3].gameObject.GetComponent<Tile>().letter = 'h';
+        tileMatrix[2, 4].gameObject.GetComponent<Tile>().letter = 'a';
+
+        for (int col = 0; col < gridSize; col++)
+        {
+            tileMatrix[2, col].gameObject.GetComponent<Tile>().SetLetterProperties();
         }
     }
 

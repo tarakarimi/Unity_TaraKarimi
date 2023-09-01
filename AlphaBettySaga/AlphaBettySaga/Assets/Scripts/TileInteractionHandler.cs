@@ -23,10 +23,10 @@ public class TileInteractionHandler : MonoBehaviour
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
         db = GetComponent<WordDatabase>();
-        gridSize = GetComponent<GameManager>().gridSize;
-        tileSize = GetComponent<GameManager>().tileSize;
-        centerOffset = new Vector3((gridSize - 1) * tileSize / 2, (gridSize - 1) * tileSize / 2, 0);
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        centerOffset = GM.centerOffset;
+        gridSize = GM.gridSize;
+        tileSize = GM.tileSize;
         tileMatrix = GM.tileMatrix;
     }
     
@@ -58,6 +58,11 @@ public class TileInteractionHandler : MonoBehaviour
                 selectedTilesList.Add(tile);
                 tileLetters.Add(tile.GetLetter());
                 selectedTile = tile;
+                if (tileLetters.Count <= 10)
+                {
+                    GM.wordInProgress.text = string.Join("", tileLetters);
+                    GM.scoreOfWordInProgress.text = ScoringManager.CalculateScore(selectedTilesList).ToString();
+                }
             }
         }
         
@@ -70,7 +75,7 @@ public class TileInteractionHandler : MonoBehaviour
         if (db.IsWordValid(chain))
         {
             CalculateScore();
-            
+            GM.SubtractMove();
             Debug.Log("Word: " + chain+ " is Valid");
             
             foreach (var tile in selectedTilesList)
@@ -95,6 +100,8 @@ public class TileInteractionHandler : MonoBehaviour
         selectedTilesList.Clear();
         selectedTile = null;
         tileLetters.Clear();
+        GM.wordInProgress.text = "";
+        GM.scoreOfWordInProgress.text = "0";
     }
     
     bool IsAdjacent(Tile tile1, Tile tile2)

@@ -8,7 +8,7 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private Sprite selectedSprite, defaultSprite;
     private SpriteRenderer _spriteRenderer;
-    private char letter;
+    public char letter;
     private int score;
     private LetterGenerator _letterGenerator;
     [SerializeField] private Text tileLetter, tileScore;
@@ -26,10 +26,15 @@ public class Tile : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _letterGenerator = new LetterGenerator();
         letter = _letterGenerator.GetRandomLetter();
-        UpdateTileLetter(letter);
         GameObject GM = GameObject.Find("GameManager");
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
+        SetLetterProperties();
+    }
+
+    public void SetLetterProperties()
+    {
+        UpdateTileLetter();
         letterScoreMap = LetterScoreMap.Instance;
         score = letterScoreMap.GetScoreForLetter(letter);
         tileScore.text = score.ToString().ToUpper();
@@ -45,7 +50,7 @@ public class Tile : MonoBehaviour
         _spriteRenderer.sprite = defaultSprite;
     }
 
-    private void UpdateTileLetter(char letter)
+    private void UpdateTileLetter()
     {
         tileLetter.text = letter.ToString();
     }

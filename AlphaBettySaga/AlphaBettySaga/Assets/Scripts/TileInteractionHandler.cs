@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 public class TileInteractionHandler : MonoBehaviour
@@ -13,11 +14,12 @@ public class TileInteractionHandler : MonoBehaviour
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
     private int gridSize = 5;
-    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject tilePrefab, arrowPrefab;
     private float tileSize = 1.1f;
     private Vector3 centerOffset;
     public GameObject[,] tileMatrix;
     private GameManager GM;
+    private List<GameObject> arrows = new List<GameObject>();
     void Start()
     {
         _camera = Camera.main;
@@ -63,6 +65,13 @@ public class TileInteractionHandler : MonoBehaviour
                     GM.wordInProgress.text = string.Join("", tileLetters);
                     GM.scoreOfWordInProgress.text = ScoringManager.CalculateScore(selectedTilesList).ToString();
                 }
+
+                if (selectedTilesList.Count>1)
+                {
+                    Transform previousTile = selectedTilesList[selectedTilesList.Count - 2].transform;
+                    Transform currentTile = selectedTile.transform;
+                    CreateArrow(previousTile, currentTile);
+                }
             }
         }
         
@@ -102,6 +111,7 @@ public class TileInteractionHandler : MonoBehaviour
         tileLetters.Clear();
         GM.wordInProgress.text = "";
         GM.scoreOfWordInProgress.text = "0";
+        ClearArrows();
     }
     
     bool IsAdjacent(Tile tile1, Tile tile2)
@@ -164,6 +174,25 @@ public class TileInteractionHandler : MonoBehaviour
     {
         int score = ScoringManager.CalculateScore(selectedTilesList);
         GM.AddScore(score);
+    }
+
+    private void CreateArrow(Transform startTile, Transform endTile)
+    {
+        var arrowPos= (startTile.position + endTile.position) / 2;
+        Vector3 direction = endTile.position - startTile.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        Quaternion arrowRotation = Quaternion.Euler(0, 0, angle);
+        GameObject arrow = Instantiate(arrowPrefab, arrowPos, arrowRotation);
+        arrows.Add(arrow);
+    }
+    
+    private void ClearArrows()
+    {
+        foreach (var arrow in arrows)
+        {
+            Destroy(arrow);
+        }
+        arrows.Clear();
     }
 
 }

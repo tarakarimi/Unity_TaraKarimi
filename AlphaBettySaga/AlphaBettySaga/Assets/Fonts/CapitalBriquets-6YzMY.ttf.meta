@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b6d70059d60337844bd9909c9fd89604
+guid: e515f8db61522ab44b3936ecf0c52539
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - DoodleJump
+  - Capital Briquets
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

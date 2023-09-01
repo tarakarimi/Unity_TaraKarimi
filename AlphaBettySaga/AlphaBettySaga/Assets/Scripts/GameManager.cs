@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameObject tilePrefab;
-    [SerializeField] private Transform tileParent;
+    [SerializeField] public Transform tileParent;
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
     public GameObject[,] tileMatrix;

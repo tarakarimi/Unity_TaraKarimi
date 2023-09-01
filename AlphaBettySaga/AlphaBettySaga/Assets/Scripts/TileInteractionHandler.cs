@@ -163,6 +163,7 @@ public class TileInteractionHandler : MonoBehaviour
                     GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
                     tempTile.transform.GetComponent<TileFall>().StartTileFall(delatTime, gridSize * tileSize);
                     tempTile.GetComponent<Tile>().SetGridPosition(row,col);
+                    tempTile.transform.SetParent(GM.tileParent);
                     tileMatrix[row, col] = tempTile;
                     delatTime += 0.05f;
                 }

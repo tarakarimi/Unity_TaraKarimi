@@ -40,6 +40,7 @@ public class TileInteractionHandler : MonoBehaviour
         } else if (Input.GetMouseButtonUp(0) && selectedTilesList.Count > 0)
         {
             WordValidation();
+            Debug.Log("Costly computation!");
         }
 
         if (Input.GetKeyDown(KeyCode.Space))

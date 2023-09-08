@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using Random = System.Random;
 
 public class TileInteractionHandler : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class TileInteractionHandler : MonoBehaviour
     private GameManager GM;
     private List<GameObject> arrows = new List<GameObject>();
     private bool wordIsValid = false;
+    [SerializeField] private GameObject Fog;
     void Start()
     {
         _camera = Camera.main;
@@ -234,5 +236,41 @@ public class TileInteractionHandler : MonoBehaviour
         GM.scoreOfWordInProgress.text = ScoringManager.CalculateScore(selectedTilesList).ToString();
         // Check the light again
         LightCheck();
+    }
+
+    public void ShuffleTiles()
+    {
+        List<char> extractedLetters = new List<char>();
+        // Move up and extract letters
+        foreach (GameObject tileObject in tileMatrix)
+        {
+            if (tileObject != null)
+            {
+                tileObject.transform.position += new Vector3(0,10f,0);
+                Tile tileScript = tileObject.GetComponent<Tile>();
+                char letter = tileScript.letter;
+                extractedLetters.Add(letter);
+            }
+        }
+        extractedLetters.Shuffle();
+
+        // ReAssign letters
+        int letterIndex = 0;
+        float delay_time = 0.5f;
+        float delay_speed = 0.1f;
+        foreach (GameObject tileObject in tileMatrix)
+        {
+            if (tileObject != null)
+            {
+                GameObject tile = tileObject;
+                tile.GetComponent<Tile>().letter = extractedLetters[letterIndex];
+                tile.GetComponent<TileFall>().StartTileFall(delay_time, 10f);
+                //tileObject.transform.position -= new Vector3(0,10f,0);
+                tile.GetComponent<Tile>().SetLetterProperties();
+                letterIndex++;
+                delay_time += delay_speed;
+            }
+        }
+        Fog.SetActive(true);
     }
 }

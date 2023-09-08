@@ -5496,6 +5496,7 @@ MonoBehaviour:
   tilePrefab: {fileID: 6182538067966243366, guid: cd6d71f07e6c8fd4caf40e0e37fe317d, type: 3}
   arrowPrefab: {fileID: 7316421863826006383, guid: 8f5751246553765438b4b4fe1561f39f, type: 3}
   LightImg: {fileID: 1252637576}
+  Fog: {fileID: 300583502}
 --- !u!114 &870079419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5521,6 +5522,7 @@ GameObject:
   - component: {fileID: 902444864}
   - component: {fileID: 902444863}
   - component: {fileID: 902444862}
+  - component: {fileID: 902444865}
   m_Layer: 5
   m_Name: Shuffle btn
   m_TagString: Untagged
@@ -5591,7 +5593,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 902444863}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 902444865}
+        m_TargetAssemblyTypeName: ShuffleBtn, Assembly-CSharp
+        m_MethodName: Clicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &902444863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5630,6 +5644,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 902444860}
   m_CullTransparentMesh: 1
+--- !u!114 &902444865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902444860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98850807de97abf44b1caf3121476159, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  disabledSprite: {fileID: 21300000, guid: 22a566901f43ed24faec773f7f25208b, type: 2}
+  enabledSprite: {fileID: 21300000, guid: d3e0bedb90f156e4bb90794de6cb5337, type: 2}
+  tileInteraction: {fileID: 870079418}
 --- !u!1 &1081562756
 GameObject:
   m_ObjectHideFlags: 0

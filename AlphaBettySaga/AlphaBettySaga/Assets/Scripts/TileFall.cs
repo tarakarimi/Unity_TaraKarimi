@@ -10,7 +10,7 @@ public class TileFall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        startPos = transform.position;
+        
     }
 
     IEnumerator FallingCoroutine(float delayTime, float ypos)
@@ -31,7 +31,7 @@ public class TileFall : MonoBehaviour
 
     public void StartTileFall(float delayTime, float ypos)
     {
-        
+        startPos = transform.position;
         StartCoroutine(FallingCoroutine(delayTime,ypos));
     }
 }

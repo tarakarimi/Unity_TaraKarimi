@@ -74,6 +74,9 @@ public class TileInteractionHandler : MonoBehaviour
                     CreateArrow(previousTile, currentTile);
                     LightCheck();
                 }
+            } else if (selectedTilesList.Count > 1 && tile == selectedTilesList[selectedTilesList.Count - 2])
+            {
+                DeselectLastTile();
             }
         }
         
@@ -213,5 +216,22 @@ public class TileInteractionHandler : MonoBehaviour
         }
         arrows.Clear();
     }
-
+    
+    private void DeselectLastTile()
+    {
+        // remove last tile
+        var lastInd = selectedTilesList.Count - 1;
+        selectedTile = selectedTilesList[lastInd-1];
+        Tile lastSelectedTile = selectedTilesList[lastInd];
+        lastSelectedTile.TileDeSelect();
+        selectedTilesList.RemoveAt(lastInd);
+        tileLetters.RemoveAt(lastInd);
+        
+        // remove last arrow
+        Destroy(arrows[arrows.Count - 1]);
+        arrows.RemoveAt(arrows.Count - 1);
+        
+        // Check the light again
+        LightCheck();
+    }
 }

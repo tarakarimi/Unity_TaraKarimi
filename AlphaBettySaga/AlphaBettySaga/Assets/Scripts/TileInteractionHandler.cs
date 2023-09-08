@@ -230,7 +230,8 @@ public class TileInteractionHandler : MonoBehaviour
         // remove last arrow
         Destroy(arrows[arrows.Count - 1]);
         arrows.RemoveAt(arrows.Count - 1);
-        
+        GM.wordInProgress.text = string.Join("", tileLetters);
+        GM.scoreOfWordInProgress.text = ScoringManager.CalculateScore(selectedTilesList).ToString();
         // Check the light again
         LightCheck();
     }

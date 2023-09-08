@@ -51,8 +51,11 @@ SpriteAtlas:
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: 004d7260726b83b49acd894036392f5d, type: 3}
-  - {fileID: 21300000, guid: eb638ce56a5b6f14398d8db19685245c, type: 3}
   - {fileID: 21300000, guid: 1eb45817222d3d54a9f019b4c43f6299, type: 3}
+  - {fileID: 21300000, guid: d3e0bedb90f156e4bb90794de6cb5337, type: 2}
+  - {fileID: 21300000, guid: ba86d84aacb11ff43809b253c884d113, type: 2}
+  - {fileID: 21300000, guid: 22a566901f43ed24faec773f7f25208b, type: 2}
+  - {fileID: 21300000, guid: eb638ce56a5b6f14398d8db19685245c, type: 3}
   - {fileID: 21300000, guid: e638a84c8b2f0de4cbf07cd1c7aaf9d0, type: 2}
   - {fileID: 21300000, guid: 4a5e626d62f5c624ea7663b6085b76d8, type: 3}
   - {fileID: 21300000, guid: d7957a6dab6e38045b70b366f4c986e3, type: 3}
@@ -61,8 +64,11 @@ SpriteAtlas:
   - {fileID: 21300000, guid: f811f20f13c9ea84895ba7da4a81e974, type: 3}
   m_PackedSpriteNamesToIndex:
   - arrow
-  - bg
   - tile_selected
+  - shuffle_active
+  - shuffle_selected
+  - shuffle_notActive
+  - bg
   - dlg box objective
   - light
   - tile_normal

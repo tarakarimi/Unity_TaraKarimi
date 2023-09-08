@@ -38,8 +38,8 @@ SpriteAtlas:
       padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
-      enableRotation: 1
-      enableTightPacking: 1
+      enableRotation: 0
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
@@ -53,6 +53,7 @@ SpriteAtlas:
   - {fileID: 21300000, guid: 004d7260726b83b49acd894036392f5d, type: 3}
   - {fileID: 21300000, guid: eb638ce56a5b6f14398d8db19685245c, type: 3}
   - {fileID: 21300000, guid: 1eb45817222d3d54a9f019b4c43f6299, type: 3}
+  - {fileID: 21300000, guid: e638a84c8b2f0de4cbf07cd1c7aaf9d0, type: 2}
   - {fileID: 21300000, guid: d7957a6dab6e38045b70b366f4c986e3, type: 3}
   - {fileID: 21300000, guid: 10886bdebfa625e49be526faf64aca5d, type: 3}
   - {fileID: 21300000, guid: ad880ddebb26e3340bb6f975e65fa163, type: 3}
@@ -61,6 +62,7 @@ SpriteAtlas:
   - arrow
   - bg
   - tile_selected
+  - dlg box objective
   - tile_normal
   - upper_panel
   - lower_panel

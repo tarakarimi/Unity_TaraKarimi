@@ -14,12 +14,13 @@ public class TileInteractionHandler : MonoBehaviour
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
     private int gridSize = 5;
-    [SerializeField] private GameObject tilePrefab, arrowPrefab;
+    [SerializeField] private GameObject tilePrefab, arrowPrefab, LightImg;
     private float tileSize = 1.1f;
     private Vector3 centerOffset;
     public GameObject[,] tileMatrix;
     private GameManager GM;
     private List<GameObject> arrows = new List<GameObject>();
+    private bool wordIsValid = false;
     void Start()
     {
         _camera = Camera.main;
@@ -40,13 +41,12 @@ public class TileInteractionHandler : MonoBehaviour
         } else if (Input.GetMouseButtonUp(0) && selectedTilesList.Count > 0)
         {
             WordValidation();
-            Debug.Log("Costly computation!");
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        /*if (Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(LogNullHouses());
-        }
+        }*/
     }
     
     private void DetectMouseOverTiles()
@@ -55,7 +55,7 @@ public class TileInteractionHandler : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
         if (hit.collider != null && hit.collider.CompareTag("Tile")) {
             Tile tile = hit.collider.GetComponent<Tile>();
-            if (!selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
+            if (selectedTile != tile && !selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
                 tile.TileSelect();
                 selectedTilesList.Add(tile);
@@ -72,21 +72,36 @@ public class TileInteractionHandler : MonoBehaviour
                     Transform previousTile = selectedTilesList[selectedTilesList.Count - 2].transform;
                     Transform currentTile = selectedTile.transform;
                     CreateArrow(previousTile, currentTile);
+                    LightCheck();
                 }
             }
         }
         
     }
-    
-    void WordValidation()
+
+    void LightCheck()
     {
-        // Form the chain of letters
         string chain = string.Join("", tileLetters);
         if (db.IsWordValid(chain))
         {
+            LightImg.SetActive(true);
+            wordIsValid = true;
+        }
+        else
+        {
+            LightImg.SetActive(false);
+            wordIsValid = false;
+        }
+    }
+    void WordValidation()
+    {
+        // Form the chain of letters
+        //string chain = string.Join("", tileLetters);
+        if (wordIsValid)
+        {
             CalculateScore();
             GM.SubtractMove();
-            Debug.Log("Word: " + chain+ " is Valid");
+            //Debug.Log("Word: " + chain+ " is Valid");
             
             foreach (var tile in selectedTilesList)
             {
@@ -103,6 +118,8 @@ public class TileInteractionHandler : MonoBehaviour
     }
     void DeselectAllTiles()
     {
+        LightImg.SetActive(false);
+        wordIsValid = false;
         foreach (Tile tile in selectedTilesList)
         {
             tile.TileDeSelect();

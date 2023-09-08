@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject tilePrefab;
+    [SerializeField] private GameObject tilePrefab, winPage, gameoverPage;
     [SerializeField] public Transform tileParent;
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
@@ -52,6 +52,10 @@ public class GameManager : MonoBehaviour
     public void AddScore(int addingScore)
     {
         targetScore = currentScore + addingScore;
+        if (targetScore > goalScore)
+        {
+            targetScore = goalScore;
+        }
         StartCoroutine(IncrementScoreCoroutine(targetScore));
     }
 
@@ -60,6 +64,10 @@ public class GameManager : MonoBehaviour
         if (numberOfMoves>0)
         {
             numberOfMoves--;
+            if (numberOfMoves == 0)
+            {
+                gameoverPage.SetActive(true);
+            }
             movesText.text = numberOfMoves.ToString();
         }
     }
@@ -69,6 +77,11 @@ public class GameManager : MonoBehaviour
         while (currentScore < targetScore)
         {
             currentScore += 20;
+            if (currentScore == goalScore)
+            {
+                winPage.SetActive(true);
+            }
+
             scoreText.text = currentScore.ToString();
             yield return null;
         }

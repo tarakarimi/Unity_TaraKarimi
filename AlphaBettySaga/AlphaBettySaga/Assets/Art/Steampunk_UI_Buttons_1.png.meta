@@ -51,7 +51,7 @@ TextureImporter:
       213: -2279932274459760023
     second: Steampunk_UI_Buttons_1_6
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -111,6 +111,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -150,6 +151,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 3
     buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -510,22 +523,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Steampunk_UI_Buttons_1_3: 2046956077990515177
-      Steampunk_UI_Buttons_1_9: 9061260165312543400
-      Steampunk_UI_Buttons_1_11: -2617616368960522490
-      Steampunk_UI_Buttons_1_15: -4374215236208778123
-      Steampunk_UI_Buttons_1_12: 7942636985899258196
-      Steampunk_UI_Buttons_1_2: 5498831262044042175
       Steampunk_UI_Buttons_1_0: -8620180257736979365
-      Steampunk_UI_Buttons_1_5: -6799594558360169861
-      Steampunk_UI_Buttons_1_13: 7030827936845937725
-      Steampunk_UI_Buttons_1_4: 7714608630032443500
-      Steampunk_UI_Buttons_1_10: -2159099536540598655
-      Steampunk_UI_Buttons_1_8: 7322667143549707229
       Steampunk_UI_Buttons_1_1: 6891791666857573563
+      Steampunk_UI_Buttons_1_10: -2159099536540598655
+      Steampunk_UI_Buttons_1_11: -2617616368960522490
+      Steampunk_UI_Buttons_1_12: 7942636985899258196
+      Steampunk_UI_Buttons_1_13: 7030827936845937725
       Steampunk_UI_Buttons_1_14: 7108429565997640284
-      Steampunk_UI_Buttons_1_7: 4119831092129829482
+      Steampunk_UI_Buttons_1_15: -4374215236208778123
+      Steampunk_UI_Buttons_1_2: 5498831262044042175
+      Steampunk_UI_Buttons_1_3: 2046956077990515177
+      Steampunk_UI_Buttons_1_4: 7714608630032443500
+      Steampunk_UI_Buttons_1_5: -6799594558360169861
       Steampunk_UI_Buttons_1_6: -2279932274459760023
+      Steampunk_UI_Buttons_1_7: 4119831092129829482
+      Steampunk_UI_Buttons_1_8: 7322667143549707229
+      Steampunk_UI_Buttons_1_9: 9061260165312543400
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

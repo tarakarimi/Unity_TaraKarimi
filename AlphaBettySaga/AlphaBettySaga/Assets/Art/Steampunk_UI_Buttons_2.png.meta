@@ -1,42 +1,27 @@
 fileFormatVersion: 2
-guid: 67417fc099c9e8043b03895065b4b888
+guid: f85c0b0d6e5acd64185eafcda5d6cba8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -991401099361754322
-    second: Steampunk_UI_Buttons_5_0
+      213: 8799829423701521183
+    second: Steampunk_UI_Buttons_2_0
   - first:
-      213: 8402200662116330782
-    second: Steampunk_UI_Buttons_5_1
+      213: -6613772995676377648
+    second: Steampunk_UI_Buttons_2_2
   - first:
-      213: -7100797646552663157
-    second: Steampunk_UI_Buttons_5_2
+      213: -6513349321188212269
+    second: Steampunk_UI_Buttons_2_5
   - first:
-      213: -8625608446024689505
-    second: Steampunk_UI_Buttons_5_3
+      213: 6912372366057910295
+    second: Steampunk_UI_Buttons_2_4
   - first:
-      213: -7191989220845783455
-    second: Steampunk_UI_Buttons_5_3
+      213: -1388602495020635306
+    second: Steampunk_UI_Buttons_2_3
   - first:
-      213: -3633398782271786105
-    second: Steampunk_UI_Buttons_5_5
-  - first:
-      213: 274569517077996234
-    second: Steampunk_UI_Buttons_5_4
-  - first:
-      213: 9119403546600149570
-    second: Steampunk_UI_Buttons_5_7
-  - first:
-      213: 4682561755941140334
-    second: Steampunk_UI_Buttons_5_5
-  - first:
-      213: -567024156268097549
-    second: Steampunk_UI_Buttons_5_6
-  - first:
-      213: 8598377932966410126
-    second: Steampunk_UI_Buttons_5_10
+      213: 2191966642830837830
+    second: Steampunk_UI_Buttons_2_1
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -96,6 +81,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -145,152 +131,143 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_0
+      name: Steampunk_UI_Buttons_2_0
       rect:
         serializedVersion: 2
-        x: 150
-        y: 837
-        width: 171
-        height: 172
+        x: 44
+        y: 818
+        width: 346
+        height: 219
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 84, y: 52, z: 102, w: 36}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e236c9ae3f5dd32f0800000000000000
-      internalID: -991401099361754322
+      spriteID: f1372c3cc364f1a70800000000000000
+      internalID: 8799829423701521183
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_1
+      name: Steampunk_UI_Buttons_2_1
       rect:
         serializedVersion: 2
-        x: 360
-        y: 732
-        width: 694
-        height: 278
+        x: 442
+        y: 816
+        width: 346
+        height: 219
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
+      border: {x: 84, y: 52, z: 102, w: 36}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1deef44cfc9a9470800000000000000
-      internalID: 8402200662116330782
+      spriteID: 64800715c0e6b6e10800000000000000
+      internalID: 2191966642830837830
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_2
+      name: Steampunk_UI_Buttons_2_2
       rect:
         serializedVersion: 2
-        x: 1056
-        y: 731
-        width: 694
-        height: 278
+        x: 845
+        y: 814
+        width: 346
+        height: 219
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
+      border: {x: 84, y: 52, z: 102, w: 36}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b8b7c4f7926e47d90800000000000000
-      internalID: -7100797646552663157
+      spriteID: 0dd63af60882734a0800000000000000
+      internalID: -6613772995676377648
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_3
+      name: Steampunk_UI_Buttons_2_3
       rect:
         serializedVersion: 2
-        x: 63
-        y: 377
-        width: 694
-        height: 278
+        x: 61
+        y: 449
+        width: 688
+        height: 271
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
+      border: {x: 80, y: 80, z: 90, w: 50}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1667c0f88ebe03c90800000000000000
-      internalID: -8625608446024689505
+      spriteID: 65be21e4361babce0800000000000000
+      internalID: -1388602495020635306
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_4
+      name: Steampunk_UI_Buttons_2_4
       rect:
         serializedVersion: 2
-        x: 1145
-        y: 372
-        width: 694
-        height: 278
+        x: 839
+        y: 443
+        width: 688
+        height: 271
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
+      border: {x: 80, y: 80, z: 90, w: 50}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ac2a59365877fc300800000000000000
-      internalID: 274569517077996234
+      spriteID: 710bb1a2b0eadef50800000000000000
+      internalID: 6912372366057910295
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_5
+      name: Steampunk_UI_Buttons_2_5
       rect:
         serializedVersion: 2
-        x: 424
-        y: 35
-        width: 694
-        height: 278
+        x: 59
+        y: 98
+        width: 688
+        height: 271
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
+      border: {x: 80, y: 80, z: 90, w: 50}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e6773b59b1dcbf040800000000000000
-      internalID: -3633398782271786105
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Steampunk_UI_Buttons_5_6
-      rect:
-        serializedVersion: 2
-        x: 1120
-        y: 34
-        width: 694
-        height: 278
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 180, y: 68, z: 210, w: 68}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ff039ab8868128f0800000000000000
-      internalID: -567024156268097549
+      spriteID: 3d18b843d4feb95a0800000000000000
+      internalID: -6513349321188212269
       vertices: []
       indices: 
       edges: []
@@ -306,13 +283,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Steampunk_UI_Buttons_5_5: -3633398782271786105
-      Steampunk_UI_Buttons_5_1: 8402200662116330782
-      Steampunk_UI_Buttons_5_0: -991401099361754322
-      Steampunk_UI_Buttons_5_4: 274569517077996234
-      Steampunk_UI_Buttons_5_6: -567024156268097549
-      Steampunk_UI_Buttons_5_2: -7100797646552663157
-      Steampunk_UI_Buttons_5_3: -8625608446024689505
+      Steampunk_UI_Buttons_2_0: 8799829423701521183
+      Steampunk_UI_Buttons_2_1: 2191966642830837830
+      Steampunk_UI_Buttons_2_2: -6613772995676377648
+      Steampunk_UI_Buttons_2_3: -1388602495020635306
+      Steampunk_UI_Buttons_2_4: 6912372366057910295
+      Steampunk_UI_Buttons_2_5: -6513349321188212269
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

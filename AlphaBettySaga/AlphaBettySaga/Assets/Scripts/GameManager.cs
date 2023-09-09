@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class GameManager : MonoBehaviour
     public Text wordInProgress, scoreOfWordInProgress;
     public Vector3 centerOffset;
     [SerializeField] private int numberOfMoves, goalScore, levelNumber;
-    [SerializeField] private int currentScore, targetScore;
+    [SerializeField] private int currentScore = 1000, targetScore;
 
     private void Start()
     {
@@ -100,6 +101,16 @@ public class GameManager : MonoBehaviour
         {
             tileMatrix[2, col].gameObject.GetComponent<Tile>().SetLetterProperties();
         }
+    }
+
+    public void GoToMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+    
+    public void RePlay()
+    {
+        SceneManager.LoadScene("GameScene");
     }
 
 }

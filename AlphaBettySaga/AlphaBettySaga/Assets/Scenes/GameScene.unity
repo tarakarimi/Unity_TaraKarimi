@@ -5541,7 +5541,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.72156864, g: 0.5529412, b: 0.3529412, a: 1}
+  m_Color: {r: 0.3773585, g: 0, b: 0.041645337, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6143,6 +6143,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1136430932}
   - component: {fileID: 1136430933}
+  - component: {fileID: 1136430934}
   m_Layer: 5
   m_Name: Mission Failed dlg
   m_TagString: Untagged
@@ -6183,7 +6184,7 @@ Animator:
   m_GameObject: {fileID: 1136430931}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e37bd5cd41e524b438ac42fd99e0fe74, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22081a21916273349beeffaedd11e4e4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6194,6 +6195,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1136430934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1136430931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3e6a78f19ce044847c37157b55f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1252637576
 GameObject:
   m_ObjectHideFlags: 0
@@ -6824,6 +6837,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1912782925}
   - component: {fileID: 1912782926}
+  - component: {fileID: 1912782927}
   m_Layer: 5
   m_Name: Mission Accomplished dlg
   m_TagString: Untagged
@@ -6864,7 +6878,7 @@ Animator:
   m_GameObject: {fileID: 1912782924}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e37bd5cd41e524b438ac42fd99e0fe74, type: 2}
+  m_Controller: {fileID: 9100000, guid: 22081a21916273349beeffaedd11e4e4, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -6875,6 +6889,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1912782927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1912782924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4c3e6a78f19ce044847c37157b55f34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1956433480
 GameObject:
   m_ObjectHideFlags: 0

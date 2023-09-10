@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        LevelManager LM = GetComponent<LevelManager>();
+        LM.StartGame();
+        
         tileMatrix = new GameObject[gridSize, gridSize];
         movesText.text = numberOfMoves.ToString();
         goalText.text = "/ " + goalScore;
@@ -111,6 +114,12 @@ public class GameManager : MonoBehaviour
     public void RePlay()
     {
         SceneManager.LoadScene("GameScene");
+    }
+
+    public void SetLevelParameters(int moves, int goal)
+    {
+        numberOfMoves = moves;
+        goalScore = goal;
     }
 
 }

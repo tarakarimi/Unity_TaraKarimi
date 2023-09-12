@@ -16,17 +16,18 @@ public class GameManager : MonoBehaviour
     public Vector3 centerOffset;
     [SerializeField] private int numberOfMoves, goalScore, levelNumber;
     [SerializeField] private int currentScore = 1000, targetScore;
+    [SerializeField] private Text ObjectivePreviewText;
 
     private void Start()
     {
         LevelManager LM = GetComponent<LevelManager>();
-        LM.StartGame();
+        LM.setLevelInfo();
         
         tileMatrix = new GameObject[gridSize, gridSize];
         movesText.text = numberOfMoves.ToString();
         goalText.text = "/ " + goalScore;
         CreateGrid();
-
+        levelNumber = PlayerPrefs.GetInt("CurrentLevel", 1);
         if (levelNumber == 1)
         {
             StartCoroutine(SetMidRowLetters());
@@ -68,7 +69,11 @@ public class GameManager : MonoBehaviour
         if (numberOfMoves>0)
         {
             numberOfMoves--;
-            if (numberOfMoves == 0)
+            if (targetScore == goalScore)
+            {
+                winPage.SetActive(true);
+            }
+            else if (numberOfMoves == 0)
             {
                 gameoverPage.SetActive(true);
             }
@@ -120,6 +125,7 @@ public class GameManager : MonoBehaviour
     {
         numberOfMoves = moves;
         goalScore = goal;
+        ObjectivePreviewText.text = "score " + goal + " points";
     }
 
 }

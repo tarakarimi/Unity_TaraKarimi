@@ -6,13 +6,21 @@ using UnityEngine.SceneManagement;
 public class EndGameDlg : MonoBehaviour
 {
     // Start is called before the first frame update
-    public void GoToMenu()
+    public void GoBack()
     {
-        SceneManager.LoadScene("Menu");
+        int currentLevel = PlayerPrefs.GetInt("CurrentLevel", 1);
+        if (gameObject.CompareTag("Win"))
+        {
+            currentLevel++;
+            PlayerPrefs.SetInt("CurrentLevel", currentLevel);
+            Debug.Log("DetectWin");
+        }
+
+        SceneManager.LoadScene("LevelsScene");
     }
     
     public void RePlay()
     {
-        SceneManager.LoadScene("GameScene");
+        SceneManager.LoadScene("LevelsScene");
     }
 }

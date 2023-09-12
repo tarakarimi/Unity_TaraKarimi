@@ -375,12 +375,28 @@ PrefabInstance:
       value: Level 2
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1879054027}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenLevelInfo
+      value: OpenInfoDlg
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101861, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_Pivot.x
@@ -714,6 +730,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 595929675}
+  - component: {fileID: 595929676}
   m_Layer: 5
   m_Name: Levels
   m_TagString: Untagged
@@ -744,6 +761,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 244}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &595929676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595929674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a886bca94b2bbe4182c6dc7d668bc5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levels: []
+  levelInfoPrefab: {fileID: 0}
 --- !u!1 &766749585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1267,6 +1298,7 @@ GameObject:
   - component: {fileID: 1364692012}
   - component: {fileID: 1364692011}
   - component: {fileID: 1364692010}
+  - component: {fileID: 1364692013}
   m_Layer: 5
   m_Name: Hand
   m_TagString: Untagged
@@ -1291,7 +1323,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 301, y: -247}
+  m_AnchoredPosition: {x: 301, y: -255}
   m_SizeDelta: {x: 148, y: 148}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &1364692010
@@ -1353,6 +1385,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1364692008}
   m_CullTransparentMesh: 1
+--- !u!114 &1364692013
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1364692008}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d2aaf2d31398644584d073f7fe69b7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1412572866
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,12 +1570,28 @@ PrefabInstance:
       value: Level 1
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1879054027}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenLevelInfo
+      value: OpenInfoDlg
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101861, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_Pivot.x
@@ -1918,9 +1978,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1879054026}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 866d21da904c0574dacc0479769cbe70, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a886bca94b2bbe4182c6dc7d668bc5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levels:
+  - {fileID: 11400000, guid: 19b2cff9102ba834daf8b3568b98a3c6, type: 2}
+  - {fileID: 11400000, guid: 5c1376b49daf0ed43bff51ef6aca9004, type: 2}
+  - {fileID: 11400000, guid: fe6c0a3c3aa0d35418a359642f772217, type: 2}
   levelInfoPrefab: {fileID: 8571890206145211610}
 --- !u!4 &1879054028
 Transform:
@@ -1949,12 +2013,28 @@ PrefabInstance:
       value: Level 3
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1879054027}
     - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenLevelInfo
+      value: OpenInfoDlg
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4427477098208101860, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4427477098208101861, guid: 712b9b1c915043c478f19feb8b652834, type: 3}
       propertyPath: m_Pivot.x
@@ -2727,7 +2807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 162}
+  m_AnchoredPosition: {x: 0, y: 190}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3132508095395563114
@@ -3147,8 +3227,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1879054027}
-        m_TargetAssemblyTypeName: LevelController, Assembly-CSharp
-        m_MethodName: GameScene
+        m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

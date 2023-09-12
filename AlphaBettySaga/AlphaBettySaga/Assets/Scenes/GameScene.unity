@@ -5796,6 +5796,7 @@ MonoBehaviour:
   levelNumber: 1
   currentScore: 0
   targetScore: 0
+  ObjectivePreviewText: {fileID: 759699517}
 --- !u!114 &870079418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5841,6 +5842,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19b2cff9102ba834daf8b3568b98a3c6, type: 2}
   - {fileID: 11400000, guid: 5c1376b49daf0ed43bff51ef6aca9004, type: 2}
   - {fileID: 11400000, guid: fe6c0a3c3aa0d35418a359642f772217, type: 2}
+  levelInfoPrefab: {fileID: 0}
 --- !u!1 &902444860
 GameObject:
   m_ObjectHideFlags: 0
@@ -6163,7 +6165,7 @@ GameObject:
   - component: {fileID: 1136430934}
   m_Layer: 5
   m_Name: Mission Failed dlg
-  m_TagString: Untagged
+  m_TagString: Lose
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6857,7 +6859,7 @@ GameObject:
   - component: {fileID: 1912782927}
   m_Layer: 5
   m_Name: Mission Accomplished dlg
-  m_TagString: Untagged
+  m_TagString: Win
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

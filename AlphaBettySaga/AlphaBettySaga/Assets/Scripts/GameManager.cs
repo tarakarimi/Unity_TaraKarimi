@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +52,14 @@ public class GameManager : MonoBehaviour
                 tileMatrix[y, x] = tempTile;
                 delay_time += delay_speed;
             }
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("LevelsScene");
         }
     }
 
@@ -127,5 +136,7 @@ public class GameManager : MonoBehaviour
         goalScore = goal;
         ObjectivePreviewText.text = "score " + goal + " points";
     }
+    
+    
 
 }

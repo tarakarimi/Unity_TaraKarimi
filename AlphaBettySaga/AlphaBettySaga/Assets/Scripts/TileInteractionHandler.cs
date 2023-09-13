@@ -87,7 +87,8 @@ public class TileInteractionHandler : MonoBehaviour
     void LightCheck()
     {
         string chain = string.Join("", tileLetters);
-        if (db.IsWordValid(chain))
+        int chainLength = chain.Length;
+        if (db.IsWordValid(chain, chainLength))
         {
             LightImg.SetActive(true);
             wordIsValid = true;

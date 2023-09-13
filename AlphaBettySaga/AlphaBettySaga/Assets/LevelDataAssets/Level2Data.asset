@@ -14,3 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movesNumber: 17
   scoreGoal: 3600
+  gridSize: 4
+  wordList:
+  - seed
+  - tree
+  - root
+  - leaf

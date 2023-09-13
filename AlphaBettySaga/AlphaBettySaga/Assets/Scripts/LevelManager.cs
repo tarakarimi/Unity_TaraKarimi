@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -46,7 +47,9 @@ public class LevelManager : MonoBehaviour
         LevelData levelData = levels[currentLevel-1];
         int moves = levelData.movesNumber;
         int scoreGoal = levelData.scoreGoal;
+        int gridSize = levelData.gridSize;
+        List<string> word = levelData.wordList;
         GM = GetComponent<GameManager>();
-        GM.SetLevelParameters(moves, scoreGoal);
+        GM.SetLevelParameters(moves, scoreGoal, gridSize, word);
     }
 }

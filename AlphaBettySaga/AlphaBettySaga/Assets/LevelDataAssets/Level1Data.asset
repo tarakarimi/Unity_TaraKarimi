@@ -14,3 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movesNumber: 8
   scoreGoal: 2100
+  gridSize: 5
+  wordList:
+  - alpha

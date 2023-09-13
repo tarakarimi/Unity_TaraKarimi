@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int numberOfMoves, goalScore, levelNumber;
     [SerializeField] private int currentScore = 1000, targetScore;
     [SerializeField] private Text ObjectivePreviewText;
+    private List<string> wordSuggest;
 
     private void Start()
     {
@@ -28,11 +30,6 @@ public class GameManager : MonoBehaviour
         movesText.text = numberOfMoves.ToString();
         goalText.text = "/ " + goalScore;
         CreateGrid();
-        levelNumber = PlayerPrefs.GetInt("CurrentLevel", 1);
-        if (levelNumber == 1)
-        {
-            StartCoroutine(SetMidRowLetters());
-        }
     }
 
     private void CreateGrid()
@@ -105,19 +102,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator SetMidRowLetters()
+    private IEnumerator SetMidRowLetters(List<string> word, int numberOfWords)
     {
         yield return null;
-        tileMatrix[2, 0].gameObject.GetComponent<Tile>().letter = 'a';
-        tileMatrix[2, 1].gameObject.GetComponent<Tile>().letter = 'l';
-        tileMatrix[2, 2].gameObject.GetComponent<Tile>().letter = 'p';
-        tileMatrix[2, 3].gameObject.GetComponent<Tile>().letter = 'h';
-        tileMatrix[2, 4].gameObject.GetComponent<Tile>().letter = 'a';
-
-        for (int col = 0; col < gridSize; col++)
+        if (numberOfWords == 1)
         {
-            tileMatrix[2, col].gameObject.GetComponent<Tile>().SetLetterProperties();
+            int midRow = 2;
+            int startCol = (gridSize - word[0].Length) / 2;
+            for (int col = 0; col < word[0].Length; col++)
+            {
+                tileMatrix[midRow, startCol + col].gameObject.GetComponent<Tile>().letter = word[0][col];
+                tileMatrix[midRow, startCol + col].gameObject.GetComponent<Tile>().SetLetterProperties();
+            }
         }
+        else
+        {
+            for (int c_word = 0; c_word < numberOfWords; c_word++)
+            {
+                bool writeLeftToRight = (Random.Range(0, 2) == 0);
+
+                string currentWord = word[c_word];
+                if (!writeLeftToRight)
+                {
+                    char[] charArray = currentWord.ToCharArray();
+                    Array.Reverse(charArray);
+                    currentWord = new string(charArray);
+                }
+
+                for (int col = 0; col < currentWord.Length; col++)
+                {
+                    tileMatrix[c_word, col].gameObject.GetComponent<Tile>().letter = currentWord[col];
+                    tileMatrix[c_word, col].gameObject.GetComponent<Tile>().SetLetterProperties();
+                }
+            }
+
+        }
+
     }
 
     public void GoToMenu()
@@ -130,11 +150,19 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void SetLevelParameters(int moves, int goal)
+    public void SetLevelParameters(int moves, int goal, int size, List<string> word)
     {
         numberOfMoves = moves;
         goalScore = goal;
         ObjectivePreviewText.text = "score " + goal + " points";
+        gridSize = size;
+        wordSuggest = word;
+        int numberOfWord = wordSuggest.Count;
+        if (gridSize > 5)
+        {
+            tileSize = 0.9f;
+        }
+        StartCoroutine(SetMidRowLetters(wordSuggest,numberOfWord));
     }
     
     

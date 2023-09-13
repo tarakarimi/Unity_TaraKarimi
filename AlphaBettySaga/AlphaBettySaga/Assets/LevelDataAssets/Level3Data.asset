@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: Level3Data
   m_EditorClassIdentifier: 
   movesNumber: 15
-  scoreGoal: 1500
+  scoreGoal: 3500
+  gridSize: 6
+  wordList:
+  - enigma
+  - magics

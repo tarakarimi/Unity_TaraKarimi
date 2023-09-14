@@ -37,6 +37,6 @@ public class MenuManager : MonoBehaviour
     
     public void PlayClickSound()
     {
-        audioManager.playSfx();
+        audioManager.PlayClickSound();
     }
 }

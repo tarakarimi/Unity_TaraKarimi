@@ -56,6 +56,6 @@ public class LevelManager : MonoBehaviour
     
     public void PlayClickSound()
     {
-        audioManager.playSfx();
+        audioManager.PlayClickSound();
     }
 }

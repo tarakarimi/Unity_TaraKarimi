@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class SettingManager : MonoBehaviour
 {
-    // Start is called before the first frame update
     private bool musicStatus = true, SFXStatus = true;
     [SerializeField] private Button MusicButtonRef, SFXButtonRef;
     [SerializeField] private Sprite MusicOn, MusicOff, SFXOn, SFXOff;
@@ -15,17 +14,28 @@ public class SettingManager : MonoBehaviour
     private string currentLanguage;
     private AudioManager audioManager;
 
+    // Define PlayerPrefs keys for saving settings
+    private string musicStatusKey = "MusicStatus";
+    private string SFXStatusKey = "SFXStatus";
+
     void Start()
     {
         currentLanguage = engStr;
         LanguageText.text = currentLanguage;
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        // Load saved settings (if available)
+        if (PlayerPrefs.HasKey(musicStatusKey))
+        {
+            musicStatus = PlayerPrefs.GetInt(musicStatusKey) == 1; // 1 for true, 0 for false
+            UpdateMusicUI();
+        }
+
+        if (PlayerPrefs.HasKey(SFXStatusKey))
+        {
+            SFXStatus = PlayerPrefs.GetInt(SFXStatusKey) == 1; // 1 for true, 0 for false
+            UpdateSFXUI();
+        }
     }
 
     public void Back()
@@ -35,30 +45,31 @@ public class SettingManager : MonoBehaviour
 
     public void MusicToggle()
     {
-        if (musicStatus)
-        {
-            musicStatus = false;
-            MusicButtonRef.image.sprite = MusicOff;
-        }
-        else
-        {
-            musicStatus = true;
-            MusicButtonRef.image.sprite = MusicOn;
-        }
+        musicStatus = !musicStatus;
+        UpdateMusicUI();
+
+        // Update AudioManager's music status
+        audioManager.SetMusicStatus(musicStatus);
+
+        // Save the music status in PlayerPrefs
+        PlayerPrefs.SetInt(musicStatusKey, musicStatus ? 1 : 0);
+        PlayerPrefs.Save();
+        
+        Debug.Log("MusicEnabled: " + PlayerPrefs.GetInt("MusicEnabled"));
+
     }
-    
+
     public void SFXToggle()
     {
-        if (SFXStatus)
-        {
-            SFXStatus = false;
-            SFXButtonRef.image.sprite = SFXOff;
-        }
-        else
-        {
-            SFXStatus = true;
-            SFXButtonRef.image.sprite = SFXOn;
-        }
+        SFXStatus = !SFXStatus;
+        UpdateSFXUI();
+
+        // Update AudioManager's SFX status
+        //audioManager.SetSFXStatus(SFXStatus);
+
+        // Save the SFX status in PlayerPrefs
+        PlayerPrefs.SetInt(SFXStatusKey, SFXStatus ? 1 : 0);
+        PlayerPrefs.Save();
     }
 
     public void LanguageToggle()
@@ -74,9 +85,19 @@ public class SettingManager : MonoBehaviour
             currentLanguage = engStr;
         }
     }
-    
+
     public void PlayClickSound()
     {
-        audioManager.playSfx();
+        audioManager.PlayClickSound();
+    }
+
+    private void UpdateMusicUI()
+    {
+        MusicButtonRef.image.sprite = musicStatus ? MusicOn : MusicOff;
+    }
+
+    private void UpdateSFXUI()
+    {
+        SFXButtonRef.image.sprite = SFXStatus ? SFXOn : SFXOff;
     }
 }

@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
         int numberOfWord = wordSuggest.Count;
         if (gridSize > 5)
         {
-            tileSize = 0.9f;
+            tileSize = 0.7f;
         }
         StartCoroutine(SetMidRowLetters(wordSuggest,numberOfWord));
     }

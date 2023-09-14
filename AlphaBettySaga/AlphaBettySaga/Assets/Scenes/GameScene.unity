@@ -5785,7 +5785,7 @@ MonoBehaviour:
   gameoverPage: {fileID: 1136430931}
   tileParent: {fileID: 2010424343}
   gridSize: 5
-  tileSize: 0.8
+  tileSize: 0.75
   scoreText: {fileID: 538317187}
   movesText: {fileID: 1561139351}
   goalText: {fileID: 1906946837}

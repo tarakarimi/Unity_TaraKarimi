@@ -20,7 +20,8 @@ public class Tile : MonoBehaviour
     private bool isShifting;
     private TileInteractionHandler _tileInteractionHandler;
     private LetterScoreMap letterScoreMap;
-
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip createdSFX, clickSFX;
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -42,6 +43,8 @@ public class Tile : MonoBehaviour
 
     public void TileSelect()
     {
+        _audioSource.clip = clickSFX;
+        _audioSource.Play();   
         _spriteRenderer.sprite = selectedSprite;
     }
 
@@ -104,6 +107,11 @@ public class Tile : MonoBehaviour
             isShifting = false;
         }
     }
-    
+
+    public void PlayeCreatedSFX()
+    {
+        _audioSource.clip = createdSFX;
+        _audioSource.Play();
+    }
     
 }

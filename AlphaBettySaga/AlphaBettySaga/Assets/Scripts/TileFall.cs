@@ -27,6 +27,7 @@ public class TileFall : MonoBehaviour
             yield return null;
         }
         transform.position = new Vector3(startPos.x, startPos.y - ypos, startPos.z);
+        GetComponent<Tile>().PlayeCreatedSFX();
     }
 
     public void StartTileFall(float delayTime, float ypos)

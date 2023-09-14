@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int currentScore = 1000, targetScore;
     [SerializeField] private Text ObjectivePreviewText;
     private List<string> wordSuggest;
+    
 
     private void Start()
     {
@@ -164,7 +165,7 @@ public class GameManager : MonoBehaviour
         }
         StartCoroutine(SetMidRowLetters(wordSuggest,numberOfWord));
     }
-    
+
     
 
 }

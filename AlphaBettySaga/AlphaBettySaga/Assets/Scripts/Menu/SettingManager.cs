@@ -7,18 +7,19 @@ using UnityEngine.UI;
 public class SettingManager : MonoBehaviour
 {
     // Start is called before the first frame update
-    private bool musicStatus = true, SFXStatus;
+    private bool musicStatus = true, SFXStatus = true;
     [SerializeField] private Button MusicButtonRef, SFXButtonRef;
     [SerializeField] private Sprite MusicOn, MusicOff, SFXOn, SFXOff;
     [SerializeField] private Text LanguageText;
     private string engStr = "English", farStr = "Farsi";
     private string currentLanguage;
-
+    private AudioManager audioManager;
 
     void Start()
     {
         currentLanguage = engStr;
         LanguageText.text = currentLanguage;
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     // Update is called once per frame
@@ -72,5 +73,10 @@ public class SettingManager : MonoBehaviour
             LanguageText.text = engStr;
             currentLanguage = engStr;
         }
+    }
+    
+    public void PlayClickSound()
+    {
+        audioManager.playSfx();
     }
 }

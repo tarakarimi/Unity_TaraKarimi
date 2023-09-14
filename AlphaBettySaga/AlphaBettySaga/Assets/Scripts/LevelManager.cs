@@ -11,9 +11,10 @@ public class LevelManager : MonoBehaviour
     private GameManager GM;
     [SerializeField] private GameObject levelInfoPrefab;
     private Animator animator;
+    private AudioManager audioManager;
     private void Start()
     {
-        
+        audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
     }
 
     public void StartGame()
@@ -51,5 +52,10 @@ public class LevelManager : MonoBehaviour
         List<string> word = levelData.wordList;
         GM = GetComponent<GameManager>();
         GM.SetLevelParameters(moves, scoreGoal, gridSize, word);
+    }
+    
+    public void PlayClickSound()
+    {
+        audioManager.playSfx();
     }
 }

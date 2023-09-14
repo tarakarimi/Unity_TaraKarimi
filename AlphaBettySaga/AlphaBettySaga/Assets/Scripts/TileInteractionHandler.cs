@@ -23,6 +23,8 @@ public class TileInteractionHandler : MonoBehaviour
     private List<GameObject> arrows = new List<GameObject>();
     private bool wordIsValid = false;
     [SerializeField] private GameObject Fog;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip destroySfx, createSFX;
     void Start()
     {
         _camera = Camera.main;
@@ -115,6 +117,7 @@ public class TileInteractionHandler : MonoBehaviour
                 var tempRow = tile.row;
                 var tempCol = tile.col;
                 Destroy(tile.gameObject);
+                _audioSource.PlayOneShot(destroySfx);
                 ShiftTiles(tempRow, tempCol);
             }
         }
@@ -175,7 +178,7 @@ public class TileInteractionHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
 
-        float delatTime = 0;
+        float delayTime = 0;
         for (int row = 0; row < gridSize; row++)
         {
             for (int col = 0; col < gridSize; col++)
@@ -185,11 +188,13 @@ public class TileInteractionHandler : MonoBehaviour
                     //Debug.Log($"House at col {col}, row {row} is null.");
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
                     GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
-                    tempTile.transform.GetComponent<TileFall>().StartTileFall(delatTime, gridSize * tileSize);
+                    //_audioSource.clip = createSFX;
+                    //_audioSource.PlayDelayed(delayTime);
+                    tempTile.transform.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize);
                     tempTile.GetComponent<Tile>().SetGridPosition(row,col);
                     tempTile.transform.SetParent(GM.tileParent);
                     tileMatrix[row, col] = tempTile;
-                    delatTime += 0.05f;
+                    delayTime += 0.08f;
                 }
             }
         }

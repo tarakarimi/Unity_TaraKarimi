@@ -15,12 +15,19 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("MusicEnabled: " + PlayerPrefs.GetInt("MusicEnabled"));
+        
         if (Instance == null)
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
             PlayMenuMusic();
+            int soundStatus = PlayerPrefs.GetInt("SFXStatus",0);
+            if(soundStatus == 1){
+                AudioListener.pause = false;
+            } else{
+                AudioListener.pause = true;
+            }
+
         }
         else
         {

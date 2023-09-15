@@ -63,11 +63,12 @@ public class SettingManager : MonoBehaviour
     {
         SFXStatus = !SFXStatus;
         UpdateSFXUI();
-
-        // Update AudioManager's SFX status
-        //audioManager.SetSFXStatus(SFXStatus);
-
-        // Save the SFX status in PlayerPrefs
+        if(SFXStatus == true){
+            AudioListener.pause = false;
+        } else{
+            AudioListener.pause = true;
+        }
+        
         PlayerPrefs.SetInt(SFXStatusKey, SFXStatus ? 1 : 0);
         PlayerPrefs.Save();
     }

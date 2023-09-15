@@ -5914,7 +5914,9 @@ MonoBehaviour:
   Fog: {fileID: 300583502}
   _audioSource: {fileID: 870079421}
   destroySfx: {fileID: 8300000, guid: 11a8c89f811358a4abec38ccbe9d55f2, type: 3}
-  createSFX: {fileID: 8300000, guid: e8f999692f439474cad602c18d71f188, type: 3}
+  createSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}
+  silverTilePrefab: {fileID: 1239350869510313489, guid: db34aba8ad2433842a6970ffda18e978, type: 3}
+  goldenTilePrefab: {fileID: 8630196049447951846, guid: 169899d074dd2484c94c8f6ee420ba70, type: 3}
 --- !u!114 &870079419
 MonoBehaviour:
   m_ObjectHideFlags: 0

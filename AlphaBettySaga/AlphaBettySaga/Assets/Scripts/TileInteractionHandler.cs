@@ -1,10 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using Random = System.Random;
+using Random = UnityEngine.Random;
 
 public class TileInteractionHandler : MonoBehaviour
 {
@@ -25,6 +23,8 @@ public class TileInteractionHandler : MonoBehaviour
     [SerializeField] private GameObject Fog;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip destroySfx, createSFX;
+    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab;
+    private bool createFromSilver, createFromGold;
     void Start()
     {
         _camera = Camera.main;
@@ -46,18 +46,17 @@ public class TileInteractionHandler : MonoBehaviour
         {
             WordValidation();
         }
-
-        /*if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(LogNullHouses());
-        }*/
+        
+        if(Input.GetKeyDown(KeyCode.Space)){
+            StartCoroutine(ChangeTileToGold());
+        }
     }
     
     private void DetectMouseOverTiles()
     {
         Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        if (hit.collider != null && hit.collider.CompareTag("Tile")) {
+        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile"))) {
             Tile tile = hit.collider.GetComponent<Tile>();
             if (selectedTile != tile && !selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
@@ -103,14 +102,13 @@ public class TileInteractionHandler : MonoBehaviour
     }
     void WordValidation()
     {
-        // Form the chain of letters
-        //string chain = string.Join("", tileLetters);
         if (wordIsValid)
         {
             CalculateScore();
             GM.SubtractMove();
-            //Debug.Log("Word: " + chain+ " is Valid");
             
+            //length of the word
+            int wordLength = tileLetters.Count;
             foreach (var tile in selectedTilesList)
             {
                 tileMatrix[tile.row, tile.col] = null;
@@ -120,11 +118,20 @@ public class TileInteractionHandler : MonoBehaviour
                 _audioSource.PlayOneShot(destroySfx);
                 ShiftTiles(tempRow, tempCol);
             }
+            if (wordLength == 4)
+            {
+                StartCoroutine(ChangeTileToSilver());
+            }
+            else if (wordLength == 5)
+            {
+                StartCoroutine(ChangeTileToGold());
+            }
         }
 
         StartCoroutine(LogNullHouses());
         DeselectAllTiles();
     }
+
     void DeselectAllTiles()
     {
         LightImg.SetActive(false);
@@ -179,19 +186,31 @@ public class TileInteractionHandler : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
 
         float delayTime = 0;
+
         for (int row = 0; row < gridSize; row++)
         {
             for (int col = 0; col < gridSize; col++)
             {
                 if (tileMatrix[row, col] == null)
                 {
-                    //Debug.Log($"House at col {col}, row {row} is null.");
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
-                    GameObject tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
-                    //_audioSource.clip = createSFX;
-                    //_audioSource.PlayDelayed(delayTime);
+                    GameObject tempTile;
+                    if (createFromGold)
+                    {
+                        tempTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
+                        createFromGold = false;
+                    }
+                    else if (createFromSilver)
+                    {
+                        tempTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
+                        createFromSilver = false;
+                    }
+                    else
+                    {
+                        tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
+                    }
                     tempTile.transform.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize);
-                    tempTile.GetComponent<Tile>().SetGridPosition(row,col);
+                    tempTile.GetComponent<Tile>().SetGridPosition(row, col);
                     tempTile.transform.SetParent(GM.tileParent);
                     tileMatrix[row, col] = tempTile;
                     delayTime += 0.08f;
@@ -199,6 +218,7 @@ public class TileInteractionHandler : MonoBehaviour
             }
         }
     }
+
 
     private void CalculateScore()
     {
@@ -271,7 +291,6 @@ public class TileInteractionHandler : MonoBehaviour
                 GameObject tile = tileObject;
                 tile.GetComponent<Tile>().letter = extractedLetters[letterIndex];
                 tile.GetComponent<TileFall>().StartTileFall(delay_time, 10f);
-                //tileObject.transform.position -= new Vector3(0,10f,0);
                 tile.GetComponent<Tile>().SetLetterProperties();
                 letterIndex++;
                 delay_time += delay_speed;
@@ -279,4 +298,62 @@ public class TileInteractionHandler : MonoBehaviour
         }
         Fog.SetActive(true);
     }
+    
+    IEnumerator ChangeTileToSilver()
+{
+    int randomRow = Random.Range(0, gridSize);
+    int randomCol = Random.Range(0, gridSize);
+    GameObject tile = tileMatrix[randomRow, randomCol];
+    if (tile != null)
+    {
+        char letterKept = tile.GetComponent<Tile>().GetLetter();
+        Vector3 tilePosition = tile.transform.position;
+        int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
+        Destroy(tile.gameObject);
+        GameObject silverTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
+        Tile tileScript = silverTile.GetComponent<Tile>();
+        yield return new WaitForSeconds(0.01f);
+        tileScript.letter = letterKept;
+        tileScript.SetLetterProperties();
+        tileScript.SetGridPosition(randomRow, randomCol);
+        tileScript.shiftDownStep = shiftStep;
+        tileScript.ShiftDown();
+        tileMatrix[randomRow, randomCol] = silverTile;
+        Debug.Log("LetterKept= " + letterKept);
+    }
+    else
+    {
+        createFromGold = true;
+    }
+}
+
+IEnumerator ChangeTileToGold()
+{
+    int randomRow = Random.Range(0, gridSize);
+    int randomCol = Random.Range(0, gridSize);
+    GameObject tile = tileMatrix[randomRow, randomCol];
+    if (tile != null)
+    {
+        char letterKept = tile.GetComponent<Tile>().GetLetter();
+        Vector3 tilePosition = tile.transform.position;
+        int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
+        Destroy(tile.gameObject);
+        GameObject goldenTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
+        Tile tileScript = goldenTile.GetComponent<Tile>();
+        yield return new WaitForSeconds(0.01f);
+        tileScript.letter = letterKept;
+        tileScript.SetLetterProperties();
+        tileScript.SetGridPosition(randomRow, randomCol);
+        tileScript.shiftDownStep = shiftStep;
+        tileScript.ShiftDown();
+        tileMatrix[randomRow, randomCol] = goldenTile;
+        Debug.Log("LetterKept= " + letterKept);
+    }
+    else
+    {
+        createFromGold = true;
+    }
+}
+
+
 }

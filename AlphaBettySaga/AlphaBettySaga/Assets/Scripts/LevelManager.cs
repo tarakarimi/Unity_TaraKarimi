@@ -24,7 +24,6 @@ public class LevelManager : MonoBehaviour
 
     public void OpenInfoDlg(int levelNumber)
     {
-        Debug.Log("level = "+ levelNumber);
         PlayerPrefs.SetInt("CurrentLevel", levelNumber);
         currentLevel = levelNumber;
         LevelData levelData = levels[currentLevel-1];

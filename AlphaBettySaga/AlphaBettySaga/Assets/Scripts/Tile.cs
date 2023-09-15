@@ -9,7 +9,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private Sprite selectedSprite, defaultSprite;
     private SpriteRenderer _spriteRenderer;
     public char letter;
-    private int score;
+    public int score;
     private LetterGenerator _letterGenerator;
     [SerializeField] private Text tileLetter, tileScore;
     public int row, col;
@@ -25,19 +25,26 @@ public class Tile : MonoBehaviour
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        _letterGenerator = new LetterGenerator();
-        letter = _letterGenerator.GetRandomLetter();
         GameObject GM = GameObject.Find("GameManager");
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
+        _letterGenerator = new LetterGenerator(); 
+        letter = _letterGenerator.GetRandomLetter();
         SetLetterProperties();
     }
 
     public void SetLetterProperties()
     {
-        UpdateTileLetter();
+        tileLetter.text = letter.ToString();
         letterScoreMap = LetterScoreMap.Instance;
-        score = letterScoreMap.GetScoreForLetter(letter);
+        if (CompareTag("Tile") || CompareTag("GoldTile"))
+        {
+            score = letterScoreMap.GetScoreForLetter(letter);
+        }
+        else if (CompareTag("SilverTile"))
+        {
+            score = letterScoreMap.GetScoreForLetter(letter) * 2;
+        }
         tileScore.text = score.ToString().ToUpper();
     }
 
@@ -51,11 +58,6 @@ public class Tile : MonoBehaviour
     public void TileDeSelect()
     {
         _spriteRenderer.sprite = defaultSprite;
-    }
-
-    private void UpdateTileLetter()
-    {
-        tileLetter.text = letter.ToString();
     }
 
     public char GetLetter()

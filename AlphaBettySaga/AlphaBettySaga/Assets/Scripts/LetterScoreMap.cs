@@ -18,7 +18,6 @@ public class LetterScoreMap
             if (instance == null)
             {
                 instance = new LetterScoreMap();
-                Debug.Log("created");
             }
             return instance;
         }

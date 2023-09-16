@@ -24,6 +24,7 @@ public class TileInteractionHandler : MonoBehaviour
     [SerializeField] private AudioClip destroySfx;
     [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab, bombTilePrefab;
     private bool createFromSilver, createFromGold, createFromWild, createFromBomb;
+    private int extraPoints;
     void Start()
     {
         _camera = Camera.main;
@@ -199,7 +200,6 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void ShiftTiles(int row, int col, string tileTag)
     {
-        Debug.Log(tileTag);
         if (tileTag == "Bomb")
         {
             for(int i = 0; i < gridSize; i++)
@@ -216,6 +216,8 @@ public class TileInteractionHandler : MonoBehaviour
                             {
                                 if (!selectedTilesList.Contains(tileScript))
                                 {
+                                    extraPoints += 10;
+                                    Debug.Log(extraPoints);
                                     string keptTag = tileObject.tag;
                                     Destroy(tileObject.gameObject);
                                     tileMatrix[i, j] = null;
@@ -254,9 +256,9 @@ public class TileInteractionHandler : MonoBehaviour
     IEnumerator LogNullHouses()
     {
         yield return new WaitForSeconds(0.3f);
-
+        GM.AddScore(extraPoints);
+        extraPoints = 0;
         float delayTime = 0;
-
         for (int row = 0; row < gridSize; row++)
         {
             for (int col = 0; col < gridSize; col++)

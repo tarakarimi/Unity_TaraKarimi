@@ -64,10 +64,10 @@ public class GameManager : MonoBehaviour
     public void AddScore(int addingScore)
     {
         targetScore = currentScore + addingScore;
-        if (targetScore > goalScore)
+        /*if (targetScore > goalScore)
         {
             targetScore = goalScore;
-        }
+        }*/
         StartCoroutine(IncrementScoreCoroutine(targetScore));
     }
 

@@ -28,8 +28,15 @@ public class Tile : MonoBehaviour
         GameObject GM = GameObject.Find("GameManager");
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
-        _letterGenerator = new LetterGenerator(); 
-        letter = _letterGenerator.GetRandomLetter();
+        if (CompareTag("WildTile"))
+        {
+            letter = '*';
+        }
+        else
+        {
+            _letterGenerator = new LetterGenerator(); 
+            letter = _letterGenerator.GetRandomLetter();
+        }
         SetLetterProperties();
     }
 
@@ -37,7 +44,7 @@ public class Tile : MonoBehaviour
     {
         tileLetter.text = letter.ToString();
         letterScoreMap = LetterScoreMap.Instance;
-        if (CompareTag("Tile") || CompareTag("GoldTile"))
+        if (CompareTag("Tile") || CompareTag("GoldTile") || CompareTag("Bomb") )
         {
             score = letterScoreMap.GetScoreForLetter(letter);
         }

@@ -9,28 +9,27 @@ public class TileInteractionHandler : MonoBehaviour
     private Camera _camera;
     private List<Tile> selectedTilesList = new List<Tile>();
     private Tile selectedTile;
-    private float distanceThreshold;
+    private float distanceThreshold, tileSize;
     private List<char> tileLetters = new List<char>();
     private WordDatabase db;
     private int gridSize = 5;
     [SerializeField] private GameObject tilePrefab, arrowPrefab, LightImg;
-    private float tileSize = 1.1f;
     private Vector3 centerOffset;
     public GameObject[,] tileMatrix;
     private GameManager GM;
     private List<GameObject> arrows = new List<GameObject>();
-    private bool wordIsValid = false;
+    private bool wordIsValid;
     [SerializeField] private GameObject Fog;
     [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip destroySfx, createSFX;
-    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab;
-    private bool createFromSilver, createFromGold, createFromWild;
+    [SerializeField] private AudioClip destroySfx;
+    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab, bombTilePrefab;
+    private bool createFromSilver, createFromGold, createFromWild, createFromBomb;
     void Start()
     {
         _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
         db = GetComponent<WordDatabase>();
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        GM = GetComponent<GameManager>();
         centerOffset = GM.centerOffset;
         gridSize = GM.gridSize;
         tileSize = GM.tileSize;
@@ -46,9 +45,14 @@ public class TileInteractionHandler : MonoBehaviour
         {
             WordValidation();
         }
-        
-        if(Input.GetKeyDown(KeyCode.Space)){
-            StartCoroutine(ChangeTileToGold());
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(LogNullHouses());
+        }
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
+        {
+            StartCoroutine(ChangeTileToBomb());
         }
     }
     
@@ -56,7 +60,7 @@ public class TileInteractionHandler : MonoBehaviour
     {
         Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile") || hit.collider.CompareTag("WildTile"))) {
+        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile") || hit.collider.CompareTag("WildTile") | hit.collider.CompareTag("Bomb"))) {
             Tile tile = hit.collider.GetComponent<Tile>();
             if (selectedTile != tile && !selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
@@ -72,12 +76,12 @@ public class TileInteractionHandler : MonoBehaviour
 
                 if (selectedTilesList.Count>1)
                 {
-                    Transform previousTile = selectedTilesList[selectedTilesList.Count - 2].transform;
+                    Transform previousTile = selectedTilesList[Index.FromEnd(2)].transform;
                     Transform currentTile = selectedTile.transform;
                     CreateArrow(previousTile, currentTile);
                     LightCheck();
                 }
-            } else if (selectedTilesList.Count > 1 && tile == selectedTilesList[selectedTilesList.Count - 2])
+            } else if (selectedTilesList.Count > 1 && tile == selectedTilesList[Index.FromEnd(2)])
             {
                 DeselectLastTile();
             }
@@ -97,7 +101,6 @@ public class TileInteractionHandler : MonoBehaviour
             for (char letter = 'a'; letter <= 'z'; letter++)
             {
                 string wordToCheck = chain.Replace('*', letter);
-                Debug.Log("word = "+ wordToCheck);
                 if (db.IsWordValid(wordToCheck, chainLength))
                 {
                     LightImg.SetActive(true);
@@ -129,12 +132,12 @@ public class TileInteractionHandler : MonoBehaviour
             int wordLength = tileLetters.Count;
             foreach (var tile in selectedTilesList)
             {
-                tileMatrix[tile.row, tile.col] = null;
                 var tempRow = tile.row;
                 var tempCol = tile.col;
+                tileMatrix[tempRow, tempCol] = null;
                 Destroy(tile.gameObject);
                 _audioSource.PlayOneShot(destroySfx);
-                ShiftTiles(tempRow, tempCol);
+                ShiftTiles(tempRow, tempCol, tile.transform.tag);
             }
             if (wordLength == 4)
             {
@@ -145,11 +148,20 @@ public class TileInteractionHandler : MonoBehaviour
                 StartCoroutine(ChangeTileToGold());
             } else if (wordLength >= 6)
             {
-                StartCoroutine(ChangeTileToWild());
+                int coin = Random.Range(0, 2);
+                if (coin == 0)
+                {
+                    StartCoroutine(ChangeTileToWild());
+                }
+                else
+                {
+                    StartCoroutine(ChangeTileToBomb());
+                }
+                
             }
         }
 
-        StartCoroutine(LogNullHouses());
+        //StartCoroutine(LogNullHouses());
         DeselectAllTiles();
     }
 
@@ -185,20 +197,56 @@ public class TileInteractionHandler : MonoBehaviour
         return distanceThreshold;
     }
     
-    public void ShiftTiles(int row, int col)
+    public void ShiftTiles(int row, int col, string tileTag)
     {
-        for(int i = row+1; i < gridSize; i++)
+        Debug.Log(tileTag);
+        if (tileTag == "Bomb")
         {
-            GameObject tileObject = tileMatrix[i, col];
-            if (tileObject != null)
+            for(int i = 0; i < gridSize; i++)
             {
-                Tile tileScript = tileMatrix[i,col].GetComponent<Tile>();
-                if (tileScript != null)
+                for (int j = 0; j < gridSize; j++)
                 {
-                    tileScript.shiftDownStep++;
-                    tileScript.ShiftDown();
+                    GameObject tileObject = tileMatrix[i, j];
+                    if (tileObject != null)
+                    {
+                        if (!(i == row && j == col))
+                        {
+                            Tile tileScript = tileMatrix[i,j].GetComponent<Tile>();
+                            if (tileScript.row == row || tileScript.col == col)
+                            {
+                                if (!selectedTilesList.Contains(tileScript))
+                                {
+                                    Destroy(tileObject.gameObject);
+                                    tileMatrix[i, j] = null;
+                                    ShiftTiles(i, j, "Tile");
+                                }
+                            }
+                        }
+                        
+                    }
                 }
             }
+            tileMatrix[row, col] = null;
+            Destroy(tileMatrix[row,col]);
+            StartCoroutine(LogNullHouses());
+        }
+        else
+        {
+            for(int i = row+1; i < gridSize; i++)
+            {
+                GameObject tileObject = tileMatrix[i, col];
+                if (tileObject != null)
+                {
+                    Tile tileScript = tileMatrix[i,col].GetComponent<Tile>();
+                    if (tileScript != null)
+                    {
+                        tileScript.shiftDownStep++;
+                        tileScript.ShiftDown();
+                    }
+                }
+            }
+
+            StartCoroutine(LogNullHouses());
         }
     }
 
@@ -216,6 +264,7 @@ public class TileInteractionHandler : MonoBehaviour
                 {
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
                     GameObject tempTile;
+                    
                     if (createFromGold)
                     {
                         tempTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
@@ -229,6 +278,10 @@ public class TileInteractionHandler : MonoBehaviour
                     {
                         tempTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
                         createFromWild = false;
+                    } else if (createFromBomb)
+                    {
+                        tempTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
+                        createFromBomb = false;
                     }
                     else
                     {
@@ -337,7 +390,7 @@ public class TileInteractionHandler : MonoBehaviour
         Destroy(tile.gameObject);
         GameObject silverTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
         Tile tileScript = silverTile.GetComponent<Tile>();
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         tileScript.letter = letterKept;
         tileScript.SetLetterProperties();
         tileScript.SetGridPosition(randomRow, randomCol);
@@ -364,7 +417,7 @@ IEnumerator ChangeTileToGold()
         Destroy(tile.gameObject);
         GameObject goldenTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
         Tile tileScript = goldenTile.GetComponent<Tile>();
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.001f);
         tileScript.letter = letterKept;
         tileScript.SetLetterProperties();
         tileScript.SetGridPosition(randomRow, randomCol);
@@ -390,17 +443,44 @@ IEnumerator ChangeTileToWild()
         Destroy(tile.gameObject);
         GameObject WildTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
         Tile tileScript = WildTile.GetComponent<Tile>();
-        yield return new WaitForSeconds(0.01f);
-        tileScript.letter = '*';
-        tileScript.SetLetterProperties();
         tileScript.SetGridPosition(randomRow, randomCol);
         tileScript.shiftDownStep = shiftStep;
         tileScript.ShiftDown();
         tileMatrix[randomRow, randomCol] = WildTile;
+        yield return new WaitForSeconds(0.02f);
+        tileScript.letter = '*';
+        tileScript.SetLetterProperties();
     }
     else
     {
         createFromWild = true;
+    }
+}
+
+IEnumerator ChangeTileToBomb()
+{
+    int randomRow = Random.Range(0, gridSize);
+    int randomCol = Random.Range(0, gridSize);
+    GameObject tile = tileMatrix[randomRow, randomCol];
+    if (tile != null)
+    {
+        char letterKept = tile.GetComponent<Tile>().GetLetter();
+        Vector3 tilePosition = tile.transform.position;
+        int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
+        Destroy(tile.gameObject);
+        GameObject bombTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
+        Tile tileScript = bombTile.GetComponent<Tile>();
+        tileScript.SetGridPosition(randomRow, randomCol);
+        tileScript.shiftDownStep = shiftStep;
+        tileScript.ShiftDown();
+        tileMatrix[randomRow, randomCol] = bombTile;
+        yield return new WaitForSeconds(0.001f);
+        tileScript.letter = letterKept;
+        tileScript.SetLetterProperties();
+    }
+    else
+    {
+        createFromBomb = true;
     }
 }
 

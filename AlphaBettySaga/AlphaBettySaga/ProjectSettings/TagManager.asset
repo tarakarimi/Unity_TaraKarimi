@@ -10,6 +10,8 @@ TagManager:
   - GoldTile
   - SilverTile
   - WildTile
+  - Gold
+  - Bomb
   layers:
   - Default
   - TransparentFX

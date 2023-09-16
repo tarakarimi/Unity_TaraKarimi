@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b470f9bdd3a0d8c49851f634f73e80ae, type: 3}
   m_Name: Level3Data
   m_EditorClassIdentifier: 
-  movesNumber: 15
-  scoreGoal: 3500
+  movesNumber: 4
+  scoreGoal: 1000
   gridSize: 6
   wordList:
   - enigma

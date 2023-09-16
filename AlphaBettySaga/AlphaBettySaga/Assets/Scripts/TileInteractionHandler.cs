@@ -25,6 +25,7 @@ public class TileInteractionHandler : MonoBehaviour
     [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab, bombTilePrefab;
     private bool createFromSilver, createFromGold, createFromWild, createFromBomb;
     private int extraPoints;
+    private List<GameObject> bombTilesList = new List<GameObject>();
     void Start()
     {
         _camera = Camera.main;
@@ -53,7 +54,7 @@ public class TileInteractionHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            StartCoroutine(ChangeTileToBomb());
+            StartCoroutine(ChangeTileToBomb(1));
         }
     }
     
@@ -156,7 +157,7 @@ public class TileInteractionHandler : MonoBehaviour
                 }
                 else
                 {
-                    StartCoroutine(ChangeTileToBomb());
+                    StartCoroutine(ChangeTileToBomb(1));
                 }
                 
             }
@@ -217,7 +218,6 @@ public class TileInteractionHandler : MonoBehaviour
                                 if (!selectedTilesList.Contains(tileScript))
                                 {
                                     extraPoints += 10;
-                                    Debug.Log(extraPoints);
                                     string keptTag = tileObject.tag;
                                     Destroy(tileObject.gameObject);
                                     tileMatrix[i, j] = null;
@@ -460,30 +460,84 @@ IEnumerator ChangeTileToWild()
     }
 }
 
-IEnumerator ChangeTileToBomb()
+IEnumerator ChangeTileToBomb(int num)
 {
-    int randomRow = Random.Range(0, gridSize);
-    int randomCol = Random.Range(0, gridSize);
-    GameObject tile = tileMatrix[randomRow, randomCol];
-    if (tile != null)
+    bombTilesList.Clear();
+    if (num > 1)
     {
-        char letterKept = tile.GetComponent<Tile>().GetLetter();
-        Vector3 tilePosition = tile.transform.position;
-        int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
-        Destroy(tile.gameObject);
-        GameObject bombTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
-        Tile tileScript = bombTile.GetComponent<Tile>();
-        tileScript.SetGridPosition(randomRow, randomCol);
-        tileScript.shiftDownStep = shiftStep;
-        tileScript.ShiftDown();
-        tileMatrix[randomRow, randomCol] = bombTile;
-        yield return new WaitForSeconds(0.001f);
-        tileScript.letter = letterKept;
-        tileScript.SetLetterProperties();
+        yield return new WaitForSeconds(1f);
     }
-    else
+    
+    for (int i = 0; i < num; i++)
     {
-        createFromBomb = true;
+        int randomRow = Random.Range(0, gridSize);
+        int randomCol = Random.Range(0, gridSize);
+        GameObject tile = tileMatrix[randomRow, randomCol];
+        if (tile != null)
+        {
+            if (!tile.CompareTag("Bomb"))
+            {
+                char letterKept = tile.GetComponent<Tile>().GetLetter();
+                Vector3 tilePosition = tile.transform.position;
+                int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
+                Destroy(tile.gameObject);
+                GameObject bombTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
+                Tile tileScript = bombTile.GetComponent<Tile>();
+                tileScript.SetGridPosition(randomRow, randomCol);
+                tileScript.shiftDownStep = shiftStep;
+                tileScript.ShiftDown();
+                tileMatrix[randomRow, randomCol] = bombTile;
+                yield return new WaitForSeconds(0.001f);
+                tileScript.letter = letterKept;
+                tileScript.SetLetterProperties();
+            }
+        }
+        else
+        {
+            createFromBomb = true;
+        }
+
+        if (num > 1)
+        {
+            GM.numberOfMoves--;
+            GM.movesText.text = GM.numberOfMoves.ToString();
+            Debug.Log("bomb created");
+            yield return new WaitForSeconds(0.5f);
+        }
+        
+    }
+
+    if (num > 1)
+    {
+        Debug.Log("Destroy the bombs");
+        Debug.Log("num of bombs here: " + bombTilesList.Count);
+        yield return new WaitForSeconds(3f);
+        StartCoroutine(DestroyBombTiles());
+    }
+}
+
+public void MovesToBomb(int num)
+{
+    StartCoroutine(ChangeTileToBomb(num));
+}
+
+
+IEnumerator DestroyBombTiles()
+{
+    bombTilesList.Clear();
+    GameObject[] bombObjects = GameObject.FindGameObjectsWithTag("Bomb");
+    foreach (GameObject bombObject in bombObjects)
+    {
+        //bombTilesList.Add(bombObject);
+        if (bombObject != null)
+        {
+            Tile tempBombScript = bombObject.GetComponent<Tile>();
+            int row = tempBombScript.row;
+            int col = tempBombScript.col;
+            Destroy(bombObject.gameObject);
+            ShiftTiles(row,col,"Bomb");
+        }
+        yield return null;
     }
 }
 

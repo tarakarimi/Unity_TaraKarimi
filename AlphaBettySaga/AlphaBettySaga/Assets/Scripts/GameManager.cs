@@ -8,25 +8,26 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject tilePrefab, winPage, gameoverPage;
+    [SerializeField] public GameObject tilePrefab, winPage, gameoverPage;
     [SerializeField] public Transform tileParent;
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
     public GameObject[,] tileMatrix;
-    [SerializeField] private Text scoreText, movesText, goalText;
+    [SerializeField] public Text scoreText, movesText, goalText;
     public Text wordInProgress, scoreOfWordInProgress;
     public Vector3 centerOffset;
-    [SerializeField] private int numberOfMoves, goalScore, levelNumber;
+    [SerializeField] public int numberOfMoves, goalScore, levelNumber;
     [SerializeField] private int currentScore = 1000, targetScore;
     [SerializeField] private Text ObjectivePreviewText;
     private List<string> wordSuggest;
-    
+    private TileInteractionHandler TIH;
+    private bool isGameOver;
 
     private void Start()
     {
         LevelManager LM = GetComponent<LevelManager>();
         LM.setLevelInfo();
-        
+        TIH = GetComponent<TileInteractionHandler>();
         tileMatrix = new GameObject[gridSize, gridSize];
         movesText.text = numberOfMoves.ToString();
         goalText.text = "/ " + goalScore;
@@ -64,10 +65,6 @@ public class GameManager : MonoBehaviour
     public void AddScore(int addingScore)
     {
         targetScore = currentScore + addingScore;
-        /*if (targetScore > goalScore)
-        {
-            targetScore = goalScore;
-        }*/
         StartCoroutine(IncrementScoreCoroutine(targetScore));
     }
 
@@ -76,9 +73,9 @@ public class GameManager : MonoBehaviour
         if (numberOfMoves>0)
         {
             numberOfMoves--;
-            if (targetScore == goalScore)
+            if (targetScore >= goalScore)
             {
-                winPage.SetActive(true);
+                //winPage.SetActive(true);
             }
             else if (numberOfMoves == 0)
             {
@@ -93,11 +90,23 @@ public class GameManager : MonoBehaviour
         while (currentScore < targetScore)
         {
             currentScore += 20;
-            if (currentScore == goalScore)
+            if (currentScore >= goalScore)
             {
-                winPage.SetActive(true);
+                if (numberOfMoves > 0)
+                {
+                    if (!isGameOver)
+                    {
+                        TIH.MovesToBomb(numberOfMoves);
+                        isGameOver = true;
+                    }
+                    
+                }
+                else
+                {
+                    //winPage.SetActive(true);
+                    Debug.Log("win page");
+                }
             }
-
             scoreText.text = currentScore.ToString();
             yield return null;
         }

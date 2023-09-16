@@ -216,9 +216,10 @@ public class TileInteractionHandler : MonoBehaviour
                             {
                                 if (!selectedTilesList.Contains(tileScript))
                                 {
+                                    string keptTag = tileObject.tag;
                                     Destroy(tileObject.gameObject);
                                     tileMatrix[i, j] = null;
-                                    ShiftTiles(i, j, "Tile");
+                                    ShiftTiles(i, j, keptTag);
                                 }
                             }
                         }

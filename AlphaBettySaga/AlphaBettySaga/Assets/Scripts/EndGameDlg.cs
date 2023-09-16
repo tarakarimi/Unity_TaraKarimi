@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class EndGameDlg : MonoBehaviour
 {
+    private bool isReady = false;
+
     // Start is called before the first frame update
     public void GoBack()
     {
@@ -13,12 +15,10 @@ public class EndGameDlg : MonoBehaviour
         {
             currentLevel++;
             PlayerPrefs.SetInt("CurrentLevel", currentLevel);
-            Debug.Log("DetectWin");
         }
 
         SceneManager.LoadScene("LevelsScene");
     }
-    
     public void RePlay()
     {
         SceneManager.LoadScene("LevelsScene");

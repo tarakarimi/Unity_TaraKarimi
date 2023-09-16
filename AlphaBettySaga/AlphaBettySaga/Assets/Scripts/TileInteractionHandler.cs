@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class TileInteractionHandler : MonoBehaviour
@@ -465,7 +467,7 @@ IEnumerator ChangeTileToBomb(int num)
     bombTilesList.Clear();
     if (num > 1)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
     }
     
     for (int i = 0; i < num; i++)
@@ -499,18 +501,18 @@ IEnumerator ChangeTileToBomb(int num)
 
         if (num > 1)
         {
-            GM.numberOfMoves--;
-            GM.movesText.text = GM.numberOfMoves.ToString();
-            Debug.Log("bomb created");
-            yield return new WaitForSeconds(0.5f);
+            if (GM.numberOfMoves > 0)
+            {
+                GM.numberOfMoves--;
+                GM.movesText.text = GM.numberOfMoves.ToString();
+                yield return new WaitForSeconds(0.1f);
+            }
         }
         
     }
 
     if (num > 1)
     {
-        Debug.Log("Destroy the bombs");
-        Debug.Log("num of bombs here: " + bombTilesList.Count);
         yield return new WaitForSeconds(3f);
         StartCoroutine(DestroyBombTiles());
     }
@@ -526,6 +528,7 @@ IEnumerator DestroyBombTiles()
 {
     bombTilesList.Clear();
     GameObject[] bombObjects = GameObject.FindGameObjectsWithTag("Bomb");
+    Debug.Log("bomb count = " + bombObjects.Length);
     foreach (GameObject bombObject in bombObjects)
     {
         //bombTilesList.Add(bombObject);
@@ -536,9 +539,26 @@ IEnumerator DestroyBombTiles()
             int col = tempBombScript.col;
             Destroy(bombObject.gameObject);
             ShiftTiles(row,col,"Bomb");
+            Debug.Log("first check");
         }
-        yield return null;
+        //yield return new WaitForSeconds(1f);
     }
+    bombObjects = new GameObject[0];
+    yield return new WaitForSeconds(1f);
+    /*foreach (GameObject bombObject in bombObjects)
+    {
+        if (bombObject != null)
+        {
+            Tile tempBombScript = bombObject.GetComponent<Tile>();
+            int row = tempBombScript.row;
+            int col = tempBombScript.col;
+            Destroy(bombObject.gameObject);
+            ShiftTiles(row,col,"Bomb");
+            Debug.Log("second check");
+        }
+    }*/
+    yield return new WaitForSeconds(3f);
+    GM.winPage.SetActive(true);
 }
 
 

@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     public Text wordInProgress, scoreOfWordInProgress;
     public Vector3 centerOffset;
     [SerializeField] public int numberOfMoves, goalScore, levelNumber;
-    [SerializeField] private int currentScore = 1000, targetScore;
+    [SerializeField] private int currentScore, targetScore;
     [SerializeField] private Text ObjectivePreviewText;
     private List<string> wordSuggest;
     private TileInteractionHandler TIH;
@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
         if (numberOfMoves>0)
         {
             numberOfMoves--;
-            if (targetScore >= goalScore)
+            if (targetScore >= goalScore && numberOfMoves == 0)
             {
-                //winPage.SetActive(true);
+                winPage.SetActive(true);
             }
             else if (numberOfMoves == 0)
             {
@@ -90,24 +90,15 @@ public class GameManager : MonoBehaviour
         while (currentScore < targetScore)
         {
             currentScore += 20;
-            if (currentScore >= goalScore)
+            scoreText.text = currentScore.ToString();
+            if ( targetScore >= goalScore && numberOfMoves > 0)
             {
-                if (numberOfMoves > 0)
+                if (!isGameOver)
                 {
-                    if (!isGameOver)
-                    {
-                        TIH.MovesToBomb(numberOfMoves);
-                        isGameOver = true;
-                    }
-                    
-                }
-                else
-                {
-                    //winPage.SetActive(true);
-                    Debug.Log("win page");
+                    TIH.MovesToBomb(numberOfMoves);
+                    isGameOver = true;
                 }
             }
-            scoreText.text = currentScore.ToString();
             yield return null;
         }
     }

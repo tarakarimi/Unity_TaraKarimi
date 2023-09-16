@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,7 @@ public class TileInteractionHandler : MonoBehaviour
     private bool createFromSilver, createFromGold, createFromWild, createFromBomb;
     private int extraPoints;
     private List<GameObject> bombTilesList = new List<GameObject>();
+    [SerializeField] private GameObject trailPrefab;
     void Start()
     {
         _camera = Camera.main;
@@ -484,6 +486,11 @@ IEnumerator ChangeTileToBomb(int num)
                 int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
                 Destroy(tile.gameObject);
                 GameObject bombTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
+                Vector3 startPos = new Vector3(0,20,0);
+                GameObject trail = Instantiate(trailPrefab,startPos, quaternion.identity);
+                Vector3 end = bombTile.transform.position;
+                trail.GetComponent<Trail>().StartMovement(end);
+
                 Tile tileScript = bombTile.GetComponent<Tile>();
                 tileScript.SetGridPosition(randomRow, randomCol);
                 tileScript.shiftDownStep = shiftStep;

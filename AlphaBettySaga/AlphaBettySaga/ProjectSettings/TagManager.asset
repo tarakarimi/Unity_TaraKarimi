@@ -9,7 +9,7 @@ TagManager:
   - Lose
   - GoldTile
   - SilverTile
-  - Gold
+  - WildTile
   layers:
   - Default
   - TransparentFX

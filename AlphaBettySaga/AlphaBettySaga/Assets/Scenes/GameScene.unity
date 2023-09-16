@@ -5917,6 +5917,7 @@ MonoBehaviour:
   createSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}
   silverTilePrefab: {fileID: 1239350869510313489, guid: db34aba8ad2433842a6970ffda18e978, type: 3}
   goldenTilePrefab: {fileID: 8630196049447951846, guid: 169899d074dd2484c94c8f6ee420ba70, type: 3}
+  wildTilePrefab: {fileID: 212950384134324842, guid: e3424a513a948d145af225e4a33351d1, type: 3}
 --- !u!114 &870079419
 MonoBehaviour:
   m_ObjectHideFlags: 0

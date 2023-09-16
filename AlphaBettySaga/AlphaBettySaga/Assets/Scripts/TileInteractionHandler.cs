@@ -23,8 +23,8 @@ public class TileInteractionHandler : MonoBehaviour
     [SerializeField] private GameObject Fog;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip destroySfx, createSFX;
-    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab;
-    private bool createFromSilver, createFromGold;
+    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab;
+    private bool createFromSilver, createFromGold, createFromWild;
     void Start()
     {
         _camera = Camera.main;
@@ -56,7 +56,7 @@ public class TileInteractionHandler : MonoBehaviour
     {
         Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile"))) {
+        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile") || hit.collider.CompareTag("WildTile"))) {
             Tile tile = hit.collider.GetComponent<Tile>();
             if (selectedTile != tile && !selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
@@ -89,7 +89,24 @@ public class TileInteractionHandler : MonoBehaviour
     {
         string chain = string.Join("", tileLetters);
         int chainLength = chain.Length;
-        if (db.IsWordValid(chain, chainLength))
+
+        if (chain.Contains("*"))
+        {
+            LightImg.SetActive(false);
+            wordIsValid = false;
+            for (char letter = 'a'; letter <= 'z'; letter++)
+            {
+                string wordToCheck = chain.Replace('*', letter);
+                Debug.Log("word = "+ wordToCheck);
+                if (db.IsWordValid(wordToCheck, chainLength))
+                {
+                    LightImg.SetActive(true);
+                    wordIsValid = true;
+                    break;
+                }
+            }
+        }
+        else if (db.IsWordValid(chain, chainLength))
         {
             LightImg.SetActive(true);
             wordIsValid = true;
@@ -100,6 +117,7 @@ public class TileInteractionHandler : MonoBehaviour
             wordIsValid = false;
         }
     }
+
     void WordValidation()
     {
         if (wordIsValid)
@@ -125,6 +143,9 @@ public class TileInteractionHandler : MonoBehaviour
             else if (wordLength == 5)
             {
                 StartCoroutine(ChangeTileToGold());
+            } else if (wordLength >= 6)
+            {
+                StartCoroutine(ChangeTileToWild());
             }
         }
 
@@ -204,6 +225,10 @@ public class TileInteractionHandler : MonoBehaviour
                     {
                         tempTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
                         createFromSilver = false;
+                    } else if (createFromWild)
+                    {
+                        tempTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
+                        createFromWild = false;
                     }
                     else
                     {
@@ -319,7 +344,6 @@ public class TileInteractionHandler : MonoBehaviour
         tileScript.shiftDownStep = shiftStep;
         tileScript.ShiftDown();
         tileMatrix[randomRow, randomCol] = silverTile;
-        Debug.Log("LetterKept= " + letterKept);
     }
     else
     {
@@ -347,11 +371,36 @@ IEnumerator ChangeTileToGold()
         tileScript.shiftDownStep = shiftStep;
         tileScript.ShiftDown();
         tileMatrix[randomRow, randomCol] = goldenTile;
-        Debug.Log("LetterKept= " + letterKept);
     }
     else
     {
         createFromGold = true;
+    }
+}
+
+IEnumerator ChangeTileToWild()
+{
+    int randomRow = Random.Range(0, gridSize);
+    int randomCol = Random.Range(0, gridSize);
+    GameObject tile = tileMatrix[randomRow, randomCol];
+    if (tile != null)
+    {
+        Vector3 tilePosition = tile.transform.position;
+        int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
+        Destroy(tile.gameObject);
+        GameObject WildTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
+        Tile tileScript = WildTile.GetComponent<Tile>();
+        yield return new WaitForSeconds(0.01f);
+        tileScript.letter = '*';
+        tileScript.SetLetterProperties();
+        tileScript.SetGridPosition(randomRow, randomCol);
+        tileScript.shiftDownStep = shiftStep;
+        tileScript.ShiftDown();
+        tileMatrix[randomRow, randomCol] = WildTile;
+    }
+    else
+    {
+        createFromWild = true;
     }
 }
 

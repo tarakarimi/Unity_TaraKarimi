@@ -288,7 +288,6 @@ public class TileInteractionHandler : MonoBehaviour
 
         maxDelayTimeForFall = delayTime + 0.4f;
         StartCoroutine(TouchState(true, maxDelayTimeForFall));
-        Debug.Log("maxDelayTimeForFall= "+ maxDelayTimeForFall);
     }
 
 

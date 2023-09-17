@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using RTLTMPro;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +11,7 @@ public class SettingManager : MonoBehaviour
     private bool musicStatus = true, SFXStatus = true;
     [SerializeField] private Button MusicButtonRef, SFXButtonRef;
     [SerializeField] private Sprite MusicOn, MusicOff, SFXOn, SFXOff;
-    [SerializeField] private TextMeshProUGUI LanguageText;
+    [SerializeField] private RTLTextMeshPro LanguageText;
     private string engStr = "English", farStr = "Farsi";
     private string currentLanguage;
     private AudioManager audioManager;
@@ -71,7 +72,7 @@ public class SettingManager : MonoBehaviour
     {
         if (currentLanguage == engStr)
         {
-            LanguageText.text = farStr;
+            LanguageText.text = "فارسی";
             currentLanguage = farStr;
         }
         else

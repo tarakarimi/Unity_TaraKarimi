@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using RTLTMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,7 +15,8 @@ public class GameManager : MonoBehaviour
     public float tileSize = 1.1f;
     public GameObject[,] tileMatrix;
     [SerializeField] public Text scoreText, movesText, goalText, ObjectivePreviewText;
-    public Text wordInProgress, scoreOfWordInProgress;
+    public Text scoreOfWordInProgress;
+    public RTLTextMeshPro wordInProgress;
     public Vector3 centerOffset;
     [SerializeField] public int numberOfMoves, goalScore;
     [SerializeField] private int currentScore, targetScore;

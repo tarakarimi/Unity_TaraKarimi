@@ -2,43 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-
 public class TileInteractionHandler : MonoBehaviour
 {
-    private Camera _camera;
-    private List<Tile> selectedTilesList = new List<Tile>();
-    private Tile selectedTile;
-    private float distanceThreshold, tileSize;
-    private List<char> tileLetters = new List<char>();
-    private WordDatabase db;
-    private int gridSize = 5;
-    [SerializeField] private GameObject tilePrefab, arrowPrefab, LightImg;
-    private Vector3 centerOffset;
-    public GameObject[,] tileMatrix;
-    private GameManager GM;
-    private List<GameObject> arrows = new List<GameObject>();
-    private bool wordIsValid;
-    [SerializeField] private GameObject Fog;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip destroySfx;
-    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab, bombTilePrefab;
-    private bool createFromSilver, createFromGold, createFromWild, createFromBomb;
-    private int extraPoints;
+    [SerializeField] private GameObject silverTilePrefab, goldenTilePrefab, wildTilePrefab, bombTilePrefab,Fog,trailPrefab,tilePrefab, arrowPrefab, LightImg;
+    [SerializeField] private WordDatabase db;
+    [SerializeField] private GameManager GM;
+    [SerializeField] private Camera _camera;
+    [SerializeField] private LayerMask tileLayerMask;
+    public GameObject[,] tileMatrix;
+    private List<char> tileLetters = new List<char>();
+    private List<Tile> selectedTilesList = new List<Tile>();
+    private List<GameObject> arrows = new List<GameObject>();
     private List<GameObject> bombTilesList = new List<GameObject>();
-    [SerializeField] private GameObject trailPrefab;
+    private Tile selectedTile;
+    private Vector3 centerOffset;
+    private float distanceThreshold, tileSize;
+    private int gridSize = 5,extraPoints;
+    private bool createFromSilver, createFromGold, createFromWild, createFromBomb,wordIsValid,isFarsiLanguage;
     private string languagePreference;
-    private bool isFarsiLanguage;
     private char startLetter, finalLetter;
     void Start()
     {
-        _camera = Camera.main;
         distanceThreshold = CalculateMaxDistance();
-        db = GetComponent<WordDatabase>();
-        GM = GetComponent<GameManager>();
         centerOffset = GM.centerOffset;
         gridSize = GM.gridSize;
         tileSize = GM.tileSize;
@@ -55,22 +44,13 @@ public class TileInteractionHandler : MonoBehaviour
         {
             WordValidation();
         }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(LogNullHouses());
-        }
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            StartCoroutine(ChangeTileToWild());
-        }
     }
     
     private void DetectMouseOverTiles()
     {
         Vector3 mousePosition = _camera.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
-        if (hit.collider != null && (hit.collider.CompareTag("Tile") || hit.collider.CompareTag("SilverTile") || hit.collider.CompareTag("GoldTile") || hit.collider.CompareTag("WildTile") | hit.collider.CompareTag("Bomb"))) {
+        if (hit.collider != null && hit.collider.gameObject.layer == LayerMask.NameToLayer("TileLayer")) {
             Tile tile = hit.collider.GetComponent<Tile>();
             if (selectedTile != tile && !selectedTilesList.Contains(tile) && (selectedTile == null || IsAdjacent(tile, selectedTile)))
             {
@@ -111,6 +91,7 @@ public class TileInteractionHandler : MonoBehaviour
             for (char letter = startLetter; letter <= finalLetter; letter++)
             {
                 string wordToCheck = chain.Replace('*', letter);
+                Debug.Log("word: "+ wordToCheck);
                 if (db.IsWordValid(wordToCheck, chainLength))
                 {
                     LightImg.SetActive(true);
@@ -273,7 +254,7 @@ public class TileInteractionHandler : MonoBehaviour
             {
                 if (tileMatrix[row, col] == null)
                 {
-                    Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize), 0) - centerOffset;
+                    Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize) + 5, 0) - centerOffset;
                     GameObject tempTile;
                     
                     if (createFromGold)
@@ -298,7 +279,7 @@ public class TileInteractionHandler : MonoBehaviour
                     {
                         tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
                     }
-                    tempTile.transform.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize);
+                    tempTile.transform.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize + 5);
                     tempTile.GetComponent<Tile>().SetGridPosition(row, col);
                     tempTile.transform.SetParent(GM.tileParent);
                     tileMatrix[row, col] = tempTile;
@@ -379,7 +360,7 @@ public class TileInteractionHandler : MonoBehaviour
             {
                 GameObject tile = tileObject;
                 tile.GetComponent<Tile>().letter = extractedLetters[letterIndex];
-                tile.GetComponent<TileFall>().StartTileFall(delay_time, 10f);
+                tile.GetComponent<TileFall>().StartTileFall(delay_time, 15f);
                 tile.GetComponent<Tile>().SetLetterProperties();
                 letterIndex++;
                 delay_time += delay_speed;
@@ -539,7 +520,6 @@ IEnumerator DestroyBombTiles()
 {
     bombTilesList.Clear();
     GameObject[] bombObjects = GameObject.FindGameObjectsWithTag("Bomb");
-    Debug.Log("bomb count = " + bombObjects.Length);
     foreach (GameObject bombObject in bombObjects)
     {
         //bombTilesList.Add(bombObject);
@@ -550,13 +530,12 @@ IEnumerator DestroyBombTiles()
             int col = tempBombScript.col;
             Destroy(bombObject.gameObject);
             ShiftTiles(row,col,"Bomb");
-            Debug.Log("first check");
         }
         //yield return new WaitForSeconds(1f);
     }
     bombObjects = new GameObject[0];
     yield return new WaitForSeconds(1f);
-    /*foreach (GameObject bombObject in bombObjects)
+    foreach (GameObject bombObject in bombObjects)
     {
         if (bombObject != null)
         {
@@ -567,7 +546,7 @@ IEnumerator DestroyBombTiles()
             ShiftTiles(row,col,"Bomb");
             Debug.Log("second check");
         }
-    }*/
+    }
     yield return new WaitForSeconds(3f);
     GM.winPage.SetActive(true);
 }
@@ -587,6 +566,4 @@ IEnumerator DestroyBombTiles()
             finalLetter = 'z';
         }
     }
-
-
 }

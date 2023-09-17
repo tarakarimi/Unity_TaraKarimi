@@ -7,9 +7,9 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     public LevelData[] levels; 
-    private int currentLevel = 0; // track the current level
-    private GameManager GM;
-    [SerializeField] private GameObject levelInfoPrefab;
+    private int currentLevel;
+    [SerializeField] private GameManager GM;
+    [SerializeField] private LevelInfoDialog _levelInfoDialog;
     private Animator animator;
     private AudioManager audioManager;
     private void Start()
@@ -28,12 +28,7 @@ public class LevelManager : MonoBehaviour
         currentLevel = levelNumber;
         LevelData levelData = levels[currentLevel-1];
         int scoreGoal = levelData.scoreGoal;
-        
-        levelInfoPrefab.SetActive(true);
-        levelInfoPrefab.transform.GetChild(2).GetComponent<Text>().text = "Level " + currentLevel;
-        levelInfoPrefab.transform.GetChild(3).GetComponent<Text>().text = "Goal: Score " + scoreGoal + " points";
-        animator = levelInfoPrefab.GetComponent<Animator>();
-        animator.Play("LevelInfoDlgBox_anim", 0, 0f);
+        _levelInfoDialog.SetProperties(currentLevel, scoreGoal);
     }
     
     public void BackBtn()
@@ -58,7 +53,6 @@ public class LevelManager : MonoBehaviour
         {
             word = levelData.wordList;
         }
-        GM = GetComponent<GameManager>();
         GM.SetLevelParameters(moves, scoreGoal, gridSize, word);
     }
     

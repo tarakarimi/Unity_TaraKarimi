@@ -3,9 +3,7 @@ using UnityEngine;
 public class LetterGenerator : MonoBehaviour
 {
     private static LetterGenerator instance;
-
-    private bool isFarsiLanguage = false;
-
+    private bool isFarsiLanguage;
     public static LetterGenerator Instance
     {
         get
@@ -34,7 +32,6 @@ public class LetterGenerator : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
-            Debug.Log("Checked once");
             isFarsiLanguage = (languagePreference == "Farsi");
         }
     }

@@ -15,7 +15,6 @@ public class SettingManager : MonoBehaviour
     private string currentLanguage;
     private AudioManager audioManager;
 
-    // Define PlayerPrefs keys for saving settings
     private string musicStatusKey = "MusicStatus";
     private string SFXStatusKey = "SFXStatus";
     private string languagePrefKey = "LanguagePreference";
@@ -25,17 +24,16 @@ public class SettingManager : MonoBehaviour
         currentLanguage = engStr;
         LanguageText.text = currentLanguage;
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
-
-        // Load saved settings (if available)
+        
         if (PlayerPrefs.HasKey(musicStatusKey))
         {
-            musicStatus = PlayerPrefs.GetInt(musicStatusKey) == 1; // 1 for true, 0 for false
+            musicStatus = PlayerPrefs.GetInt(musicStatusKey) == 1;
             UpdateMusicUI();
         }
 
         if (PlayerPrefs.HasKey(SFXStatusKey))
         {
-            SFXStatus = PlayerPrefs.GetInt(SFXStatusKey) == 1; // 1 for true, 0 for false
+            SFXStatus = PlayerPrefs.GetInt(SFXStatusKey) == 1;
             UpdateSFXUI();
         }
     }
@@ -49,15 +47,10 @@ public class SettingManager : MonoBehaviour
     {
         musicStatus = !musicStatus;
         UpdateMusicUI();
-
-        // Update AudioManager's music status
         audioManager.SetMusicStatus(musicStatus);
-
-        // Save the music status in PlayerPrefs
         PlayerPrefs.SetInt(musicStatusKey, musicStatus ? 1 : 0);
         PlayerPrefs.Save();
         
-        Debug.Log("MusicEnabled: " + PlayerPrefs.GetInt("MusicEnabled"));
 
     }
 
@@ -65,12 +58,11 @@ public class SettingManager : MonoBehaviour
     {
         SFXStatus = !SFXStatus;
         UpdateSFXUI();
-        if(SFXStatus == true){
+        if(SFXStatus){
             AudioListener.pause = false;
         } else{
             AudioListener.pause = true;
         }
-        
         PlayerPrefs.SetInt(SFXStatusKey, SFXStatus ? 1 : 0);
         PlayerPrefs.Save();
     }

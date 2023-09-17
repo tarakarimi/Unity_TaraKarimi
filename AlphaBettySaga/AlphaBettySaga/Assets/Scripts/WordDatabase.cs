@@ -69,7 +69,7 @@ public class WordDatabase : MonoBehaviour
             }
         }
 
-        Debug.Log("Word loading complete. Total words: " + validWords.Count + " Time: " + Time.time);
+        //Debug.Log("Word loading complete. Total words: " + validWords.Count + " Time: " + Time.time);
     }
 
     public bool IsWordValid(string word, int wordLength)

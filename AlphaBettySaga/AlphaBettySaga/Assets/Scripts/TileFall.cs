@@ -7,18 +7,11 @@ public class TileFall : MonoBehaviour
 {
     private float fallDuration = 0.4f;
     private Vector3 startPos;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     IEnumerator FallingCoroutine(float delayTime, float ypos)
     {
         yield return new WaitForSeconds(delayTime);
-        
         float startTime = Time.time;
-
         while (Time.time - startTime < fallDuration)
         {
             float progress = (Time.time - startTime) / fallDuration;

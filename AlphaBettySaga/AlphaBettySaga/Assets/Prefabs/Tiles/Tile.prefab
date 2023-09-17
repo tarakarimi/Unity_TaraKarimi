@@ -115,12 +115,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedSprite: {fileID: 21300000, guid: 1eb45817222d3d54a9f019b4c43f6299, type: 3}
   defaultSprite: {fileID: 21300000, guid: d7957a6dab6e38045b70b366f4c986e3, type: 3}
+  _spriteRenderer: {fileID: 7490067753407674922}
   letter: 0
-  tileLetter: {fileID: 1566877355258176890}
-  tileScore: {fileID: 8540340732194275269}
+  score: 0
   row: 0
   col: 0
   shiftDownStep: 0
+  tileLetter: {fileID: 1566877355258176890}
+  tileScore: {fileID: 8540340732194275269}
   _audioSource: {fileID: -1751759962014188128}
   createdSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}
   clickSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}

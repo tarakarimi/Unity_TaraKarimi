@@ -5856,7 +5856,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870079415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.8086214, y: -6.0825543, z: -0.18432531}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5887,15 +5887,16 @@ MonoBehaviour:
   scoreText: {fileID: 538317187}
   movesText: {fileID: 1561139351}
   goalText: {fileID: 1906946837}
+  ObjectivePreviewText: {fileID: 759699517}
   wordInProgress: {fileID: 33692617}
   scoreOfWordInProgress: {fileID: 1956433482}
   centerOffset: {x: 0, y: 0, z: 0}
   numberOfMoves: 8
   goalScore: 2100
-  levelNumber: 1
   currentScore: 0
   targetScore: 0
-  ObjectivePreviewText: {fileID: 759699517}
+  TIH: {fileID: 870079418}
+  LM: {fileID: 870079420}
 --- !u!114 &870079418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5908,17 +5909,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fece0546c04d7fe40829d2592f18ad78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tilePrefab: {fileID: 6182538067966243366, guid: cd6d71f07e6c8fd4caf40e0e37fe317d, type: 3}
-  arrowPrefab: {fileID: 7316421863826006383, guid: 8f5751246553765438b4b4fe1561f39f, type: 3}
-  LightImg: {fileID: 1252637576}
-  Fog: {fileID: 300583502}
   _audioSource: {fileID: 870079421}
   destroySfx: {fileID: 8300000, guid: 11a8c89f811358a4abec38ccbe9d55f2, type: 3}
   silverTilePrefab: {fileID: 1239350869510313489, guid: db34aba8ad2433842a6970ffda18e978, type: 3}
   goldenTilePrefab: {fileID: 8630196049447951846, guid: 169899d074dd2484c94c8f6ee420ba70, type: 3}
   wildTilePrefab: {fileID: 212950384134324842, guid: e3424a513a948d145af225e4a33351d1, type: 3}
   bombTilePrefab: {fileID: 5639850803124627746, guid: 8e9dbda12f9ba1347a6f0f7f54ead791, type: 3}
+  Fog: {fileID: 300583502}
   trailPrefab: {fileID: 1319701760385131812, guid: 5eb011138fe6bcb4b981edf94877ba1e, type: 3}
+  tilePrefab: {fileID: 6182538067966243366, guid: cd6d71f07e6c8fd4caf40e0e37fe317d, type: 3}
+  arrowPrefab: {fileID: 7316421863826006383, guid: 8f5751246553765438b4b4fe1561f39f, type: 3}
+  LightImg: {fileID: 1252637576}
+  db: {fileID: 870079419}
+  GM: {fileID: 870079417}
+  _camera: {fileID: 519420031}
+  tileLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &870079419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5949,7 +5956,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19b2cff9102ba834daf8b3568b98a3c6, type: 2}
   - {fileID: 11400000, guid: 5c1376b49daf0ed43bff51ef6aca9004, type: 2}
   - {fileID: 11400000, guid: fe6c0a3c3aa0d35418a359642f772217, type: 2}
-  levelInfoPrefab: {fileID: 0}
+  GM: {fileID: 870079417}
+  _levelInfoDialog: {fileID: 0}
 --- !u!82 &870079421
 AudioSource:
   m_ObjectHideFlags: 0

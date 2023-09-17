@@ -1,6 +1,4 @@
-
 using System.Collections.Generic;
-using UnityEngine;
 
 public class LetterScoreMap
 {
@@ -53,7 +51,6 @@ public class LetterScoreMap
         letterScores['y'] = 3;
         letterScores['z'] = 4;
 
-        
         letterScores['آ'] = 1;
         letterScores['ا'] = 1; 
         letterScores['ب'] = 3; 
@@ -86,7 +83,9 @@ public class LetterScoreMap
         letterScores['ن'] = 3;
         letterScores['و'] = 1;
         letterScores['ه'] = 2; 
-        letterScores['ی'] = 1; 
+        letterScores['ی'] = 1;
+
+        letterScores['*'] = 0;
     }
 
     public int GetScoreForLetter(char letter)

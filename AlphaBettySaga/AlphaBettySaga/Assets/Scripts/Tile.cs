@@ -1,22 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Tile : MonoBehaviour
 {
     [SerializeField] private Sprite selectedSprite, defaultSprite;
-    private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
     public char letter;
-    public int score;
+    public int score,row, col,shiftDownStep;
     private LetterGenerator _letterGenerator;
     [SerializeField] private Text tileLetter, tileScore;
-    public int row, col;
-    public int shiftDownStep;
-    private float size;
-    private float elapsedTime = 0f;
-    private float duration = 0.2f;
+    private float size,elapsedTime,duration = 0.2f;
     private bool isShifting;
     private TileInteractionHandler _tileInteractionHandler;
     private LetterScoreMap letterScoreMap;
@@ -24,15 +18,11 @@ public class Tile : MonoBehaviour
     [SerializeField] private AudioClip createdSFX, clickSFX;
     void Start()
     {
-        _spriteRenderer = GetComponent<SpriteRenderer>();
         GameObject GM = GameObject.Find("GameManager");
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
-        if (CompareTag("WildTile"))
-        {
-            letter = '*';
-        }
-        else
+        letterScoreMap = LetterScoreMap.Instance;
+        if (letter != '*')
         {
             _letterGenerator = LetterGenerator.Instance;
             letter = _letterGenerator.GetRandomLetter();
@@ -43,14 +33,13 @@ public class Tile : MonoBehaviour
     public void SetLetterProperties()
     {
         tileLetter.text = letter.ToString();
-        letterScoreMap = LetterScoreMap.Instance;
-        if (CompareTag("Tile") || CompareTag("GoldTile") || CompareTag("Bomb") )
+        if (gameObject.layer == LayerMask.NameToLayer("TileLayer"))
         {
             score = letterScoreMap.GetScoreForLetter(letter);
-        }
-        else if (CompareTag("SilverTile"))
-        {
-            score = letterScoreMap.GetScoreForLetter(letter) * 2;
+            if (CompareTag("SilverTile"))
+            {
+                score *= 2;
+            }
         }
         tileScore.text = score.ToString().ToUpper();
     }
@@ -92,13 +81,11 @@ public class Tile : MonoBehaviour
         if (!isShifting)
         {
             isShifting = true;
-
             yield return new WaitForSeconds(time);
             _tileInteractionHandler.tileMatrix[row, col] = null;
             Vector3 startPosition = transform.position;
             Vector3 targetPosition = startPosition + new Vector3(0, -shiftDownStep * size, 0);
-            transform.position = targetPosition;
-            
+
             while (elapsedTime <= duration)
             {
                 float t = Mathf.Clamp01(elapsedTime / duration);
@@ -109,14 +96,12 @@ public class Tile : MonoBehaviour
 
             transform.position = targetPosition;
             row -= shiftDownStep;
-            //Debug.Log("tile: " + letter + "moves "+shiftDownStep+" steps and new row & col is: "+row+", " + col);
-            _tileInteractionHandler.tileMatrix[row, col] = this.gameObject;
+            _tileInteractionHandler.tileMatrix[row, col] = gameObject;
             shiftDownStep = 0;
             elapsedTime = 0f;
             isShifting = false;
         }
     }
-
     public void PlayeCreatedSFX()
     {
         _audioSource.clip = createdSFX;

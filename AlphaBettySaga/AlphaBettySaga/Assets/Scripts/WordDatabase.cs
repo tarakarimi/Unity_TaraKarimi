@@ -11,14 +11,24 @@ public class WordDatabase : MonoBehaviour
     private List<string> fiveLetterWords = new List<string>();
     private List<string> otherWords = new List<string>();
 
-    [SerializeField] private TextAsset textAsset;
+    [SerializeField] private TextAsset englishWordDatabase;
+    [SerializeField] private TextAsset farsiWordDatabase;
 
     private void Start()
     {
-        StartCoroutine(LoadWordsCoroutine());
+        string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
+
+        if (languagePreference == "Farsi")
+        {
+            StartCoroutine(LoadWordsCoroutine(farsiWordDatabase));
+        }
+        else
+        {
+            StartCoroutine(LoadWordsCoroutine(englishWordDatabase));
+        }
     }
 
-    private IEnumerator LoadWordsCoroutine()
+    private IEnumerator LoadWordsCoroutine(TextAsset textAsset)
     {
         if (textAsset != null)
         {
@@ -59,7 +69,7 @@ public class WordDatabase : MonoBehaviour
             }
         }
 
-        Debug.Log("Word loading complete. Total words: " + validWords.Count + "time: " + Time.time);
+        Debug.Log("Word loading complete. Total words: " + validWords.Count + " Time: " + Time.time);
     }
 
     public bool IsWordValid(string word, int wordLength)
@@ -75,6 +85,5 @@ public class WordDatabase : MonoBehaviour
             default:
                 return otherWords.Contains(word);
         }
-
     }
 }

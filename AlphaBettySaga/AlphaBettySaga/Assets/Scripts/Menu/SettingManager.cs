@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,7 +10,7 @@ public class SettingManager : MonoBehaviour
     private bool musicStatus = true, SFXStatus = true;
     [SerializeField] private Button MusicButtonRef, SFXButtonRef;
     [SerializeField] private Sprite MusicOn, MusicOff, SFXOn, SFXOff;
-    [SerializeField] private Text LanguageText;
+    [SerializeField] private TextMeshProUGUI LanguageText;
     private string engStr = "English", farStr = "Farsi";
     private string currentLanguage;
     private AudioManager audioManager;
@@ -17,6 +18,7 @@ public class SettingManager : MonoBehaviour
     // Define PlayerPrefs keys for saving settings
     private string musicStatusKey = "MusicStatus";
     private string SFXStatusKey = "SFXStatus";
+    private string languagePrefKey = "LanguagePreference";
 
     void Start()
     {
@@ -85,7 +87,10 @@ public class SettingManager : MonoBehaviour
             LanguageText.text = engStr;
             currentLanguage = engStr;
         }
+        PlayerPrefs.SetString(languagePrefKey, currentLanguage);
+        PlayerPrefs.Save();
     }
+
 
     public void PlayClickSound()
     {

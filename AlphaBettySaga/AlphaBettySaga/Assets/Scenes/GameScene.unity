@@ -5931,7 +5931,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 074e169b2ab074d418f7bd35b1d4d15a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textAsset: {fileID: 4900000, guid: e87480fa6221a56449c77f496b1da46e, type: 3}
+  englishWordDatabase: {fileID: 4900000, guid: e87480fa6221a56449c77f496b1da46e, type: 3}
+  farsiWordDatabase: {fileID: 4900000, guid: 7328595df03f2c24c81cf8fdbb0d8412, type: 3}
 --- !u!114 &870079420
 MonoBehaviour:
   m_ObjectHideFlags: 0

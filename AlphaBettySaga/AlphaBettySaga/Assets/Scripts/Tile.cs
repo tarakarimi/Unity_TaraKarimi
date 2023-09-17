@@ -34,7 +34,7 @@ public class Tile : MonoBehaviour
         }
         else
         {
-            _letterGenerator = new LetterGenerator(); 
+            _letterGenerator = LetterGenerator.Instance;
             letter = _letterGenerator.GetRandomLetter();
         }
         SetLetterProperties();

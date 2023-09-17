@@ -1,3 +1,4 @@
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -51,6 +52,41 @@ public class LetterScoreMap
         letterScores['x'] = 4;
         letterScores['y'] = 3;
         letterScores['z'] = 4;
+
+        
+        letterScores['آ'] = 1;
+        letterScores['ا'] = 1; 
+        letterScores['ب'] = 3; 
+        letterScores['پ'] = 2; 
+        letterScores['ت'] = 1; 
+        letterScores['ث'] = 2;
+        letterScores['ج'] = 3;
+        letterScores['چ'] = 4; 
+        letterScores['ح'] = 2; 
+        letterScores['خ'] = 4; 
+        letterScores['د'] = 2;
+        letterScores['ذ'] = 3; 
+        letterScores['ر'] = 3; 
+        letterScores['ز'] = 1;
+        letterScores['ژ'] = 4;
+        letterScores['س'] = 3;
+        letterScores['ش'] = 2;
+        letterScores['ص'] = 2;
+        letterScores['ض'] = 3;
+        letterScores['ط'] = 1; 
+        letterScores['ظ'] = 4; 
+        letterScores['ع'] = 3; 
+        letterScores['غ'] = 3;
+        letterScores['ف'] = 2;
+        letterScores['ق'] = 4; 
+        letterScores['ک'] = 2; 
+        letterScores['گ'] = 3;
+        letterScores['ل'] = 1; 
+        letterScores['م'] = 2;
+        letterScores['ن'] = 3;
+        letterScores['و'] = 1;
+        letterScores['ه'] = 2; 
+        letterScores['ی'] = 1; 
     }
 
     public int GetScoreForLetter(char letter)

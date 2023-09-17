@@ -83,10 +83,20 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    gameoverPage.SetActive(true);
+                    StartCoroutine(FinalGameOverCheck());
                 }
             }
         }
+    }
+
+    IEnumerator FinalGameOverCheck()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (targetScore < goalScore)
+        {
+            gameoverPage.SetActive(true);
+        }
+        
     }
 
     private IEnumerator IncrementScoreCoroutine(int targetScore)

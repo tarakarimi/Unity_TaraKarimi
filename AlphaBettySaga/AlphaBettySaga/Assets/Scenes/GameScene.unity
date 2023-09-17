@@ -5926,6 +5926,8 @@ MonoBehaviour:
   tileLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  isTouchActive: 0
+  isGameOver: 0
 --- !u!114 &870079419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6547,6 +6549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c3e6a78f19ce044847c37157b55f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TIH: {fileID: 870079418}
 --- !u!82 &1136430935
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7435,6 +7438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4c3e6a78f19ce044847c37157b55f34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TIH: {fileID: 870079418}
 --- !u!82 &1912782928
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7926,3 +7930,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioSource: {fileID: 2141734981}
+  TIH: {fileID: 870079418}

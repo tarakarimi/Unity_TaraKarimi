@@ -20,13 +20,16 @@ public class ShuffleBtn : MonoBehaviour
     }
     public void Clicked()
     {
-        if (!shuffled)
+        if (tileInteraction.isTouchActive && tileInteraction.isGameOver == false)
         {
-            img.sprite = disabledSprite;
-            tileInteraction.ShuffleTiles();
-            shuffled = true;
-            btn.interactable = false;
-            StartCoroutine(EnableShuffleBtn());
+            if (!shuffled)
+            {
+                img.sprite = disabledSprite;
+                tileInteraction.ShuffleTiles();
+                shuffled = true;
+                btn.interactable = false;
+                StartCoroutine(EnableShuffleBtn());
+            }
         }
     }
 

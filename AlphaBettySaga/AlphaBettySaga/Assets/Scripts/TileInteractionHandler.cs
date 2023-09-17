@@ -22,6 +22,7 @@ public class TileInteractionHandler : MonoBehaviour
     private float distanceThreshold, tileSize,maxDelayTimeForFall;
     private int gridSize = 5,extraPoints;
     private bool createFromSilver, createFromGold, createFromWild, createFromBomb,wordIsValid,isFarsiLanguage;
+    public bool isTouchActive, isGameOver;
     private string languagePreference;
     private char startLetter, finalLetter;
     
@@ -37,21 +38,25 @@ public class TileInteractionHandler : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (isTouchActive && !isGameOver)
         {
-            DetectMouseOverTiles();
-        } else if (Input.GetMouseButtonUp(0) && selectedTilesList.Count > 0)
-        {
-            WordValidation();
+            if (Input.GetMouseButton(0))
+            {
+                DetectMouseOverTiles();
+            } else if (Input.GetMouseButtonUp(0) && selectedTilesList.Count > 0)
+            {
+                WordValidation();
+            }
+            if (Input.GetKeyDown(KeyCode.LeftAlt))
+            {
+                StartCoroutine(ChangeTileToBooster(goldenTilePrefab,1));
+            }
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(ChangeTileToBooster(silverTilePrefab,1));
+            }
         }
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            StartCoroutine(ChangeTileToBooster(goldenTilePrefab,1));
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(ChangeTileToBooster(silverTilePrefab,1));
-        }
+        
     }
     
     private void DetectMouseOverTiles()
@@ -188,6 +193,7 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void ShiftTiles(int row, int col, string tileTag)
     {
+        StartCoroutine(TouchState(false, 0));
         if (tileTag == "Bomb")
         {
             for(int i = 0; i < gridSize; i++)
@@ -280,6 +286,7 @@ public class TileInteractionHandler : MonoBehaviour
         }
 
         maxDelayTimeForFall = delayTime + 0.4f;
+        StartCoroutine(TouchState(true, maxDelayTimeForFall));
         Debug.Log("maxDelayTimeForFall= "+ maxDelayTimeForFall);
     }
 
@@ -431,6 +438,7 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void MovesToBomb(int num)
     {
+        isGameOver = true;
         StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));
     }
 
@@ -469,5 +477,11 @@ public class TileInteractionHandler : MonoBehaviour
             startLetter = 'a';
             finalLetter = 'z';
         }
+    }
+
+    public IEnumerator TouchState(bool toggle, float time)
+    {
+        yield return new WaitForSeconds(time);
+        isTouchActive = toggle;
     }
 }

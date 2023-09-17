@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TileInteractionHandler TIH;
     private bool isGameOver;
     [SerializeField] private LevelManager LM;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] AudioClip winSFX;
 
     private void Start()
     {
@@ -98,6 +100,8 @@ public class GameManager : MonoBehaviour
                 if (!isGameOver)
                 {
                     TIH.MovesToBomb(numberOfMoves);
+                    _audioSource.clip = winSFX;
+                    _audioSource.Play();
                     isGameOver = true;
                 }
             }

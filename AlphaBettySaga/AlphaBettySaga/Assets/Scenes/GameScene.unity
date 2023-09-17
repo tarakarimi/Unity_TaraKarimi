@@ -6242,6 +6242,8 @@ MonoBehaviour:
   targetScore: 0
   TIH: {fileID: 870079418}
   LM: {fileID: 870079420}
+  _audioSource: {fileID: 870079421}
+  winSFX: {fileID: 8300000, guid: eb6b714e9ee3e3b4d83c4024f8d62d22, type: 3}
 --- !u!114 &870079418
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -212,6 +212,7 @@ public class TileInteractionHandler : MonoBehaviour
                             {
                                 extraPoints += 10;
                                 string keptTag = tileObject.tag;
+                                //_audioSource.PlayOneShot(destroySfx);
                                 Destroy(tileObject.gameObject);
                                 tileMatrix[i, j] = null;
                                 ShiftTiles(i, j, keptTag);
@@ -453,6 +454,7 @@ public class TileInteractionHandler : MonoBehaviour
                 Tile tempBombScript = bombObject.GetComponent<Tile>();
                 int row = tempBombScript.row;
                 int col = tempBombScript.col;
+                _audioSource.PlayOneShot(destroySfx);
                 Destroy(bombObject.gameObject);
                 ShiftTiles(row,col,"Bomb");
             }

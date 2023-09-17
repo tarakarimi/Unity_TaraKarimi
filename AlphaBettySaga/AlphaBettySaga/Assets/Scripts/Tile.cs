@@ -102,10 +102,10 @@ public class Tile : MonoBehaviour
             isShifting = false;
         }
     }
-    public void PlayeCreatedSFX()
+    public void PlayCreatedSfx()
     {
         _audioSource.clip = createdSFX;
         _audioSource.Play();
     }
-    
+
 }

@@ -126,6 +126,7 @@ MonoBehaviour:
   _audioSource: {fileID: -1751759962014188128}
   createdSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}
   clickSFX: {fileID: 8300000, guid: 58ebd89df11c7664c8a346b1b1fb2b8b, type: 3}
+  poofSFX: {fileID: 8300000, guid: 11a8c89f811358a4abec38ccbe9d55f2, type: 3}
 --- !u!61 &911187028608630423
 BoxCollider2D:
   m_ObjectHideFlags: 0

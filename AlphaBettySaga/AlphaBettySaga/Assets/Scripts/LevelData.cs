@@ -8,4 +8,5 @@ public class LevelData : ScriptableObject
     public int scoreGoal;
     public int gridSize;
     public List<string> wordList;
+    public List<string> wordListFarsi;
 }

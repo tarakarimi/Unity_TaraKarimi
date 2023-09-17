@@ -17,3 +17,5 @@ MonoBehaviour:
   gridSize: 5
   wordList:
   - alpha
+  wordListFarsi:
+  - "\u0627\u0644\u0641\u0628\u0627"

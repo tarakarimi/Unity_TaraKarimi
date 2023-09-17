@@ -30,6 +30,9 @@ public class TileInteractionHandler : MonoBehaviour
     private int extraPoints;
     private List<GameObject> bombTilesList = new List<GameObject>();
     [SerializeField] private GameObject trailPrefab;
+    private string languagePreference;
+    private bool isFarsiLanguage;
+    private char startLetter, finalLetter;
     void Start()
     {
         _camera = Camera.main;
@@ -40,6 +43,7 @@ public class TileInteractionHandler : MonoBehaviour
         gridSize = GM.gridSize;
         tileSize = GM.tileSize;
         tileMatrix = GM.tileMatrix;
+        LanguageSetUp();
     }
     
     void Update()
@@ -58,7 +62,7 @@ public class TileInteractionHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            StartCoroutine(ChangeTileToBomb(1));
+            StartCoroutine(ChangeTileToWild());
         }
     }
     
@@ -104,7 +108,7 @@ public class TileInteractionHandler : MonoBehaviour
         {
             LightImg.SetActive(false);
             wordIsValid = false;
-            for (char letter = 'a'; letter <= 'z'; letter++)
+            for (char letter = startLetter; letter <= finalLetter; letter++)
             {
                 string wordToCheck = chain.Replace('*', letter);
                 if (db.IsWordValid(wordToCheck, chainLength))
@@ -567,6 +571,22 @@ IEnumerator DestroyBombTiles()
     yield return new WaitForSeconds(3f);
     GM.winPage.SetActive(true);
 }
+
+    void LanguageSetUp()
+    {
+        languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
+        isFarsiLanguage = (languagePreference == "Farsi");
+        if (isFarsiLanguage)
+        {
+            startLetter = 'ا';
+            finalLetter = 'ی';
+        }
+        else
+        {
+            startLetter = 'a';
+            finalLetter = 'z';
+        }
+    }
 
 
 }

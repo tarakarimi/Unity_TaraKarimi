@@ -48,7 +48,16 @@ public class LevelManager : MonoBehaviour
         int moves = levelData.movesNumber;
         int scoreGoal = levelData.scoreGoal;
         int gridSize = levelData.gridSize;
-        List<string> word = levelData.wordList;
+        string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
+        List<string> word;
+        if (languagePreference == "Farsi")
+        {
+            word = levelData.wordListFarsi;
+        }
+        else
+        {
+            word = levelData.wordList;
+        }
         GM = GetComponent<GameManager>();
         GM.SetLevelParameters(moves, scoreGoal, gridSize, word);
     }

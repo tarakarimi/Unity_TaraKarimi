@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] public GameObject tilePrefab, winPage, gameoverPage;
+    [SerializeField] public GameObject tilePrefab, winPage, gameoverPage, pauseDlg;
     [SerializeField] public Transform tileParent;
     [SerializeField] public int gridSize = 5;
     public float tileSize = 1.1f;
@@ -56,7 +56,8 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("LevelsScene");
+            pauseDlg.SetActive(true);
+            TIH.isTouchActive = false;
         }
     }
 
@@ -128,14 +129,15 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void GoToMenu()
+    public void GoToLevels()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("LevelsScene");
     }
     
-    public void RePlay()
+    public void KeepPlaying()
     {
-        SceneManager.LoadScene("GameScene");
+        pauseDlg.SetActive(false);
+        TIH.isTouchActive = true;
     }
 
     public void SetLevelParameters(int moves, int goal, int size, List<string> word)

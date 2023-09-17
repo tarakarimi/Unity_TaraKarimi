@@ -46,11 +46,11 @@ public class TileInteractionHandler : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            StartCoroutine(ChangeTileToBooster(bombTilePrefab,1));
+            StartCoroutine(ChangeTileToBooster(goldenTilePrefab,1));
         }
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            StartCoroutine(ChangeTileToBooster(wildTilePrefab,1));
+            StartCoroutine(ChangeTileToBooster(silverTilePrefab,1));
         }
     }
     
@@ -370,6 +370,10 @@ public class TileInteractionHandler : MonoBehaviour
             //wait for shifts to end
             yield return new WaitForSeconds(4f);
         }
+        else
+        {
+            //yield return new WaitForSeconds(0.1f);
+        }
         int randomRow = Random.Range(0, gridSize);
         int randomCol = Random.Range(0, gridSize);
         GameObject tile = tileMatrix[randomRow, randomCol];
@@ -427,7 +431,6 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void MovesToBomb(int num)
     {
-        Debug.Log("MovesToBomb = "+ num);
         StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));
     }
 
@@ -435,7 +438,6 @@ public class TileInteractionHandler : MonoBehaviour
     IEnumerator DestroyBombTiles()
     {
         GameObject[] bombObjects = GameObject.FindGameObjectsWithTag("Bomb");
-        Debug.Log("Bombs found: "+bombObjects.Length);
         foreach (GameObject bombObject in bombObjects)
         {
             if (bombObject != null)
@@ -449,20 +451,6 @@ public class TileInteractionHandler : MonoBehaviour
         }
 
         createFromBomb = false;
-        bombObjects = new GameObject[0];
-        yield return new WaitForSeconds(1f);
-        /*foreach (GameObject bombObject in bombObjects)
-        {
-            if (bombObject != null)
-            {
-                Tile tempBombScript = bombObject.GetComponent<Tile>();
-                int row = tempBombScript.row;
-                int col = tempBombScript.col;
-                Destroy(bombObject.gameObject);
-                ShiftTiles(row,col,"Bomb");
-                Debug.Log("second check");
-            }
-        }*/
         yield return new WaitForSeconds(3f);
         GM.winPage.SetActive(true);
     }

@@ -22,12 +22,12 @@ public class Tile : MonoBehaviour
         size = GM.GetComponent<GameManager>().tileSize;
         _tileInteractionHandler = GM.GetComponent<TileInteractionHandler>();
         letterScoreMap = LetterScoreMap.Instance;
-        if (letter != '*')
+        if (tileLetter.text != "*")
         {
             _letterGenerator = LetterGenerator.Instance;
             letter = _letterGenerator.GetRandomLetter();
+            SetLetterProperties();
         }
-        SetLetterProperties();
     }
 
     public void SetLetterProperties()

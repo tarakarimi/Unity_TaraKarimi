@@ -17,10 +17,9 @@ public class TileInteractionHandler : MonoBehaviour
     private List<char> tileLetters = new List<char>();
     private List<Tile> selectedTilesList = new List<Tile>();
     private List<GameObject> arrows = new List<GameObject>();
-    private List<GameObject> bombTilesList = new List<GameObject>();
     private Tile selectedTile;
     private Vector3 centerOffset;
-    private float distanceThreshold, tileSize;
+    private float distanceThreshold, tileSize,maxDelayTimeForFall;
     private int gridSize = 5,extraPoints;
     private bool createFromSilver, createFromGold, createFromWild, createFromBomb,wordIsValid,isFarsiLanguage;
     private string languagePreference;
@@ -48,6 +47,10 @@ public class TileInteractionHandler : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             StartCoroutine(ChangeTileToBooster(bombTilePrefab,1));
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(ChangeTileToBooster(wildTilePrefab,1));
         }
     }
     
@@ -116,9 +119,9 @@ public class TileInteractionHandler : MonoBehaviour
     {
         if (wordIsValid)
         {
-            CalculateScore();
             GM.SubtractMove();
-            
+            CalculateScore();
+
             int wordLength = tileLetters.Count;
             foreach (var tile in selectedTilesList)
             {
@@ -237,6 +240,7 @@ public class TileInteractionHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         GM.AddScore(extraPoints);
+        maxDelayTimeForFall = 0;
         extraPoints = 0;
         float delayTime = 0;
         for (int row = 0; row < gridSize; row++)
@@ -247,7 +251,6 @@ public class TileInteractionHandler : MonoBehaviour
                 {
                     Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize) + 5, 0) - centerOffset;
                     GameObject tempTile;
-                    
                     if (createFromGold) {
                         tempTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
                         createFromGold = false;
@@ -275,6 +278,9 @@ public class TileInteractionHandler : MonoBehaviour
                 }
             }
         }
+
+        maxDelayTimeForFall = delayTime + 0.4f;
+        Debug.Log("maxDelayTimeForFall= "+ maxDelayTimeForFall);
     }
 
 
@@ -359,10 +365,10 @@ public class TileInteractionHandler : MonoBehaviour
     
     IEnumerator ChangeTileToBooster(GameObject prefab, int num)
     {
-        bombTilesList.Clear();
         if (num > 1)
         {
-            yield return new WaitForSeconds(3.5f);
+            //wait for shifts to end
+            yield return new WaitForSeconds(4f);
         }
         int randomRow = Random.Range(0, gridSize);
         int randomCol = Random.Range(0, gridSize);
@@ -374,7 +380,7 @@ public class TileInteractionHandler : MonoBehaviour
             int shiftStep = tile.GetComponent<Tile>().shiftDownStep;
             Destroy(tile.gameObject);
             GameObject magicTile = Instantiate(prefab, tilePosition, Quaternion.identity);
-            GameObject trail = Instantiate(trailPrefab,new Vector3(0,15,0), quaternion.identity);
+            GameObject trail = Instantiate(trailPrefab,new Vector3(0,10,0), quaternion.identity);
             Vector3 end = magicTile.transform.position;
             trail.GetComponent<Trail>().StartMovement(end);
             Tile tileScript = magicTile.GetComponent<Tile>();
@@ -403,16 +409,17 @@ public class TileInteractionHandler : MonoBehaviour
             else if (prefab == wildTilePrefab) { createFromWild = true; } 
             else { createFromBomb = true; }
         }
-        
-        if (num > 1)
+
+        if (prefab == bombTilePrefab && num > 1)
         {
-            if (GM.numberOfMoves > 0)
+            for (int i = 0; i < num; i++)
             {
                 GM.numberOfMoves--;
                 GM.movesText.text = GM.numberOfMoves.ToString();
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.2f);
+                yield return ChangeTileToBooster(bombTilePrefab, 1);
             }
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(1.5f);
             StartCoroutine(DestroyBombTiles());
         }
     }
@@ -420,14 +427,15 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void MovesToBomb(int num)
     {
+        Debug.Log("MovesToBomb = "+ num);
         StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));
     }
 
 
     IEnumerator DestroyBombTiles()
     {
-        bombTilesList.Clear();
         GameObject[] bombObjects = GameObject.FindGameObjectsWithTag("Bomb");
+        Debug.Log("Bombs found: "+bombObjects.Length);
         foreach (GameObject bombObject in bombObjects)
         {
             if (bombObject != null)
@@ -439,9 +447,11 @@ public class TileInteractionHandler : MonoBehaviour
                 ShiftTiles(row,col,"Bomb");
             }
         }
+
+        createFromBomb = false;
         bombObjects = new GameObject[0];
         yield return new WaitForSeconds(1f);
-        foreach (GameObject bombObject in bombObjects)
+        /*foreach (GameObject bombObject in bombObjects)
         {
             if (bombObject != null)
             {
@@ -452,7 +462,7 @@ public class TileInteractionHandler : MonoBehaviour
                 ShiftTiles(row,col,"Bomb");
                 Debug.Log("second check");
             }
-        }
+        }*/
         yield return new WaitForSeconds(3f);
         GM.winPage.SetActive(true);
     }

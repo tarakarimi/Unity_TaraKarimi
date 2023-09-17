@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class LetterGenerator : MonoBehaviour
 {
@@ -34,6 +36,12 @@ public class LetterGenerator : MonoBehaviour
             string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
             isFarsiLanguage = (languagePreference == "Farsi");
         }
+    }
+
+    private void Start()
+    {
+        string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
+        isFarsiLanguage = (languagePreference == "Farsi");
     }
 
     public char GetRandomLetter()

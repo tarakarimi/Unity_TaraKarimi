@@ -23,9 +23,9 @@ public class AudioManager : MonoBehaviour
             PlayMenuMusic();
             int soundStatus = PlayerPrefs.GetInt("SFXStatus",0);
             if(soundStatus == 1){
-                AudioListener.pause = false;
-            } else{
                 AudioListener.pause = true;
+            } else{
+                AudioListener.pause = false;
             }
 
         }

@@ -372,14 +372,9 @@ public class TileInteractionHandler : MonoBehaviour
     
     IEnumerator ChangeTileToBooster(GameObject prefab, int num)
     {
-        if (num > 1)
+        if (isGameOver)
         {
-            //wait for shifts to end
             yield return new WaitForSeconds(4f);
-        }
-        else
-        {
-            //yield return new WaitForSeconds(0.1f);
         }
         int randomRow = Random.Range(0, gridSize);
         int randomCol = Random.Range(0, gridSize);
@@ -421,14 +416,17 @@ public class TileInteractionHandler : MonoBehaviour
             else { createFromBomb = true; }
         }
 
-        if (prefab == bombTilePrefab && num > 1)
+        if (prefab == bombTilePrefab && isGameOver)
         {
             for (int i = 0; i < num; i++)
             {
-                GM.numberOfMoves--;
-                GM.movesText.text = GM.numberOfMoves.ToString();
-                yield return new WaitForSeconds(0.2f);
-                yield return ChangeTileToBooster(bombTilePrefab, 1);
+                if (GM.numberOfMoves > 0)
+                {
+                    GM.numberOfMoves--;
+                    GM.movesText.text = GM.numberOfMoves.ToString();
+                    yield return new WaitForSeconds(0.5f);
+                    yield return ChangeTileToBooster(bombTilePrefab, 1);
+                }
             }
             yield return new WaitForSeconds(1.5f);
             StartCoroutine(DestroyBombTiles());
@@ -438,6 +436,9 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void MovesToBomb(int num)
     {
+        if (num == 1) {
+            num++;
+        }
         createFromBomb = createFromGold = createFromSilver = createFromWild = false;
         isGameOver = true;
         StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));

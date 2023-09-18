@@ -107,7 +107,7 @@ public class GameManager : MonoBehaviour
         {
             currentScore += 20;
             scoreText.text = currentScore.ToString();
-            if (targetScore >= goalScore && numberOfMoves > 0)
+            if (targetScore >= goalScore && numberOfMoves >= 0)
             {
                 if (!isGameOver)
                 {

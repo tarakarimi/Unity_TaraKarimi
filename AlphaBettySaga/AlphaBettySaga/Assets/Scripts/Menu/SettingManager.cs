@@ -22,8 +22,6 @@ public class SettingManager : MonoBehaviour
 
     void Start()
     {
-        currentLanguage = engStr;
-        LanguageText.text = currentLanguage;
         audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
         
         if (PlayerPrefs.HasKey(musicStatusKey))
@@ -37,6 +35,10 @@ public class SettingManager : MonoBehaviour
             SFXStatus = PlayerPrefs.GetInt(SFXStatusKey) == 1;
             UpdateSFXUI();
         }
+
+        currentLanguage = PlayerPrefs.GetString(languagePrefKey, engStr);
+        UpdateLanguageUI();
+        //audioManager.SetMusicStatus(musicStatus);
     }
 
     public void Back()
@@ -81,6 +83,7 @@ public class SettingManager : MonoBehaviour
             currentLanguage = engStr;
         }
         PlayerPrefs.SetString(languagePrefKey, currentLanguage);
+        Debug.Log("saved: "+currentLanguage);
         PlayerPrefs.Save();
     }
 
@@ -98,5 +101,17 @@ public class SettingManager : MonoBehaviour
     private void UpdateSFXUI()
     {
         SFXButtonRef.image.sprite = SFXStatus ? SFXOn : SFXOff;
+    }
+
+    void UpdateLanguageUI()
+    {
+        if (currentLanguage == farStr)
+        {
+            LanguageText.text = "فارسی";
+        }
+        else
+        {
+            LanguageText.text = engStr;
+        }
     }
 }

@@ -438,6 +438,7 @@ public class TileInteractionHandler : MonoBehaviour
     
     public void MovesToBomb(int num)
     {
+        createFromBomb = createFromGold = createFromSilver = createFromWild = false;
         isGameOver = true;
         StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));
     }

@@ -6,6 +6,7 @@ public class LetterGenerator : MonoBehaviour
 {
     private static LetterGenerator instance;
     private bool isFarsiLanguage;
+    private string languagePreference;
     public static LetterGenerator Instance
     {
         get
@@ -33,19 +34,14 @@ public class LetterGenerator : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
-            string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
-            isFarsiLanguage = (languagePreference == "Farsi");
         }
     }
 
-    private void Start()
-    {
-        string languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
-        isFarsiLanguage = (languagePreference == "Farsi");
-    }
 
     public char GetRandomLetter()
     {
+        languagePreference = PlayerPrefs.GetString("LanguagePreference", "English");
+        isFarsiLanguage = (languagePreference == "Farsi");
         if (isFarsiLanguage)
         {
             float tmpRnd = Random.Range(0.0684f, 1.0f);

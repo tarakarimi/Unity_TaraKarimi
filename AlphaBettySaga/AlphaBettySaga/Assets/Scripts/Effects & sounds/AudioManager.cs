@@ -21,11 +21,11 @@ public class AudioManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             PlayMenuMusic();
-            int soundStatus = PlayerPrefs.GetInt("SFXStatus",0);
+            int soundStatus = PlayerPrefs.GetInt("SFXStatus",1);
             if(soundStatus == 1){
-                AudioListener.pause = true;
-            } else{
                 AudioListener.pause = false;
+            } else{
+                AudioListener.pause = true;
             }
 
         }
@@ -76,7 +76,7 @@ public class AudioManager : MonoBehaviour
 
     private void PlayMenuMusic()
     {
-        if (PlayerPrefs.GetInt("MusicEnabled", 1) == 1) // Check user preference
+        if (PlayerPrefs.GetInt("MusicEnabled", 1) == 1)
         {
             audioSourceMusic.clip = menuMusic;
             audioSourceMusic.Play();
@@ -85,7 +85,7 @@ public class AudioManager : MonoBehaviour
 
     private void PlayGameMusic()
     {
-        if (PlayerPrefs.GetInt("MusicEnabled", 1) == 1) // Check user preference
+        if (PlayerPrefs.GetInt("MusicEnabled", 1) == 1) 
         {
             audioSourceMusic.clip = gameMusic;
             audioSourceMusic.Play();

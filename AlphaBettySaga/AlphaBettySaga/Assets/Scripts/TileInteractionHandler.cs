@@ -384,7 +384,7 @@ public class TileInteractionHandler : MonoBehaviour
         int randomRow = Random.Range(0, gridSize);
         int randomCol = Random.Range(0, gridSize);
         GameObject tile = tileMatrix[randomRow, randomCol];
-        if (tile != null && !tile.CompareTag("Bomb"))
+        if (tile != null && !tile.CompareTag("Bomb") && !tile.CompareTag("WildTile"))
         {
             char letterKept = tile.GetComponent<Tile>().GetLetter();
             Vector3 tilePosition = tile.transform.position;

@@ -810,6 +810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels: []
+  GM: {fileID: 0}
   _levelInfoDialog: {fileID: 0}
 --- !u!1 &766749585
 GameObject:
@@ -2085,6 +2086,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19b2cff9102ba834daf8b3568b98a3c6, type: 2}
   - {fileID: 11400000, guid: 5c1376b49daf0ed43bff51ef6aca9004, type: 2}
   - {fileID: 11400000, guid: fe6c0a3c3aa0d35418a359642f772217, type: 2}
+  GM: {fileID: 0}
   _levelInfoDialog: {fileID: 8571890206145211612}
 --- !u!4 &1879054028
 Transform:
@@ -2310,10 +2312,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

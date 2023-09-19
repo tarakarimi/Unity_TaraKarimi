@@ -49,7 +49,7 @@ public class TileInteractionHandler : MonoBehaviour
             }
             if (Input.GetKeyDown(KeyCode.LeftAlt))
             {
-                StartCoroutine(ChangeTileToBooster(goldenTilePrefab,1));
+                StartCoroutine(ChangeTileToBooster(bombTilePrefab,1));
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -137,7 +137,7 @@ public class TileInteractionHandler : MonoBehaviour
                 _audioSource.PlayOneShot(destroySfx);
                 ShiftTiles(tempRow, tempCol, tile.transform.tag);
             }
-            if (wordLength >= 4)
+            if (wordLength >= 3)
             {
                 switch (wordLength)
                 {
@@ -212,7 +212,6 @@ public class TileInteractionHandler : MonoBehaviour
                             {
                                 extraPoints += 10;
                                 string keptTag = tileObject.tag;
-                                //_audioSource.PlayOneShot(destroySfx);
                                 Destroy(tileObject.gameObject);
                                 tileMatrix[i, j] = null;
                                 ShiftTiles(i, j, keptTag);
@@ -245,50 +244,60 @@ public class TileInteractionHandler : MonoBehaviour
 
     IEnumerator LogNullHouses()
     {
-        yield return new WaitForSeconds(0.3f);
-        GM.AddScore(extraPoints);
-        maxDelayTimeForFall = 0;
-        extraPoints = 0;
-        float delayTime = 0;
-        for (int row = 0; row < gridSize; row++)
+        yield return new WaitForSeconds(0.6f);
+    
+    GM.AddScore(extraPoints);
+    maxDelayTimeForFall = 0;
+    extraPoints = 0;
+    float delayTime = 0;
+    
+    for (int row = 0; row < gridSize; row++)
+    {
+        for (int col = 0; col < gridSize; col++)
         {
-            for (int col = 0; col < gridSize; col++)
+            if (tileMatrix[row, col] == null)
             {
-                if (tileMatrix[row, col] == null)
+                Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize) + 5, 0) - centerOffset;
+                GameObject tempTile;
+                if (createFromGold)
                 {
-                    Vector3 tilePosition = new Vector3(col * tileSize, row * tileSize + (gridSize * tileSize) + 5, 0) - centerOffset;
-                    GameObject tempTile;
-                    if (createFromGold) {
-                        tempTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
-                        createFromGold = false;
-                        
-                    } else if (createFromSilver) {
-                        tempTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
-                        createFromSilver = false;
-                        
-                    } else if (createFromWild) {
-                        tempTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
-                        createFromWild = false;
-                        
-                    } else if (createFromBomb) {
-                        tempTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
-                        createFromBomb = false;
-                        
-                    }else {
-                        tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
-                    }
-                    tempTile.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize + 5);
-                    tempTile.GetComponent<Tile>().SetGridPosition(row, col);
-                    tempTile.transform.SetParent(GM.tileParent);
-                    tileMatrix[row, col] = tempTile;
-                    delayTime += 0.08f;
+                    tempTile = Instantiate(goldenTilePrefab, tilePosition, Quaternion.identity);
+                    createFromGold = false;
                 }
+                else if (createFromSilver)
+                {
+                    tempTile = Instantiate(silverTilePrefab, tilePosition, Quaternion.identity);
+                    createFromSilver = false;
+                }
+                else if (createFromWild)
+                {
+                    tempTile = Instantiate(wildTilePrefab, tilePosition, Quaternion.identity);
+                    createFromWild = false;
+                }
+                else if (createFromBomb)
+                {
+                    tempTile = Instantiate(bombTilePrefab, tilePosition, Quaternion.identity);
+                    createFromBomb = false;
+                }
+                else
+                {
+                    tempTile = Instantiate(tilePrefab, tilePosition, Quaternion.identity);
+                }
+                tempTile.GetComponent<TileFall>().StartTileFall(delayTime, gridSize * tileSize + 5);
+                tempTile.GetComponent<Tile>().SetGridPosition(row, col);
+                tempTile.transform.SetParent(GM.tileParent);
+                tileMatrix[row, col] = tempTile;
+                delayTime += 0.08f;
             }
         }
-
-        maxDelayTimeForFall = delayTime + 0.4f;
-        StartCoroutine(TouchState(true, maxDelayTimeForFall));
     }
+    
+    maxDelayTimeForFall = delayTime + 0.4f;
+    StartCoroutine(TouchState(true, maxDelayTimeForFall));
+}
+
+        
+    
 
 
     private void CalculateScore()
@@ -372,14 +381,6 @@ public class TileInteractionHandler : MonoBehaviour
     
     IEnumerator ChangeTileToBooster(GameObject prefab, int num)
     {
-        if (num > 1 && isGameOver)
-        {
-            yield return new WaitForSeconds(4f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.5f);
-        }
         int randomRow = Random.Range(0, gridSize);
         int randomCol = Random.Range(0, gridSize);
         GameObject tile = tileMatrix[randomRow, randomCol];
@@ -419,22 +420,6 @@ public class TileInteractionHandler : MonoBehaviour
             else if (prefab == wildTilePrefab) { createFromWild = true; } 
             else { createFromBomb = true; }
         }
-
-        if (prefab == bombTilePrefab && isGameOver)
-        {
-            for (int i = 0; i < num; i++)
-            {
-                if (GM.numberOfMoves > 0)
-                {
-                    GM.numberOfMoves--;
-                    GM.movesText.text = GM.numberOfMoves.ToString();
-                    //yield return new WaitForSeconds(0.2f);
-                    yield return ChangeTileToBooster(bombTilePrefab, 1);
-                }
-            }
-            yield return new WaitForSeconds(1.5f);
-            StartCoroutine(DestroyBombTiles());
-        }
     }
 
     
@@ -443,9 +428,29 @@ public class TileInteractionHandler : MonoBehaviour
         num++;
         createFromBomb = createFromGold = createFromSilver = createFromWild = false;
         isGameOver = true;
-        StartCoroutine(ChangeTileToBooster(bombTilePrefab, num));
+        StartCoroutine(ChangeMovesToBombs(num));
     }
 
+    
+    IEnumerator ChangeMovesToBombs(int num)
+    {
+        Debug.Log("Come to wait at: " +Time.time);
+        yield return new WaitForSeconds(4f);
+        Debug.Log("waited for 5 sec at: " +Time.time);
+        for (int i = 0; i < num; i++)
+        {
+            if (GM.numberOfMoves > 0)
+            {
+                GM.numberOfMoves--;
+                GM.movesText.text = GM.numberOfMoves.ToString();
+                yield return new WaitForSeconds(0.4f);
+                yield return ChangeTileToBooster(bombTilePrefab, 1);
+            }
+        }
+        yield return new WaitForSeconds(1.5f);
+        StartCoroutine(DestroyBombTiles());
+    }
+    
 
     IEnumerator DestroyBombTiles()
     {

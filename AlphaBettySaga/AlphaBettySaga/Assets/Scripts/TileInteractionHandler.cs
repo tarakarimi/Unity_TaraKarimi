@@ -107,7 +107,6 @@ public class TileInteractionHandler : MonoBehaviour
                 string wordToCheck = chain.Replace('*', letter);
                 if (db.IsWordValid(wordToCheck, chainLength))
                 {
-                    Debug.Log("word: " + wordToCheck);
                     wordIsValid = true;
                     break;
                 }
@@ -137,7 +136,7 @@ public class TileInteractionHandler : MonoBehaviour
                 _audioSource.PlayOneShot(destroySfx);
                 ShiftTiles(tempRow, tempCol, tile.transform.tag);
             }
-            if (wordLength >= 3)
+            if (wordLength >= 4)
             {
                 switch (wordLength)
                 {

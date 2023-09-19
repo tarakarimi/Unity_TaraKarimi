@@ -28,6 +28,12 @@ public class Tile : MonoBehaviour
             letter = _letterGenerator.GetRandomLetter();
             SetLetterProperties();
         }
+        else
+        {
+            letter = '*';
+            SetLetterProperties();
+        }
+            
     }
 
     public void SetLetterProperties()

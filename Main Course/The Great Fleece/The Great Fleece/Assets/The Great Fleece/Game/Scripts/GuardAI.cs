@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,7 +11,8 @@ public class GuardAI : MonoBehaviour
     private Animator _animator;
     [SerializeField] private int currentTarget;
     private int wayPointCount;
-    private bool reverse, _targetReached;
+    private bool reverse, _targetReached, coinTossed;
+    private Vector3 coinPosition;
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
@@ -19,7 +21,7 @@ public class GuardAI : MonoBehaviour
     }
     void Update()
     {
-        if (wayPoints[currentTarget] != null)
+        if (wayPoints[currentTarget] != null && !coinTossed)
         {
             _agent.SetDestination(wayPoints[currentTarget].position);
 
@@ -28,6 +30,14 @@ public class GuardAI : MonoBehaviour
             {
                 _targetReached = true;
                 StartCoroutine(WaitBeforeMoving());
+            }
+        }
+        else
+        {
+            float distance = Vector3.Distance(transform.position, coinPosition);
+            if (distance < 4f)
+            {
+                _animator.SetBool("Walk",false);
             }
         }
     }
@@ -59,5 +69,13 @@ public class GuardAI : MonoBehaviour
                 reverse = true;
             }
         }
+    }
+
+    public void SetCoinDestination(Vector3 coinPos)
+    {
+        coinPosition = coinPos;
+        coinTossed = true;
+        _agent.SetDestination(coinPosition);
+        _animator.SetBool("Walk",true);
     }
 }

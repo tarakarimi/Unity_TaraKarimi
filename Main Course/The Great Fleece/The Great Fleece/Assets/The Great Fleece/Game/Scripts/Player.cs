@@ -6,18 +6,16 @@ using UnityEngine.UIElements;
 public class Player : MonoBehaviour
 {
     private NavMeshAgent _agent;
-
     private Animator _animator;
-
     private Vector3 _target;
-    // Start is called before the first frame update
+    public GameObject coinPrefab;
+    private bool _coinTossed;
     void Start()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -39,5 +37,30 @@ public class Player : MonoBehaviour
         {
             _animator.SetBool("walk",false);
         }
+
+        if (Input.GetMouseButtonDown(1) && _coinTossed == false)
+        {
+            Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo;
+            if (Physics.Raycast(rayOrigin,out hitInfo))
+            {
+                _animator.SetTrigger("Throw");
+                _coinTossed = true;
+                Instantiate(coinPrefab, hitInfo.point, Quaternion.identity);
+                SendAIToCoinSpot(hitInfo.point);
+            }
+            
+        }
     }
+
+    void SendAIToCoinSpot(Vector3 coinPos)
+    {
+        GameObject[] guards = GameObject.FindGameObjectsWithTag("Guard1");
+        foreach (var guard in guards)
+        {
+            GuardAI guardAi = guard.GetComponent<GuardAI>();
+            guardAi.SetCoinDestination(coinPos);
+        }
+    }
+    
 }

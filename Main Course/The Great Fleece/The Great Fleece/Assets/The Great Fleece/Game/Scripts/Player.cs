@@ -26,7 +26,6 @@ public class Player : MonoBehaviour
             RaycastHit hitInfo;
             if (Physics.Raycast(rayOrigin,out hitInfo))
             {
-                //print("hit: "+hitInfo.point);
                 //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 //cube.transform.position = hitInfo.point;
                 _agent.SetDestination(hitInfo.point);

@@ -1,17 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraLookAtPlayer : MonoBehaviour
 {
-    public Transform target;
-    // Start is called before the first frame update
-    void Start()
+    public Transform target, startCamera;
+
+    private void Start()
     {
-        
+        transform.position = startCamera.position;
+        transform.rotation = startCamera.rotation;
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.LookAt(target);

@@ -6,10 +6,12 @@ using UnityEngine;
 public class VoicOverTrigger : MonoBehaviour
 {
     private AudioSource _audioSource;
+    private AudioClip clip;
 
     private void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        clip = _audioSource.clip;
     }
 
     // Start is called before the first frame update
@@ -17,7 +19,8 @@ public class VoicOverTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _audioSource.Play();
+            //_audioSource.Play();
+            AudioManager.Instance.PlayVoiceOver(clip);
         }
     }
 }

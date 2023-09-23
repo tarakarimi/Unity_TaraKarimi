@@ -26,7 +26,7 @@ public class GuardAI : MonoBehaviour
             _agent.SetDestination(wayPoints[currentTarget].position);
 
             float distance = Vector3.Distance(transform.position, wayPoints[currentTarget].position);
-            if (distance < 1.0f && _targetReached == false && wayPointCount > 0)
+            if (distance < 2.0f && _targetReached == false && wayPointCount > 0)
             {
                 _targetReached = true;
                 StartCoroutine(WaitBeforeMoving());

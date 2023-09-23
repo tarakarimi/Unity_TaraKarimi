@@ -6,13 +6,13 @@ using UnityEngine;
 public class SecurityCamera : MonoBehaviour
 {
     public GameObject gameOverCutscene;
-    private MeshRenderer renderer;
+    private MeshRenderer meshRenderer;
     private Color _redColor;
     public Animator anim;
 
     private void Start()
     {
-        renderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>();
         _redColor = new Color(0.83f,0.18f,0.30f,0.03f);
     }
 
@@ -22,7 +22,7 @@ public class SecurityCamera : MonoBehaviour
         {
             StartCoroutine(AlertRoutine());
             anim.enabled = false;
-            renderer.material.SetColor("_TintColor",_redColor);
+            meshRenderer.material.SetColor("_TintColor",_redColor);
         }
     }
 

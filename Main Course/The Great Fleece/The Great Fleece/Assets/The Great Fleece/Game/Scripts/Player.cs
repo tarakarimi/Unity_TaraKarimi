@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
     
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {

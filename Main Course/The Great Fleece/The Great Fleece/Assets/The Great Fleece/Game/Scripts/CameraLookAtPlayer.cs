@@ -13,7 +13,7 @@ public class CameraLookAtPlayer : MonoBehaviour
         transform.rotation = startCamera.rotation;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.LookAt(target);
     }

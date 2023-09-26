@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     private bool _coinTossed;
     void Start()
     {
+    
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponentInChildren<Animator>();
     }

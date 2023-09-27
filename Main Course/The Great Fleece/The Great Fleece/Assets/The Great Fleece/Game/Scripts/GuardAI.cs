@@ -35,9 +35,10 @@ public class GuardAI : MonoBehaviour
         else
         {
             float distance = Vector3.Distance(transform.position, coinPosition);
-            if (distance < 4f)
+            if (distance < 5f)
             {
                 _animator.SetBool("Walk",false);
+                transform.LookAt(coinPosition);
             }
         }
     }
@@ -73,6 +74,7 @@ public class GuardAI : MonoBehaviour
 
     public void SetCoinDestination(Vector3 coinPos)
     {
+        _agent.stoppingDistance = 5.0f;
         coinPosition = coinPos;
         coinTossed = true;
         _agent.SetDestination(coinPosition);

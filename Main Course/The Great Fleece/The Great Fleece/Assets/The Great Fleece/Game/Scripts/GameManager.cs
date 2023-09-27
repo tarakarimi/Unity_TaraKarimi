@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.S))
         {
-            introCutscene.time = 60.1f;
+            introCutscene.time = 60.0f;
         }
     }
 }

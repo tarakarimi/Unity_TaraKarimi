@@ -21,6 +21,7 @@ public class VoicOverTrigger : MonoBehaviour
         {
             //_audioSource.Play();
             AudioManager.Instance.PlayVoiceOver(clip);
+            Destroy(this.gameObject);
         }
     }
 }

@@ -10,8 +10,11 @@ public class CameraTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Camera.main.transform.position = myCamera.position;
-            Camera.main.transform.rotation = myCamera.rotation;
+            if (Camera.main.transform.position != myCamera.position)
+            {
+                Camera.main.transform.position = myCamera.position;
+                Camera.main.transform.rotation = myCamera.rotation;
+            }
         }
     }
 }

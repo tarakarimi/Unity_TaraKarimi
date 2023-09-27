@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
     }
     
-    void FixedUpdate()
+    void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
             {
                 //GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 //cube.transform.position = hitInfo.point;
+                //Debug.Log("Hit point: " + hitInfo.point);
                 _agent.SetDestination(hitInfo.point);
                 _animator.SetBool("walk",true);
                 _target = hitInfo.point;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         }
 
         float distance = Vector3.Distance(transform.position, _target);
-        if (distance < 1)
+        if (distance < 1.5f)
         {
             _animator.SetBool("walk",false);
         }
@@ -47,7 +48,9 @@ public class Player : MonoBehaviour
             {
                 _animator.SetTrigger("Throw");
                 _coinTossed = true;
-                Instantiate(coinPrefab, hitInfo.point, Quaternion.identity);
+                Vector3 point = hitInfo.point;
+                point.y = -1.86f;
+                Instantiate(coinPrefab, point, Quaternion.identity);
                 SendAIToCoinSpot(hitInfo.point);
             }
             

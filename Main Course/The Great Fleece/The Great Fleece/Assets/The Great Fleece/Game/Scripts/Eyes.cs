@@ -11,6 +11,7 @@ public class Eyes : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            AudioManager.Instance.StopAudioSource();
             GameOverCurscene.SetActive(true);
         }
     }

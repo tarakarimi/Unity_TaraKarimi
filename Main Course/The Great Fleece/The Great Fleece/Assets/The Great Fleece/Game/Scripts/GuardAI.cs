@@ -79,5 +79,6 @@ public class GuardAI : MonoBehaviour
         coinTossed = true;
         _agent.SetDestination(coinPosition);
         _animator.SetBool("Walk",true);
+        _agent.stoppingDistance = 4.0f;
     }
 }

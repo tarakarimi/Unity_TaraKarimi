@@ -31,9 +31,11 @@ public class Player : MonoBehaviour
                 _agent.SetDestination(hitInfo.point);
                 _animator.SetBool("walk",true);
                 _target = hitInfo.point;
+                
             }
         }
 
+        _target.y = transform.position.y;
         float distance = Vector3.Distance(transform.position, _target);
         if (distance < 1.5f)
         {
@@ -52,6 +54,7 @@ public class Player : MonoBehaviour
                 point.y = -1.86f;
                 Instantiate(coinPrefab, point, Quaternion.identity);
                 SendAIToCoinSpot(hitInfo.point);
+                transform.LookAt(hitInfo.point);
             }
             
         }

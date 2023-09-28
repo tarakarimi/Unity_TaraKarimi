@@ -6,13 +6,13 @@ using UnityEngine;
 
 public class CineMachineBrainProperty : MonoBehaviour
 {
-    private Camera camera;
+    private Camera _camera;
     private CinemachineBrain cinemachineBrain;
 
     private void Start()
     {
-        camera = Camera.main;
-        cinemachineBrain = camera.GetComponent<CinemachineBrain>();
+        _camera = Camera.main;
+        cinemachineBrain = _camera.GetComponent<CinemachineBrain>();
         if (cinemachineBrain != null)
         {
             CinemachineBlendDefinition customBlend = new CinemachineBlendDefinition();
@@ -33,7 +33,6 @@ public class CineMachineBrainProperty : MonoBehaviour
 
     public void SetDefaultProperties()
     {
-        Debug.Log("deactivate");
         CinemachineBlendDefinition customBlend = new CinemachineBlendDefinition();
         customBlend.m_Style = CinemachineBlendDefinition.Style.Cut;
         cinemachineBrain.m_DefaultBlend = customBlend;

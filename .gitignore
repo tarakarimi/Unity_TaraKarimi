@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/unity,rider,visualstudio
 # Edit at https://www.gitignore.io/?templates=unity,rider,visualstudio
 
@@ -83,11 +82,17 @@ fabric.properties
 **/[Bb]uild/
 **/[Bb]uilds/
 **/[Ll]ogs/
-**/[Mm]emoryCaptures/
-**/UserSettings/
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta
+**/[Uu]ser[Ss]ettings/
+
+# MemoryCaptures can get excessive in size.
+# They also could contain extremely sensitive data
+/[Mm]emoryCaptures/
+
+# Recordings can get excessive in size
+/[Rr]ecordings/
 
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
@@ -119,8 +124,11 @@ ExportedObj/
 *.svd
 *.pdb
 *.mdb
+
+*.idea
 *.opendb
 *.VC.db
+*.idea
 
 # Unity3D generated meta files
 *.pidb.meta

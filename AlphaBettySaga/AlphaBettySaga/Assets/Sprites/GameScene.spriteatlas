@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GameScene
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 1
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 4096
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: -1
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 1
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+      enableAlphaDilation: 0
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 767f8b54b47687e49834422caedcf8a1, type: 3}
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 004d7260726b83b49acd894036392f5d, type: 3}
+  - {fileID: 21300000, guid: 48c40d129979a52428563783eeaddc2b, type: 3}
+  - {fileID: 21300000, guid: 34b0f1e2d99793e48a56df2490688331, type: 3}
+  - {fileID: 21300000, guid: d3e0bedb90f156e4bb90794de6cb5337, type: 2}
+  - {fileID: 21300000, guid: ba86d84aacb11ff43809b253c884d113, type: 2}
+  - {fileID: 21300000, guid: 22a566901f43ed24faec773f7f25208b, type: 2}
+  - {fileID: 21300000, guid: fc32ae12798c08943bcfddeb24f9bbf0, type: 3}
+  - {fileID: 21300000, guid: d81d8ac25ed58d44b8ae1e7c039bc041, type: 3}
+  - {fileID: 21300000, guid: e658e505cd4985947a26801618758db0, type: 3}
+  - {fileID: 21300000, guid: eb638ce56a5b6f14398d8db19685245c, type: 3}
+  - {fileID: 21300000, guid: 1eb45817222d3d54a9f019b4c43f6299, type: 3}
+  - {fileID: 21300000, guid: fb812fa7ff628bb4aae0c0f150dc0e91, type: 3}
+  - {fileID: 21300000, guid: e638a84c8b2f0de4cbf07cd1c7aaf9d0, type: 2}
+  - {fileID: 21300000, guid: 4a5e626d62f5c624ea7663b6085b76d8, type: 3}
+  - {fileID: 21300000, guid: d7957a6dab6e38045b70b366f4c986e3, type: 3}
+  - {fileID: 21300000, guid: 10886bdebfa625e49be526faf64aca5d, type: 3}
+  - {fileID: 21300000, guid: ad880ddebb26e3340bb6f975e65fa163, type: 3}
+  - {fileID: 21300000, guid: f811f20f13c9ea84895ba7da4a81e974, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - arrow
+  - bomb tile
+  - silverFrame
+  - shuffle_active
+  - shuffle_selected
+  - shuffle_notActive
+  - golden tile
+  - ParticleCloudWhite
+  - zero tile
+  - bg
+  - tile_selected
+  - goldFrame
+  - dlg box objective
+  - light
+  - tile_normal
+  - upper_panel
+  - lower_panel
+  - score
+  m_RenderDataMap: {}
+  m_Tag: GameScene
+  m_IsVariant: 0

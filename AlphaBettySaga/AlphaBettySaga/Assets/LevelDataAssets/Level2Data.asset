@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b470f9bdd3a0d8c49851f634f73e80ae, type: 3}
+  m_Name: Level2Data
+  m_EditorClassIdentifier: 
+  movesNumber: 17
+  scoreGoal: 3600
+  gridSize: 4
+  wordList:
+  - seed
+  - tree
+  - root
+  - leaf
+  wordListFarsi:
+  - "\u0631\u06CC\u0634\u0647"
+  - "\u0633\u0627\u0642\u0647"
+  - "\u06AF\u0644"
+  - "\u0628\u0631\u06AF"
